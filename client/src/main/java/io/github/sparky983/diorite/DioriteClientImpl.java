@@ -31,6 +31,7 @@ import io.github.sparky983.diorite.net.Networking;
 import io.github.sparky983.diorite.net.annotations.Port;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.LoginSuccessPacket;
+import io.github.sparky983.diorite.net.packet.clientbound.login.SetCompressionPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.handshaking.HandshakePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.login.LoginStartPacket;
@@ -105,6 +106,9 @@ final class DioriteClientImpl implements DioriteClient {
 
         clientChannel.sendPacket(new LoginStartPacket(name))
                 .block();
+
+        clientChannel.on(SetCompressionPacket.class)
+                .subscribe((packet) -> clientChannel.setCompression(packet.getThreshold()));
 
         final LoginSuccessPacket loginSuccess = clientChannel.on(LoginSuccessPacket.class)
                 .blockFirst();

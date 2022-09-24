@@ -18,6 +18,8 @@ package io.github.sparky983.diorite;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.sparky983.diorite.io.DecodeException;
 import io.github.sparky983.diorite.io.MinecraftInputStream;
@@ -29,6 +31,8 @@ import io.github.sparky983.diorite.util.Preconditions;
 import reactor.core.publisher.Sinks;
 
 final class PacketListener implements Runnable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PacketListener.class);
 
     private final Sinks.Many<Packet> packets;
     private final Stateful stateful;
@@ -69,10 +73,10 @@ final class PacketListener implements Runnable {
                 final Packet packet = packetFormat.decode(inputStream);
                 packets.emitNext(packet, Sinks.EmitFailureHandler.FAIL_FAST);
             } catch (final DecodeException e) {
-                e.printStackTrace();
                 if (!e.isIgnorable()) {
                     throw e;
                 }
+                LOGGER.warn("Ignorable error ({}): {}", stateful.getState(), e.getMessage());
             } catch (final Exception e) {
                 e.printStackTrace();
                 throw e;

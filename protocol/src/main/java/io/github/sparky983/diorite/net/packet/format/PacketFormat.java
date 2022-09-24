@@ -59,10 +59,11 @@ public interface PacketFormat {
      */
     @Contract(pure = true)
     static @NotNull PacketFormat compressed(
+            final @NotNull Stateful stateful,
             final @Range(from = 1, to = Integer.MAX_VALUE) int threshold,
             final @NotNull Compression compression) {
 
-        throw new UnsupportedOperationException();
+        return new CompressedPacketFormat(stateful, threshold, compression);
     }
 
     /**

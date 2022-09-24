@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutorService;
 import io.github.sparky983.diorite.io.MinecraftInputStream;
 import io.github.sparky983.diorite.io.MinecraftOutputStream;
 import io.github.sparky983.diorite.io.RuntimeIOException;
+import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Channel;
 import io.github.sparky983.diorite.net.ChannelState;
 import io.github.sparky983.diorite.net.packet.Packet;
@@ -86,8 +87,7 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     @Override
     public void setCompression(final @Range(from = 0, to = Integer.MAX_VALUE) int threshold) {
 
-        // TODO(Sparky983): Implement compression
-        throw new UnsupportedOperationException("ClientChannel does not support compression");
+        setPacketFormat(PacketFormat.compressed(this, threshold, Compression.zlib()));
     }
 
     @Override
@@ -101,6 +101,7 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
 
         Preconditions.requireNotNull(packetFormat, "packetFormat");
 
+        packetListener.setPacketFormat(packetFormat);
         this.packetFormat = packetFormat;
     }
 

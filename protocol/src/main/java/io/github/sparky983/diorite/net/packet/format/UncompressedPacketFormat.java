@@ -76,8 +76,7 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final PacketDecoder<?> decoder = stateful.getPacketRegistry()
                 .getPacketDecoder(id)
-                .orElseThrow(() -> new DecodeException(
-                        "No packet encoder for id 0x" + Integer.toHexString(id), true));
+                .orElseThrow(() -> new DecodeException("No packet encoder for id 0x" + Integer.toHexString(id), true));
 
         try {
             return decoder.decode(byteArrayInputStream);
