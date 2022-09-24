@@ -40,13 +40,13 @@ public interface Identifier {
      * @since 1.0.0
      */
     @Language("RegExp")
-    String NAMESPACE_PATTERN = "[a-z0-9-_]+";
+    String NAMESPACE_PATTERN = "[\\da-z_-]+";
 
     /**
      * The pattern all values must follow.
      */
     @Language("RegExp")
-    String VALUE_PATTERN = "[a-z0-9+/.-]+";
+    String VALUE_PATTERN = "[\\da-z_/.-]+";
 
     /**
      * The default namespace. This is used if a namespace is not specified in an identifier.
