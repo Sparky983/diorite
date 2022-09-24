@@ -30,6 +30,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -176,11 +178,10 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
         return readString(Protocol.MAX_STRING_LENGTH);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public @NotNull String readString(final @Range(from = 1, to = Protocol.MAX_STRING_LENGTH) int maxLength) {
 
-        Preconditions.requireTrue(maxLength >= 1, "maxLength");
+        Preconditions.requireRange(maxLength, 1, Protocol.MAX_STRING_LENGTH, "maxLength");
 
         final int length = readVarInt();
 
@@ -192,7 +193,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
             throw new DecodeException("Received string length was less than 0");
         }
 
-        final String input = new String(readLengthPrefixedBytes(), StandardCharsets.UTF_8);
+        final String input = new String(readBytes(length), StandardCharsets.UTF_8);
 
         if (input.length() > maxLength) {
             throw new DecodeException("Received string was longer than the maximum length (" + maxLength + ")");
@@ -435,7 +436,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
         assert enumConstants != null : "enumClass should be an enum";
 
         if (ordinal >= enumConstants.length) {
-            throw new DecodeException("Id was too large");
+            throw new DecodeException("Id was too large. Expected range: 0-" + (enumConstants.length - 1) + " was " + ordinal);
         }
 
         if (ordinal < 0) {
@@ -478,10 +479,10 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
         return readList(() -> reader.apply(this));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "Java9CollectionFactory" /* List.of doesn't support null */})
     @Override
-    public @Unmodifiable @NotNull <T> List<@NotNull T> readList(
-            final @NotNull Supplier<@NotNull T> reader) {
+    public <T> @Unmodifiable @NotNull List<T> readList(
+            final @NotNull Supplier<T> reader) {
 
         final int size = readVarInt();
 
@@ -489,11 +490,10 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
 
         for (int i = 0; i < size; i++) {
             final T e = reader.get();
-            Preconditions.requireNotNull(e, "reader.get([" + i + "])");
             array[i] = e;
         }
 
-        return List.of(array);
+        return Collections.unmodifiableList(Arrays.asList(array));
     }
 
     @Override

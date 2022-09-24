@@ -20,26 +20,23 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 import io.github.sparky983.diorite.io.MinecraftInputStream;
 import io.github.sparky983.diorite.io.MinecraftOutputStream;
-import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
-import io.github.sparky983.diorite.world.Identifier;
 
 public class DeclareRecipesPacket implements ClientBoundPacket {
 
-    private final List<Recipe> recipes;
+    private final byte[] recipes; // TOOD(Sparky983): Do proper parsing of recipes
 
+    @ApiStatus.Experimental
     @Contract(pure = true)
-    public DeclareRecipesPacket(final @NotNull List<@NotNull Recipe> recipes) {
+    public DeclareRecipesPacket(final byte @NotNull [] recipes) {
 
-        Preconditions.requireContainsNoNulls(recipes, "recipes");
+        Preconditions.requireNotNull(recipes, "recipes");
 
-        this.recipes = List.copyOf(recipes);
+        this.recipes = recipes;
     }
 
     @Contract(mutates = "param")
@@ -47,7 +44,7 @@ public class DeclareRecipesPacket implements ClientBoundPacket {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.recipes = inputStream.readList(Recipe::new);
+        this.recipes = inputStream.readAllBytes();
     }
 
     @Override
@@ -55,7 +52,7 @@ public class DeclareRecipesPacket implements ClientBoundPacket {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeList(recipes, MinecraftOutputStream::writeWritable);
+        outputStream.writeBytes(recipes);
     }
 
     @Override
@@ -64,70 +61,10 @@ public class DeclareRecipesPacket implements ClientBoundPacket {
         return ClientBoundPacketId.Play.DECLARE_RECIPES;
     }
 
+    @ApiStatus.Experimental
     @Contract(pure = true)
-    public @NotNull List<@NotNull Recipe> getRecipes() {
+    public byte @NotNull [] getRecipes() {
 
         return recipes;
-    }
-
-    public static final class Recipe implements Writable {
-
-        private final Identifier type;
-        private final Identifier id;
-        private final byte[] data; // TODO(Sparky983): parse actual data
-
-        @ApiStatus.Experimental
-        @Contract(pure = true)
-        public Recipe(final @NotNull Identifier type,
-                      final @NotNull Identifier id,
-                      final byte @NotNull [] data) {
-
-            Preconditions.requireNotNull(type, "type");
-            Preconditions.requireNotNull(id, "id");
-            Preconditions.requireNotNull(data, "data");
-
-            this.type = type;
-            this.id = id;
-            this.data = data;
-        }
-
-        @Contract(mutates = "param")
-        public Recipe(final @NotNull MinecraftInputStream inputStream) {
-
-            Preconditions.requireNotNull(inputStream, "inputStream");
-
-            this.type = inputStream.readIdentifier();
-            this.id = inputStream.readIdentifier();
-            this.data = inputStream.readAllBytes();
-        }
-
-        @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
-
-            Preconditions.requireNotNull(outputStream, "outputStream");
-
-            outputStream.writeIdentifier(type)
-                    .writeIdentifier(id)
-                    .writeBytes(data);
-        }
-
-        @Contract(pure = true)
-        public @NotNull Identifier getType() {
-
-            return type;
-        }
-
-        @Contract(pure = true)
-        public @NotNull Identifier getId() {
-
-            return id;
-        }
-
-        @ApiStatus.Experimental
-        @Contract(pure = true)
-        public byte @NotNull [] getData() {
-
-            return data;
-        }
     }
 }

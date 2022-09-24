@@ -27,14 +27,13 @@ import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
-import io.github.sparky983.diorite.world.Identifier;
 
 public class TagsPacket implements ClientBoundPacket {
 
-    private final List<Tags> tags;
+    private final List<Tag> tags;
 
     @Contract(pure = true)
-    public TagsPacket(final @NotNull List<@NotNull Tags> tags) {
+    public TagsPacket(final @NotNull List<@NotNull Tag> tags) {
 
         Preconditions.requireContainsNoNulls(tags, "tags");
 
@@ -46,7 +45,7 @@ public class TagsPacket implements ClientBoundPacket {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.tags = inputStream.readList(Tags::new);
+        this.tags = inputStream.readList(Tag::new);
     }
 
     @Override
@@ -64,33 +63,39 @@ public class TagsPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    public @NotNull List<@NotNull Tags> getTags() {
+    public @NotNull List<@NotNull Tag> getTags() {
 
         return tags;
     }
 
-    public static final class Tags implements Writable {
+    public static final class Tag implements Writable {
 
-        private final Identifier type;
-        private final List<Tag> tags;
+        private final String name;
+        private final int[] entries;
 
         @Contract(pure = true)
-        public Tags(final @NotNull Identifier type, final @NotNull List<@NotNull Tag> tags) {
+        public Tag(final @NotNull String name, final int @NotNull [] entries) {
 
-            Preconditions.requireNotNull(type, "type");
-            Preconditions.requireContainsNoNulls(tags, "tags");
+            Preconditions.requireNotNull(name, "name");
+            Preconditions.requireNotNull(entries, "entries");
 
-            this.type = type;
-            this.tags = List.copyOf(tags);
+            this.name = name;
+            // TODO(Sparky983): consider using cloned array
+            this.entries = entries;
         }
 
         @Contract(mutates = "param")
-        public Tags(final @NotNull MinecraftInputStream inputStream) {
+        public Tag(final @NotNull MinecraftInputStream inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.type = inputStream.readIdentifier();
-            this.tags = inputStream.readList(Tag::new);
+            this.name = inputStream.readString();
+
+            final int entriesLength = inputStream.readVarInt();
+            this.entries = new int[entriesLength];
+            for (int i = 0; i < entriesLength; i++) {
+                this.entries[i] = inputStream.readVarInt();
+            }
         }
 
         @Override
@@ -98,76 +103,24 @@ public class TagsPacket implements ClientBoundPacket {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeIdentifier(type);
-            outputStream.writeList(tags, MinecraftOutputStream::writeWritable);
+            outputStream.writeString(name)
+                    .writeVarInt(entries.length);
+
+            for (final int entry : entries) {
+                outputStream.writeVarInt(entry);
+            }
         }
 
         @Contract(pure = true)
-        public @NotNull Identifier getType() {
+        public @NotNull String getName() {
 
-            return type;
+            return name;
         }
 
         @Contract(pure = true)
-        public @NotNull List<@NotNull Tag> getTags() {
+        public int @NotNull [] getEntries() {
 
-            return tags;
-        }
-
-        public static final class Tag implements Writable {
-
-            private final Identifier name;
-            private final int[] entries;
-
-            @Contract(pure = true)
-            public Tag(final @NotNull Identifier name, final int @NotNull [] entries) {
-
-                Preconditions.requireNotNull(name, "name");
-                Preconditions.requireNotNull(entries, "entries");
-
-                this.name = name;
-                // TODO(Sparky983): consider using cloned array
-                this.entries = entries;
-            }
-
-            @Contract(mutates = "param")
-            public Tag(final @NotNull MinecraftInputStream inputStream) {
-
-                Preconditions.requireNotNull(inputStream, "inputStream");
-
-                this.name = inputStream.readIdentifier();
-
-                final int entriesLength = inputStream.readVarInt();
-                this.entries = new int[entriesLength];
-                for (int i = 0; i < entriesLength; i++) {
-                    this.entries[i] = inputStream.readVarInt();
-                }
-            }
-
-            @Override
-            public void write(final @NotNull MinecraftOutputStream outputStream) {
-
-                Preconditions.requireNotNull(outputStream, "outputStream");
-
-                outputStream.writeIdentifier(name)
-                        .writeVarInt(entries.length);
-
-                for (final int entry : entries) {
-                    outputStream.writeVarInt(entry);
-                }
-            }
-
-            @Contract(pure = true)
-            public @NotNull Identifier getName() {
-
-                return name;
-            }
-
-            @Contract(pure = true)
-            public int @NotNull [] getEntries() {
-
-                return entries;
-            }
+            return entries;
         }
     }
 }

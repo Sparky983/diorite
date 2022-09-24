@@ -94,7 +94,7 @@ public class JoinGamePacket implements ClientBoundPacket {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.entityId = inputStream.readVarInt();
+        this.entityId = inputStream.readInt();
         this.isHardcore = inputStream.readBoolean();
         this.gamemode = inputStream.readUByteEnum(Gamemode.class);
 

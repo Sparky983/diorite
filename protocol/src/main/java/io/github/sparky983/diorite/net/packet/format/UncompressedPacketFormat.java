@@ -19,13 +19,13 @@ package io.github.sparky983.diorite.net.packet.format;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-
 import io.github.sparky983.diorite.io.ByteArrayMinecraftOutputStream;
+import io.github.sparky983.diorite.io.DecodeException;
 import io.github.sparky983.diorite.io.MinecraftInputStream;
 import io.github.sparky983.diorite.io.MinecraftOutputStream;
 import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
+import io.github.sparky983.diorite.net.packet.PacketDecoder;
 import io.github.sparky983.diorite.util.Preconditions;
 
 final class UncompressedPacketFormat implements PacketFormat {
@@ -68,14 +68,21 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final int length = inputStream.readVarInt();
 
-        final MinecraftInputStream byteArrayInputStream = MinecraftInputStream.createByteArrayInputStream(inputStream.readBytes(length));
+        final byte[] data = inputStream.readBytes(length);
+
+        final MinecraftInputStream byteArrayInputStream = MinecraftInputStream.createByteArrayInputStream(data);
 
         final int id = byteArrayInputStream.readVarInt();
 
-        return stateful.getPacketRegistry()
+        final PacketDecoder<?> decoder = stateful.getPacketRegistry()
                 .getPacketDecoder(id)
-                .orElseThrow(() -> new IllegalStateException(
-                        "No packet encoder for id 0x" + Integer.toHexString(id)))
-                .decode(byteArrayInputStream);
+                .orElseThrow(() -> new DecodeException(
+                        "No packet encoder for id 0x" + Integer.toHexString(id), true));
+
+        try {
+            return decoder.decode(byteArrayInputStream);
+        } catch (final DecodeException e) {
+            throw new DecodeException(e, true);
+        }
     }
 }

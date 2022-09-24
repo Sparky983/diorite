@@ -31,13 +31,13 @@ import io.github.sparky983.diorite.net.Networking;
 import io.github.sparky983.diorite.net.annotations.Port;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.LoginSuccessPacket;
-import io.github.sparky983.diorite.net.packet.clientbound.play.JoinGamePacket;
 import io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.handshaking.HandshakePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.login.LoginStartPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.play.ChatMessagePacket;
 import io.github.sparky983.diorite.util.Preconditions;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 final class DioriteClientImpl implements DioriteClient {
 
@@ -128,7 +128,8 @@ final class DioriteClientImpl implements DioriteClient {
 
         clientChannel = new ClientChannel(
                 new InetSocketAddress(host, port),
-                executor
+                executor,
+                Sinks.many().replay().all()
         );
 
         clientChannel.sendPacket(new HandshakePacket(protocolVersion, host, port, ChannelState.LOGIN))

@@ -30,14 +30,16 @@ import io.github.sparky983.diorite.io.MinecraftOutputStream;
 import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.net.Channel;
 import io.github.sparky983.diorite.net.ChannelState;
+import io.github.sparky983.diorite.net.packet.Packet;
 import io.github.sparky983.diorite.net.packet.PacketRegistries;
 import io.github.sparky983.diorite.net.packet.PacketRegistry;
-import io.github.sparky983.diorite.net.packet.format.PacketFormat;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
+import io.github.sparky983.diorite.net.packet.format.PacketFormat;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.util.Preconditions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacket> {
 
@@ -45,9 +47,11 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     private final MinecraftOutputStream outputStream;
     private final MinecraftInputStream inputStream;
 
-    private final IncomingPacketListener incomingPacketListener;
+    private final PacketListener packetListener;
 
     private final ExecutorService executor;
+
+    private final Sinks.Many<Packet> packets;
 
     private ChannelState state;
     private PacketFormat packetFormat = PacketFormat.uncompressed(this);
@@ -55,10 +59,8 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     private PacketRegistry packetRegistry = PacketRegistry.EMPTY;
 
     public ClientChannel(final @NotNull InetSocketAddress address,
-                         final @NotNull ExecutorService executor) {
-
-        Preconditions.requireNotNull(address, "address");
-        Preconditions.requireNotNull(executor, "ioExecutor");
+                         final @NotNull ExecutorService executor,
+                         final Sinks.@NotNull Many<Packet> packets) {
 
         try {
             client = new Socket(address.getAddress(), address.getPort());
@@ -70,8 +72,9 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
 
         state = ChannelState.HANDSHAKING;
         this.executor = executor;
-        this.incomingPacketListener = new IncomingPacketListener(inputStream, packetFormat);
-        executor.submit(this.incomingPacketListener);
+        this.packets = packets;
+        this.packetListener = new PacketListener(packets, this, inputStream, packetFormat);
+        executor.submit(this.packetListener);
     }
 
     @Override
@@ -104,7 +107,9 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     @Override
     public @NotNull <T extends ClientBoundPacket> Flux<T> on(final @NotNull Class<T> packetType) {
 
-        return incomingPacketListener.on(packetType);
+        return packetListener.getPackets()
+                .asFlux()
+                .ofType(packetType);
     }
 
     @Override

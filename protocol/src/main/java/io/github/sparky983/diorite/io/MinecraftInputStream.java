@@ -541,13 +541,12 @@ public interface MinecraftInputStream extends Closeable {
      *
      * @param reader The reader to read elements from.
      * @return The output stream instance (for chaining).
-     * @throws NullPointerException if data or writer are {@code null} or if the reader returns
-     *                              {@code null}.
+     * @throws NullPointerException if data or writer are {@code null}.
      * @throws RuntimeIOException if an io exception occurred.
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    <T> @Unmodifiable @NotNull List<@NotNull T> readList(@NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader);
+    <T> @Unmodifiable @NotNull List<T> readList(@NotNull Function<@NotNull MinecraftInputStream, T> reader);
 
     /**
      * Reads a list from the input stream, reading each element with the specified reader.

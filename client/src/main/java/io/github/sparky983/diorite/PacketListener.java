@@ -16,36 +16,38 @@
 
 package io.github.sparky983.diorite;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.EOFException;
-
+import io.github.sparky983.diorite.io.DecodeException;
 import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.RuntimeIOException;
+import io.github.sparky983.diorite.net.ChannelState;
+import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
 import io.github.sparky983.diorite.net.packet.format.PacketFormat;
 import io.github.sparky983.diorite.util.Preconditions;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
-final class IncomingPacketListener implements Runnable {
+final class PacketListener implements Runnable {
 
+    private final Sinks.Many<Packet> packets;
+    private final Stateful stateful;
     private final MinecraftInputStream inputStream;
     private PacketFormat packetFormat;
 
-    private final Sinks.Many<Packet> packets;
+    @Contract(pure = true)
+    public PacketListener(final @NotNull Sinks.Many<Packet> packets,
+                          final @NotNull Stateful stateful,
+                          final @NotNull MinecraftInputStream inputStream,
+                          final @NotNull PacketFormat initialPacketFormat) {
 
-    public IncomingPacketListener(final @NotNull MinecraftInputStream inputStream, final @NotNull PacketFormat initialPacketFormat) {
-
-        Preconditions.requireNotNull(inputStream, "inputStream");
-        Preconditions.requireNotNull(initialPacketFormat, "initialPacketFormat");
-
-        packets = Sinks.many().replay().all();
-
+        this.packets = packets;
+        this.stateful = stateful;
         this.inputStream = inputStream;
         this.packetFormat = initialPacketFormat;
     }
 
+    @Contract(mutates = "this")
     public void setPacketFormat(final @NotNull PacketFormat packetFormat) {
 
         Preconditions.requireNotNull(packetFormat);
@@ -53,28 +55,28 @@ final class IncomingPacketListener implements Runnable {
         this.packetFormat = packetFormat;
     }
 
-    public <T extends Packet> Flux<T> on(final @NotNull Class<T> packetType) {
+    @Contract(pure = true)
+    public Sinks.@NotNull Many<Packet> getPackets() {
 
-        return packets.asFlux()
-                .ofType(packetType);
+        return packets;
     }
 
     @Override
     public void run() {
 
-        while (true) {
+        while (stateful.getState() != ChannelState.NOT_CONNECTED) {
             try {
                 final Packet packet = packetFormat.decode(inputStream);
                 packets.emitNext(packet, Sinks.EmitFailureHandler.FAIL_FAST);
-            } catch (final RuntimeIOException e) {
-                if (e.getCause() instanceof EOFException) {
-                    System.err.println(e.getMessage());
-                    break;
+            } catch (final DecodeException e) {
+                e.printStackTrace();
+                if (!e.isIgnorable()) {
+                    throw e;
                 }
+            } catch (final Exception e) {
+                e.printStackTrace();
                 throw e;
             }
         }
-
-        packets.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
     }
 }

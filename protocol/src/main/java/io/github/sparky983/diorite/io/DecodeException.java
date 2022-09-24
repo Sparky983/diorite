@@ -125,4 +125,10 @@ public class DecodeException extends RuntimeException {
         super(cause);
         this.canIgnore = canIgnore;
     }
+
+    @Contract(pure = true)
+    public boolean isIgnorable() {
+
+        return canIgnore;
+    }
 }

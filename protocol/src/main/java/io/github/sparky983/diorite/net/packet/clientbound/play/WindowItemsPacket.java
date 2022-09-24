@@ -37,16 +37,15 @@ public class WindowItemsPacket implements ClientBoundPacket {
     private final int windowId;
     private final int stateId;
     private final List<@Nullable SlotData> slotDataList;
-    private final SlotData carriedItem;
+    private final @Nullable SlotData carriedItem;
 
     @Contract(pure = true)
     public WindowItemsPacket(final int windowId,
                              final int stateId,
                              final @NotNull List<@Nullable SlotData> slotDataList,
-                             final @NotNull SlotData carriedItem) {
+                             final @Nullable SlotData carriedItem) {
 
         Preconditions.requireNotNull(slotDataList, "slotDataList");
-        Preconditions.requireNotNull(carriedItem, "carriedItem");
 
         this.windowId = windowId;
         this.stateId = stateId;
