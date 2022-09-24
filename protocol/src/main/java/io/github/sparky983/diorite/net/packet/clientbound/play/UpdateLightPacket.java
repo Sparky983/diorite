@@ -103,7 +103,7 @@ public class UpdateLightPacket implements ClientBoundPacket {
         for (int i = 0; i < skyLightArraysLength; i++) {
             final byte[] skyLightArray = inputStream.readLengthPrefixedBytes();
             if (skyLightArray.length != LIGHT_ARRAY_LENGTH) {
-                throw new DecodeException("skyLightArrays[" + i + "] length must be 2048");
+                throw new DecodeException("skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
             }
             skyLightArrays[i] = skyLightArray;
         }
