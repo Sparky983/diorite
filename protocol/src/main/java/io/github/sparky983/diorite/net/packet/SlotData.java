@@ -69,11 +69,13 @@ public final class SlotData implements Writable {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        return inputStream.readOptional(() -> new SlotData(
-                inputStream.readVarInt(),
-                inputStream.readByte(),
-                inputStream.readNbtCompound()
-        )).orElse(null);
+        return inputStream.readOptional(() -> {
+            final int id = inputStream.readVarInt();
+            final byte count = inputStream.readByte();
+            final CompoundBinaryTag nbt = inputStream.readNbtCompound();
+
+            return new SlotData(id, count, nbt);
+        }).orElse(null);
     }
 
     @Override
