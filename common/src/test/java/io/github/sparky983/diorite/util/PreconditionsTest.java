@@ -18,7 +18,6 @@ package io.github.sparky983.diorite.util;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -26,11 +25,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import io.github.sparky983.diorite.util.Preconditions;
 
 @SuppressWarnings("ConstantConditions")
 class PreconditionsTest {
