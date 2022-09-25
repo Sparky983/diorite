@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -45,7 +45,7 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public EntityPropertiesPacket(final @NotNull MinecraftInputStream inputStream) {
+    public EntityPropertiesPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -54,12 +54,12 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(entityId)
-                .writeList(properties, MinecraftOutputStream::writeWritable);
+                .writeList(properties, StreamOut::writeWritable);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Property(final @NotNull MinecraftInputStream inputStream) {
+        public Property(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -110,13 +110,13 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
             outputStream.writeIdentifier(key)
                     .writeDouble(value)
-                    .writeList(modifiers, MinecraftOutputStream::writeWritable);
+                    .writeList(modifiers, StreamOut::writeWritable);
         }
 
         @Contract(pure = true)
@@ -154,7 +154,7 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
             }
 
             @Contract(mutates = "param")
-            public Modifier(final @NotNull MinecraftInputStream inputStream) {
+            public Modifier(final @NotNull StreamIn inputStream) {
 
                 Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -164,7 +164,7 @@ public class EntityPropertiesPacket implements ClientBoundPacket {
             }
 
             @Override
-            public void write(final @NotNull MinecraftOutputStream outputStream) {
+            public void write(final @NotNull StreamOut outputStream) {
 
                 Preconditions.requireNotNull(outputStream, "outputStream");
 

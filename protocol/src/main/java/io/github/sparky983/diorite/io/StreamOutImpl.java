@@ -42,7 +42,7 @@ import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Velocity;
 
-final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
+final class StreamOutImpl implements StreamOut {
 
     private static final GsonComponentSerializer COMPONENT_SERIALIZER =
             GsonComponentSerializer.gson();
@@ -51,7 +51,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
 
     private final DataOutputStream outputStream;
 
-    public MinecraftOutputStreamImpl(final @NotNull DataOutputStream outputStream) {
+    public StreamOutImpl(final @NotNull DataOutputStream outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -65,7 +65,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeBoolean(final boolean data) {
+    public @NotNull StreamOut writeBoolean(final boolean data) {
 
         try {
             outputStream.writeBoolean(data);
@@ -76,7 +76,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeByte(final byte data) {
+    public @NotNull StreamOut writeByte(final byte data) {
 
         try {
             outputStream.writeByte(data);
@@ -87,7 +87,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeUByte(final @Range(from = 0, to = 0xFF) int data) {
+    public @NotNull StreamOut writeUnsignedByte(final @Range(from = 0, to = 0xFF) int data) {
 
         Preconditions.requireRange(data, 0, 0xFF, "data");
 
@@ -100,7 +100,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeShort(final short data) {
+    public @NotNull StreamOut writeShort(final short data) {
 
         try {
             outputStream.writeShort(data);
@@ -111,7 +111,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeUShort(
+    public @NotNull StreamOut writeUnsignedShort(
             final @Range(from = 0, to = 0xFFFF) int data) {
 
         Preconditions.requireRange(data, 0, 0xFFFF, "data");
@@ -125,7 +125,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeInt(final int data) {
+    public @NotNull StreamOut writeInt(final int data) {
 
         try {
             outputStream.writeInt(data);
@@ -136,7 +136,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLong(final long data) {
+    public @NotNull StreamOut writeLong(final long data) {
 
         try {
             outputStream.writeLong(data);
@@ -147,7 +147,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeFloat(final float data) {
+    public @NotNull StreamOut writeFloat(final float data) {
 
         try {
             outputStream.writeFloat(data);
@@ -158,7 +158,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeDouble(final double data) {
+    public @NotNull StreamOut writeDouble(final double data) {
 
         try {
             outputStream.writeDouble(data);
@@ -169,7 +169,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeString(final @NotNull String data) {
+    public @NotNull StreamOut writeString(final @NotNull String data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -178,19 +178,19 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeChat(final @NotNull Component data) {
+    public @NotNull StreamOut writeComponent(final @NotNull Component data) {
 
         return writeString(COMPONENT_SERIALIZER.serialize(data));
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeIdentifier(final @NotNull Identifier data) {
+    public @NotNull StreamOut writeIdentifier(final @NotNull Identifier data) {
 
         return writeString(data.toString());
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarInt(int data) {
+    public @NotNull StreamOut writeVarInt(int data) {
 
         while (true) {
             if ((data & ~VarInts.SEGMENT_BITS) == 0) {
@@ -206,7 +206,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarLong(long data) {
+    public @NotNull StreamOut writeVarLong(long data) {
 
         while (true) {
             if ((data & ~((long) VarInts.SEGMENT_BITS)) == 0) {
@@ -222,7 +222,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeNbtCompound(final @NotNull CompoundBinaryTag data) {
+    public @NotNull StreamOut writeCompoundTag(final @NotNull CompoundBinaryTag data) {
 
         try {
             BINARY_TAG_WRITER.write(data, (DataOutput) outputStream);
@@ -233,7 +233,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeBlockPosition(final @NotNull BlockPosition data) {
+    public @NotNull StreamOut writeBlockPosition(final @NotNull BlockPosition data) {
 
         writeLong(
                 ((long) (data.getX() & 0x3FFFFFF) << 38) | ((long) (data.getY() & 0x3FFFFFF) << 12)
@@ -242,7 +242,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeUuid(final @NotNull UUID data) {
+    public @NotNull StreamOut writeUuid(final @NotNull UUID data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -251,7 +251,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeBytes(final byte @NotNull [] data) {
+    public @NotNull StreamOut writeBytes(final byte @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -264,7 +264,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedBytes(final byte @NotNull [] data) {
+    public @NotNull StreamOut writeByteList(final byte @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -273,7 +273,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarInts(final int @NotNull [] data) {
+    public @NotNull StreamOut writeVarInts(final int @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -284,7 +284,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedVarInts(final int @NotNull [] data) {
+    public @NotNull StreamOut writeVarIntList(final int @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -293,7 +293,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeLongs(final long @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -304,7 +304,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeLongList(final long @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -313,7 +313,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeVarLongs(final long @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -324,7 +324,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedVarLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeVarLongList(final long @NotNull [] data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -333,7 +333,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writePosition(final @NotNull Position data) {
+    public @NotNull StreamOut writePosition(final @NotNull Position data) {
 
         return writeDouble(data.getX())
                 .writeDouble(data.getY())
@@ -341,7 +341,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeDirection(final @NotNull Direction data) {
+    public @NotNull StreamOut writeDirection(final @NotNull Direction data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -350,7 +350,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVelocity(final @NotNull Velocity data) {
+    public @NotNull StreamOut writeVelocity(final @NotNull Velocity data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -360,8 +360,8 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull <T> MinecraftOutputStream writeNullable(final @Nullable T data,
-            final @NotNull BiConsumer<@NotNull MinecraftOutputStream, @NotNull T> writer) {
+    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
+            final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
 
@@ -369,7 +369,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull <T> MinecraftOutputStream writeNullable(final @Nullable T data,
+    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -381,7 +381,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull <T> MinecraftOutputStream writeNullable(final @Nullable T data,
+    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
                                                             final @NotNull Runnable writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -394,7 +394,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarIntEnum(final @NotNull Enum<?> data) {
+    public @NotNull StreamOut writeVarIntEnum(final @NotNull Enum<?> data) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -402,7 +402,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeByteEnum(final @NotNull Enum<?> data) {
+    public @NotNull StreamOut writeByteEnum(final @NotNull Enum<?> data) {
 
         Preconditions.requireNotNull(data, "data");
         Preconditions.requireTrue(data.ordinal() <= Byte.MAX_VALUE, "enum value is too big to be encoded to a single byte");
@@ -411,17 +411,17 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeUByteEnum(final @NotNull Enum<?> data) {
+    public @NotNull StreamOut writeUnsignedByteEnum(final @NotNull Enum<?> data) {
 
         Preconditions.requireNotNull(data, "data");
         Preconditions.requireTrue(data.ordinal() <= 0xFF, "enum value is too big to be encoded to a single unsigned byte");
 
-        return writeUByte((byte) data.ordinal());
+        return writeUnsignedByte((byte) data.ordinal());
     }
 
     @Override
-    public @NotNull <T> MinecraftOutputStream writeList(final @NotNull List<T> data,
-            final @NotNull BiConsumer<@NotNull MinecraftOutputStream, @NotNull T> writer) {
+    public @NotNull <T> StreamOut writeList(final @NotNull List<T> data,
+            final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         Preconditions.requireNotNull(data, "data");
 
@@ -429,7 +429,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull <T> MinecraftOutputStream writeList(final @NotNull List<T> data,
+    public @NotNull <T> StreamOut writeList(final @NotNull List<T> data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -444,7 +444,7 @@ final class MinecraftOutputStreamImpl implements MinecraftOutputStream {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeWritable(final @NotNull Writable writable) {
+    public @NotNull StreamOut writeWritable(final @NotNull Writable writable) {
 
         Preconditions.requireNotNull(writable, "writable");
 

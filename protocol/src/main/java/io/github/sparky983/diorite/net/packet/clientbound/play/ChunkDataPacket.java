@@ -23,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -64,31 +64,31 @@ public class ChunkDataPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public ChunkDataPacket(final @NotNull MinecraftInputStream inputStream) {
+    public ChunkDataPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.chunkX = inputStream.readInt();
         this.chunkZ = inputStream.readInt();
-        this.chunkMask = inputStream.readLengthPrefixedLongs();
-        this.heightmaps = inputStream.readNbtCompound();
-        this.biomes = inputStream.readLengthPrefixedVarInts();
-        this.data = inputStream.readLengthPrefixedBytes();
-        this.blockEntities = inputStream.readList(MinecraftInputStream::readNbtCompound);
+        this.chunkMask = inputStream.readLongList();
+        this.heightmaps = inputStream.readCompoundTag();
+        this.biomes = inputStream.readVarIntList();
+        this.data = inputStream.readByteList();
+        this.blockEntities = inputStream.readList(StreamIn::readCompoundTag);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeInt(chunkX)
                 .writeInt(chunkZ)
-                .writeLengthPrefixedVarLongs(chunkMask)
-                .writeNbtCompound(heightmaps)
-                .writeLengthPrefixedVarInts(biomes)
-                .writeLengthPrefixedBytes(data)
-                .writeList(blockEntities, MinecraftOutputStream::writeNbtCompound);
+                .writeVarLongList(chunkMask)
+                .writeCompoundTag(heightmaps)
+                .writeVarIntList(biomes)
+                .writeByteList(data)
+                .writeList(blockEntities, StreamOut::writeCompoundTag);
     }
 
     @Override

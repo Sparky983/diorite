@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.ChannelState;
 import io.github.sparky983.diorite.net.Networking;
 import io.github.sparky983.diorite.net.annotations.Port;
@@ -53,13 +53,13 @@ public class HandshakePacket implements ServerBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public HandshakePacket(final @NotNull MinecraftInputStream inputStream) {
+    public HandshakePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.protocolVersion = inputStream.readVarInt();
         this.serverAddress = inputStream.readString();
-        this.serverPort = inputStream.readUShort();
+        this.serverPort = inputStream.readUnsignedShort();
 
         final int nextStateId = inputStream.readVarInt();
 
@@ -97,13 +97,13 @@ public class HandshakePacket implements ServerBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(protocolVersion)
                 .writeString(serverAddress)
-                .writeUShort(serverPort)
+                .writeUnsignedShort(serverPort)
                 .writeVarInt(nextState == ChannelState.STATUS ? 1 : 2);
     }
 

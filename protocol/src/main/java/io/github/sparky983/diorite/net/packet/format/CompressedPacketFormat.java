@@ -20,11 +20,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import io.github.sparky983.diorite.io.ByteArrayMinecraftInputStream;
-import io.github.sparky983.diorite.io.ByteArrayMinecraftOutputStream;
+import io.github.sparky983.diorite.io.ByteArrayStreamIn;
+import io.github.sparky983.diorite.io.ByteArrayStreamOut;
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
@@ -51,7 +51,7 @@ final class CompressedPacketFormat implements PacketFormat {
     }
 
     @Override
-    public void encode(final @NotNull Packet packet, final @NotNull MinecraftOutputStream outputStream) {
+    public void encode(final @NotNull Packet packet, final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(packet, "packet");
         Preconditions.requireNotNull(outputStream, "outputStream");
@@ -59,7 +59,7 @@ final class CompressedPacketFormat implements PacketFormat {
         // contains an uncompressed version of packet id and data fields
         final byte[] uncompressed;
 
-        try (final ByteArrayMinecraftOutputStream uncompressedOutputStream = MinecraftOutputStream.createByteArrayOutputStream()) {
+        try (final ByteArrayStreamOut uncompressedOutputStream = StreamOut.createByteArrayStream()) {
             uncompressedOutputStream.writeVarInt(packet.getId());
             packet.write(uncompressedOutputStream);
             uncompressed = uncompressedOutputStream.toByteArray();
@@ -68,31 +68,31 @@ final class CompressedPacketFormat implements PacketFormat {
         final byte[] dataLengthAndData;
 
         if (uncompressed.length < threshold) {
-            try (final ByteArrayMinecraftOutputStream dataLengthAndDataOutputStream = MinecraftOutputStream.createByteArrayOutputStream()) {
+            try (final ByteArrayStreamOut dataLengthAndDataOutputStream = StreamOut.createByteArrayStream()) {
                 dataLengthAndDataOutputStream.writeVarInt(0);
                 dataLengthAndDataOutputStream.writeBytes(uncompressed);
                 dataLengthAndData = dataLengthAndDataOutputStream.toByteArray();
             }
         } else {
-            final ByteArrayMinecraftOutputStream byteArrayCompressedOutputStream = MinecraftOutputStream.createByteArrayOutputStream();
-            try (final MinecraftOutputStream compressedOutputStream = compression.compressed(byteArrayCompressedOutputStream)) {
-                compressedOutputStream.writeLengthPrefixedBytes(uncompressed);
+            final ByteArrayStreamOut byteArrayCompressedOutputStream = StreamOut.createByteArrayStream();
+            try (final StreamOut compressedOutputStream = compression.compressed(byteArrayCompressedOutputStream)) {
+                compressedOutputStream.writeByteList(uncompressed);
                 dataLengthAndData = byteArrayCompressedOutputStream.toByteArray();
             }
         }
 
-        outputStream.writeLengthPrefixedBytes(dataLengthAndData);
+        outputStream.writeByteList(dataLengthAndData);
     }
 
     @Override
-    public @NotNull Packet decode(final @NotNull MinecraftInputStream inputStream) {
+    public @NotNull Packet decode(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        try (final ByteArrayMinecraftInputStream packetInputStream = MinecraftInputStream.createByteArrayInputStream(inputStream.readLengthPrefixedBytes())) {
+        try (final ByteArrayStreamIn packetInputStream = StreamIn.createByteArrayInputStream(inputStream.readByteList())) {
             final int dataLength = packetInputStream.readVarInt();
 
-            final MinecraftInputStream decompressedDataInputStream;
+            final StreamIn decompressedDataInputStream;
 
             if (dataLength == 0) {
                 decompressedDataInputStream = packetInputStream;

@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -49,7 +49,7 @@ public class EditBookPacket implements ServerBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public EditBookPacket(final @NotNull MinecraftInputStream inputStream) {
+    public EditBookPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -59,7 +59,7 @@ public class EditBookPacket implements ServerBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 

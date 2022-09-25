@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -52,7 +52,7 @@ public class TeamsPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public TeamsPacket(final @NotNull MinecraftInputStream inputStream) {
+    public TeamsPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -62,7 +62,7 @@ public class TeamsPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -123,7 +123,7 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public CreateAction(final @NotNull MinecraftInputStream inputStream) {
+        public CreateAction(final @NotNull StreamIn inputStream) {
 
             super(inputStream);
 
@@ -137,10 +137,10 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             super.write(outputStream);
-            outputStream.writeList(entities, MinecraftOutputStream::writeString);
+            outputStream.writeList(entities, StreamOut::writeString);
         }
 
         @Override
@@ -164,13 +164,13 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public RemoveAction(final @NotNull MinecraftInputStream inputStream) {
+        public RemoveAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
         }
@@ -223,31 +223,31 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.displayName = inputStream.readChat();
+            this.displayName = inputStream.readComponent();
             this.flags = inputStream.readByte();
             this.nameTagVisibility = NameTagVisibility.valueOf(inputStream.readString(MAX_NAME_TAG_VISIBILITY_LENGTH));
             this.collisionRule = CollisionRule.valueOf(inputStream.readString(MAX_COLLISION_RULE_LENGTH));
             this.teamColor = inputStream.readVarIntEnum(TeamColor.class);
-            this.prefix = inputStream.readChat();
-            this.suffix = inputStream.readChat();
+            this.prefix = inputStream.readComponent();
+            this.suffix = inputStream.readComponent();
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeChat(displayName)
+            outputStream.writeComponent(displayName)
                     .writeByte(flags)
                     .writeString(nameTagVisibility.name())
                     .writeString(collisionRule.name())
                     .writeVarIntEnum(teamColor)
-                    .writeChat(prefix)
-                    .writeChat(suffix);
+                    .writeComponent(prefix)
+                    .writeComponent(suffix);
         }
 
         @Override
@@ -369,7 +369,7 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public AddEntities(final @NotNull MinecraftInputStream inputStream) {
+        public AddEntities(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -383,11 +383,11 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeList(entities, MinecraftOutputStream::writeString);
+            outputStream.writeList(entities, StreamOut::writeString);
         }
 
         @Override
@@ -419,7 +419,7 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public RemoveEntities(final @NotNull MinecraftInputStream inputStream) {
+        public RemoveEntities(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -433,11 +433,11 @@ public class TeamsPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeList(entities, MinecraftOutputStream::writeString);
+            outputStream.writeList(entities, StreamOut::writeString);
         }
 
         @Override
@@ -461,16 +461,16 @@ public class TeamsPacket implements ClientBoundPacket {
         ADD_ENTITIES(AddEntities::new),
         REMOVE_ENTITIES(RemoveEntities::new);
 
-        private final Function<MinecraftInputStream, Action> factory;
+        private final Function<StreamIn, Action> factory;
 
         @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull MinecraftInputStream, @NotNull Action> factory) {
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
 
             this.factory = factory;
         }
 
         @Contract(mutates = "param")
-        public @NotNull Action create(final @NotNull MinecraftInputStream inputStream) {
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
 
             return factory.apply(inputStream);
         }

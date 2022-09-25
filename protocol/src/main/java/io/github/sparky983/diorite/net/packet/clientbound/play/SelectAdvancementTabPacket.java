@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -38,19 +38,19 @@ public class SelectAdvancementTabPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public SelectAdvancementTabPacket(final @NotNull MinecraftInputStream inputStream) {
+    public SelectAdvancementTabPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.identifier = inputStream.readOptional(MinecraftInputStream::readIdentifier).orElse(null);
+        this.identifier = inputStream.readOptional(StreamIn::readIdentifier).orElse(null);
     }
 
     @Override
-    public void write(@NotNull MinecraftOutputStream outputStream) {
+    public void write(@NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeNullable(identifier, MinecraftOutputStream::writeIdentifier);
+        outputStream.writeNullable(identifier, StreamOut::writeIdentifier);
     }
 
     @Override

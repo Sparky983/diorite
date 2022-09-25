@@ -23,8 +23,8 @@ import java.io.OutputStream;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.util.Preconditions;
 
 final class ZlibCompression implements Compression {
@@ -32,11 +32,11 @@ final class ZlibCompression implements Compression {
     static Compression INSTANCE = new ZlibCompression();
 
     @Override
-    public @NotNull MinecraftInputStream decompressed(final @NotNull MinecraftInputStream inputStream) {
+    public @NotNull StreamIn decompressed(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        return MinecraftInputStream.from(decompressed(inputStream.toInputStream()));
+        return StreamIn.from(decompressed(inputStream.toInputStream()));
     }
 
     @Override
@@ -48,11 +48,11 @@ final class ZlibCompression implements Compression {
     }
 
     @Override
-    public @NotNull MinecraftOutputStream compressed(final @NotNull MinecraftOutputStream outputStream) {
+    public @NotNull StreamOut compressed(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        return MinecraftOutputStream.from(compressed(outputStream.toOutputStream()));
+        return StreamOut.from(compressed(outputStream.toOutputStream()));
     }
 
     @Override

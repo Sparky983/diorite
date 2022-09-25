@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Something that can write to a {@link MinecraftOutputStream}.
+ * Something that can write to a {@link StreamOut}.
  *
  * @author Sparky983
  * @since 1.0.0
@@ -34,5 +34,5 @@ public interface Writable {
      * @since 1.0.0
      */
     @Contract(mutates = "param")
-    void write(@NotNull MinecraftOutputStream outputStream);
+    void write(@NotNull StreamOut outputStream);
 }

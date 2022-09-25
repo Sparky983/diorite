@@ -21,8 +21,8 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -40,19 +40,19 @@ public class SetTitleTextPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public SetTitleTextPacket(final @NotNull MinecraftInputStream inputStream) {
+    public SetTitleTextPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.titleText = inputStream.readChat();
+        this.titleText = inputStream.readComponent();
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeChat(titleText);
+        outputStream.writeComponent(titleText);
     }
 
     @Override

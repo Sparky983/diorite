@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -53,25 +53,25 @@ public class ResourcePackSendPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public ResourcePackSendPacket(final @NotNull MinecraftInputStream inputStream) {
+    public ResourcePackSendPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.url = inputStream.readString();
         this.hash = inputStream.readString(MAX_HASH_LENGTH);
         this.isForced = inputStream.readBoolean();
-        this.promptMessage = inputStream.readOptional(MinecraftInputStream::readChat).orElse(null);
+        this.promptMessage = inputStream.readOptional(StreamIn::readComponent).orElse(null);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeString(this.url)
                 .writeString(this.hash)
                 .writeBoolean(this.isForced)
-                .writeNullable(this.promptMessage, MinecraftOutputStream::writeChat);
+                .writeNullable(this.promptMessage, StreamOut::writeComponent);
     }
 
     @Override

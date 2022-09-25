@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -43,7 +43,7 @@ public class EntityMetadataPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public EntityMetadataPacket(final @NotNull MinecraftInputStream inputStream) {
+    public EntityMetadataPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -52,7 +52,7 @@ public class EntityMetadataPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -95,11 +95,11 @@ public class EntityMetadataPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public EntityMetadata(final @NotNull MinecraftInputStream inputStream) {
+        public EntityMetadata(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.index = inputStream.readUByte();
+            this.index = inputStream.readUnsignedByte();
 
             if (index == 0xFF) {
                 this.value = null;
@@ -109,11 +109,11 @@ public class EntityMetadataPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeUByte(index);
+            outputStream.writeUnsignedByte(index);
 
             if (index != 0xFF) {
                 assert value != null : "value shouldn't be null when index != 0xFF";
@@ -150,7 +150,7 @@ public class EntityMetadataPacket implements ClientBoundPacket {
             }
 
             @Contract(mutates = "param")
-            public Value(final @NotNull MinecraftInputStream inputStream) {
+            public Value(final @NotNull StreamIn inputStream) {
 
                 Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -159,7 +159,7 @@ public class EntityMetadataPacket implements ClientBoundPacket {
             }
 
             @Override
-            public void write(final @NotNull MinecraftOutputStream outputStream) {
+            public void write(final @NotNull StreamOut outputStream) {
 
                 Preconditions.requireNotNull(outputStream, "outputStream");
 

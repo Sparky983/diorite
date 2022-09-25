@@ -25,8 +25,8 @@ import java.util.UUID;
 import java.util.function.Function;
 
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -48,7 +48,7 @@ public class BossBarPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public BossBarPacket(final @NotNull MinecraftInputStream inputStream) {
+    public BossBarPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -60,7 +60,7 @@ public class BossBarPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -112,11 +112,11 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public AddAction(final @NotNull MinecraftInputStream inputStream) {
+        public AddAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.title = inputStream.readChat();
+            this.title = inputStream.readComponent();
             this.health = inputStream.readFloat();
 
             if (health < 0) {
@@ -129,11 +129,11 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeChat(title)
+            outputStream.writeComponent(title)
                     .writeFloat(health)
                     .writeVarIntEnum(color)
                     .writeVarIntEnum(division)
@@ -203,13 +203,13 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public RemoveAction(final @NotNull MinecraftInputStream inputStream) {
+        public RemoveAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
         }
@@ -234,7 +234,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateHealthAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateHealthAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -242,7 +242,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -275,19 +275,19 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateTitleAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateTitleAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.title = inputStream.readChat();
+            this.title = inputStream.readComponent();
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeChat(title);
+            outputStream.writeComponent(title);
         }
 
         @Override
@@ -319,7 +319,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateStyleAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateStyleAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -328,7 +328,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -366,7 +366,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateFlagsAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateFlagsAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -374,7 +374,7 @@ public class BossBarPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -421,16 +421,16 @@ public class BossBarPacket implements ClientBoundPacket {
         UPDATE_STYLE(UpdateStyleAction::new),
         UPDATE_FLAGS(UpdateFlagsAction::new);
 
-        private final Function<MinecraftInputStream, Action> factory;
+        private final Function<StreamIn, Action> factory;
 
         @Contract(pure = true)
-        ActionType(final @NotNull Function<MinecraftInputStream, Action> factory) {
+        ActionType(final @NotNull Function<StreamIn, Action> factory) {
 
             this.factory = factory;
         }
 
         @Contract(pure = true)
-        public @NotNull Action create(final @NotNull MinecraftInputStream inputStream) {
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
 
             return factory.apply(inputStream);
         }

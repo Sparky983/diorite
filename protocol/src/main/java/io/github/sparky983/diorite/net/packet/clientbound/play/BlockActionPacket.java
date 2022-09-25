@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -51,24 +51,24 @@ public class BlockActionPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public BlockActionPacket(final @NotNull MinecraftInputStream inputStream) {
+    public BlockActionPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.location = inputStream.readBlockPosition();
-        this.actionId = inputStream.readUByte();
-        this.actionParam = inputStream.readUByte();
+        this.actionId = inputStream.readUnsignedByte();
+        this.actionParam = inputStream.readUnsignedByte();
         this.blockType = inputStream.readVarInt();
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeBlockPosition(location)
-                .writeUByte(actionId)
-                .writeUByte(actionParam)
+                .writeUnsignedByte(actionId)
+                .writeUnsignedByte(actionParam)
                 .writeVarInt(blockType);
     }
 

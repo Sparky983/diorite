@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -36,47 +36,47 @@ public class WindowItemsPacket implements ClientBoundPacket {
 
     private final int windowId;
     private final int stateId;
-    private final List<@Nullable SlotData> slotDataList;
-    private final @Nullable SlotData carriedItem;
+    private final List<@Nullable ItemStack> itemStackList;
+    private final @Nullable ItemStack carriedItem;
 
     @Contract(pure = true)
     public WindowItemsPacket(final int windowId,
                              final int stateId,
-                             final @NotNull List<@Nullable SlotData> slotDataList,
-                             final @Nullable SlotData carriedItem) {
+                             final @NotNull List<@Nullable ItemStack> itemStackList,
+                             final @Nullable ItemStack carriedItem) {
 
-        Preconditions.requireNotNull(slotDataList, "slotDataList");
+        Preconditions.requireNotNull(itemStackList, "itemStackList");
 
         this.windowId = windowId;
         this.stateId = stateId;
 
-        final List<SlotData> copy = new ArrayList<>();
-        Collections.copy(copy, slotDataList);
-        this.slotDataList = Collections.unmodifiableList(copy);
+        final List<ItemStack> copy = new ArrayList<>();
+        Collections.copy(copy, itemStackList);
+        this.itemStackList = Collections.unmodifiableList(copy);
 
         this.carriedItem = carriedItem;
     }
 
     @Contract(mutates = "param")
-    public WindowItemsPacket(final @NotNull MinecraftInputStream inputStream) {
+    public WindowItemsPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.windowId = inputStream.readUByte();
+        this.windowId = inputStream.readUnsignedByte();
         this.stateId = inputStream.readVarInt();
-        this.slotDataList = inputStream.readList(SlotData::readNullable);
-        this.carriedItem = SlotData.readNullable(inputStream);
+        this.itemStackList = inputStream.readList(ItemStack::readNullable);
+        this.carriedItem = ItemStack.readNullable(inputStream);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeUByte(windowId)
+        outputStream.writeUnsignedByte(windowId)
                 .writeVarInt(stateId)
                 .writeList(
-                        slotDataList,
+                        itemStackList,
                         (slotDataList) -> outputStream.writeNullable(
                                 slotDataList,
                                 outputStream::writeWritable
@@ -104,13 +104,13 @@ public class WindowItemsPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    public @NotNull List<@Nullable SlotData> getSlotData() {
+    public @NotNull List<@Nullable ItemStack> getSlotData() {
 
-        return slotDataList;
+        return itemStackList;
     }
 
     @Contract(pure = true)
-    public @NotNull SlotData getCarriedItem() {
+    public @NotNull ItemStack getCarriedItem() {
 
         return carriedItem;
     }

@@ -22,10 +22,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -58,11 +58,11 @@ public class TradeListPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public TradeListPacket(final @NotNull MinecraftInputStream inputStream) {
+    public TradeListPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.windowId = inputStream.readUByte();
+        this.windowId = inputStream.readUnsignedByte();
         this.trades = inputStream.readList(Trade::new);
         this.villagerLevel = inputStream.readVarInt();
         this.experience = inputStream.readVarInt();
@@ -71,11 +71,11 @@ public class TradeListPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeUByte(windowId)
+        outputStream.writeUnsignedByte(windowId)
                 .writeList(trades, outputStream::writeWritable)
                 .writeVarInt(villagerLevel)
                 .writeVarInt(experience)
@@ -127,10 +127,10 @@ public class TradeListPacket implements ClientBoundPacket {
 
     public static final class Trade implements Writable {
 
-        private final SlotData inputItem1;
-        private final SlotData outputItem;
+        private final ItemStack inputItem1;
+        private final ItemStack outputItem;
         private final boolean hasItem2;
-        private final @Nullable SlotData inputItem2;
+        private final @Nullable ItemStack inputItem2;
         private final boolean isDisabled;
         private final int uses;
         private final int maxUses;
@@ -140,10 +140,10 @@ public class TradeListPacket implements ClientBoundPacket {
         private final int demand;
 
         @Contract(pure = true)
-        public Trade(final @Nullable SlotData inputItem1,
-                     final @Nullable SlotData outputItem,
+        public Trade(final @Nullable ItemStack inputItem1,
+                     final @Nullable ItemStack outputItem,
                      final boolean hasItem2,
-                     final @Nullable SlotData inputItem2,
+                     final @Nullable ItemStack inputItem2,
                      final boolean isDisabled,
                      final int uses,
                      final int maxUses,
@@ -166,16 +166,16 @@ public class TradeListPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Trade(final @NotNull MinecraftInputStream inputStream) {
+        public Trade(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.inputItem1 = SlotData.readNullable(inputStream);
-            this.outputItem = SlotData.readNullable(inputStream);
+            this.inputItem1 = ItemStack.readNullable(inputStream);
+            this.outputItem = ItemStack.readNullable(inputStream);
             this.hasItem2 = inputStream.readBoolean();
 
             if (this.hasItem2) {
-                this.inputItem2 = SlotData.readNullable(inputStream);
+                this.inputItem2 = ItemStack.readNullable(inputStream);
             } else {
                 this.inputItem2 = null;
             }
@@ -190,7 +190,7 @@ public class TradeListPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -208,13 +208,13 @@ public class TradeListPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public @Nullable SlotData getInputItem1() {
+        public @Nullable ItemStack getInputItem1() {
 
             return inputItem1;
         }
 
         @Contract(pure = true)
-        public @Nullable SlotData getOutputItem() {
+        public @Nullable ItemStack getOutputItem() {
 
             return outputItem;
         }
@@ -226,7 +226,7 @@ public class TradeListPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public @Nullable SlotData getInputItem2() {
+        public @Nullable ItemStack getInputItem2() {
 
             return inputItem2;
         }

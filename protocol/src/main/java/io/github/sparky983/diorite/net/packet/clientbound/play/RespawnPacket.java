@@ -21,8 +21,8 @@ import net.kyori.adventure.nbt.CompoundBinaryTag;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -66,30 +66,30 @@ public class RespawnPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public RespawnPacket(final @NotNull MinecraftInputStream inputStream) {
+    public RespawnPacket(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.dimension = inputStream.readNbtCompound();
+            this.dimension = inputStream.readCompoundTag();
             this.worldName = inputStream.readIdentifier();
             this.hashedSeed = inputStream.readLong();
-            this.gamemode = inputStream.readUByteEnum(Gamemode.class);
-            this.previousGamemode = inputStream.readUByteEnum(Gamemode.class);
+            this.gamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
+            this.previousGamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
             this.isDebug = inputStream.readBoolean();
             this.isFlag = inputStream.readBoolean();
             this.copyMetadata = inputStream.readBoolean();
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeNbtCompound(dimension)
+        outputStream.writeCompoundTag(dimension)
                 .writeIdentifier(worldName)
                 .writeLong(hashedSeed)
-                .writeUByteEnum(gamemode)
-                .writeUByteEnum(previousGamemode)
+                .writeUnsignedByteEnum(gamemode)
+                .writeUnsignedByteEnum(previousGamemode)
                 .writeBoolean(isDebug)
                 .writeBoolean(isFlag)
                 .writeBoolean(copyMetadata);

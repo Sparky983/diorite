@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -53,7 +53,7 @@ public class TabCompletePacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public TabCompletePacket(final @NotNull MinecraftInputStream inputStream) {
+    public TabCompletePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -64,7 +64,7 @@ public class TabCompletePacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -95,12 +95,12 @@ public class TabCompletePacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Match(final @NotNull MinecraftInputStream inputStream) {
+        public Match(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
             this.match = inputStream.readString();
-            this.toolTip = inputStream.readOptional(inputStream::readChat).orElse(null);
+            this.toolTip = inputStream.readOptional(inputStream::readComponent).orElse(null);
         }
 
         @Contract(pure = true)
@@ -116,12 +116,12 @@ public class TabCompletePacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
             outputStream.writeString(match);
-            outputStream.writeNullable(toolTip, outputStream::writeChat);
+            outputStream.writeNullable(toolTip, outputStream::writeComponent);
         }
     }
 }

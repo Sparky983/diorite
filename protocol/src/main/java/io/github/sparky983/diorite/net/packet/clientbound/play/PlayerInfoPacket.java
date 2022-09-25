@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.Property;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
@@ -52,7 +52,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public PlayerInfoPacket(final @NotNull MinecraftInputStream inputStream) {
+    public PlayerInfoPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -61,7 +61,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -91,7 +91,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Player(final @NotNull MinecraftInputStream inputStream, final @NotNull ActionType actionType) {
+        public Player(final @NotNull StreamIn inputStream, final @NotNull ActionType actionType) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
             Preconditions.requireNotNull(actionType, "actionType");
@@ -101,7 +101,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -130,16 +130,16 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         UPDATE_DISPLAY_NAME(UpdateDisplayNameAction::new),
         REMOVE_PLAYER(RemovePlayerAction::new);
 
-        private final Function<MinecraftInputStream, Action> factory;
+        private final Function<StreamIn, Action> factory;
 
         @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull MinecraftInputStream, @NotNull Action> factory) {
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
 
             this.factory = factory;
         }
 
         @Contract(pure = true)
-        public @NotNull Action read(final @NotNull MinecraftInputStream inputStream) {
+        public @NotNull Action read(final @NotNull StreamIn inputStream) {
 
             return factory.apply(inputStream);
         }
@@ -177,7 +177,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public AddPlayerAction(final @NotNull MinecraftInputStream inputStream) {
+        public AddPlayerAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -185,7 +185,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
             this.properties = inputStream.readList(Property::new);
             this.gamemode = inputStream.readVarIntEnum(Gamemode.class);
             this.ping = inputStream.readVarInt();
-            this.displayName = inputStream.readOptional(MinecraftInputStream::readChat).orElse(null);
+            this.displayName = inputStream.readOptional(StreamIn::readComponent).orElse(null);
         }
 
         @Override
@@ -195,7 +195,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -203,7 +203,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
                     .writeList(properties, outputStream::writeWritable)
                     .writeVarIntEnum(gamemode)
                     .writeVarInt(ping)
-                    .writeNullable(displayName, MinecraftOutputStream::writeChat);
+                    .writeNullable(displayName, StreamOut::writeComponent);
         }
 
         @Contract(pure = true)
@@ -250,7 +250,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateGamemodeAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateGamemodeAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -258,7 +258,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -289,7 +289,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateLatencyAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateLatencyAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -297,7 +297,7 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -328,19 +328,19 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public UpdateDisplayNameAction(final @NotNull MinecraftInputStream inputStream) {
+        public UpdateDisplayNameAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.displayName = inputStream.readOptional(MinecraftInputStream::readChat).orElse(null);
+            this.displayName = inputStream.readOptional(StreamIn::readComponent).orElse(null);
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
-            outputStream.writeNullable(displayName, MinecraftOutputStream::writeChat);
+            outputStream.writeNullable(displayName, StreamOut::writeComponent);
         }
 
         @Override
@@ -364,13 +364,13 @@ public class PlayerInfoPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public RemovePlayerAction(final @NotNull MinecraftInputStream inputStream) {
+        public RemovePlayerAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
         }

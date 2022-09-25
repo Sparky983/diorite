@@ -21,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -40,7 +40,7 @@ public class SpectatePacket implements ServerBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public SpectatePacket(final @NotNull MinecraftInputStream inputStream) {
+    public SpectatePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -48,7 +48,7 @@ public class SpectatePacket implements ServerBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 

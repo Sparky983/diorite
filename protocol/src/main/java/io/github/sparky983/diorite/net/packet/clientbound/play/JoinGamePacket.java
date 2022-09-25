@@ -25,8 +25,8 @@ import org.jetbrains.annotations.Range;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -90,15 +90,15 @@ public class JoinGamePacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public JoinGamePacket(final @NotNull MinecraftInputStream inputStream) {
+    public JoinGamePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.entityId = inputStream.readInt();
         this.isHardcore = inputStream.readBoolean();
-        this.gamemode = inputStream.readUByteEnum(Gamemode.class);
+        this.gamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
 
-        // TODO(Sparky983): Make a MinecraftInputStream method that does this
+        // TODO(Sparky983): Make a StreamIn method that does this
         // Maybe make enum classes handle ids rather than ordinal to make it clearer what is being
         // done.
         final byte previousGamemodeId = inputStream.readByte();
@@ -110,8 +110,8 @@ public class JoinGamePacket implements ClientBoundPacket {
         }
 
         this.worldNames = inputStream.readList(inputStream::readIdentifier);
-        this.dimensionCodec = inputStream.readNbtCompound();
-        this.dimension = inputStream.readNbtCompound();
+        this.dimensionCodec = inputStream.readCompoundTag();
+        this.dimension = inputStream.readCompoundTag();
         this.worldName = inputStream.readIdentifier();
         this.maxPlayers = inputStream.readVarInt();
         this.viewDistance = Math.min(32, Math.max(2, inputStream.readVarInt())); // Clamp value to 2-32
@@ -122,15 +122,15 @@ public class JoinGamePacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(entityId)
                 .writeBoolean(isHardcore)
-                .writeUByteEnum(gamemode);
+                .writeUnsignedByteEnum(gamemode);
 
-        // TODO(Sparky983): Make a MinecraftOutputStream method that does this
+        // TODO(Sparky983): Make a StreamOut method that does this
         if (previousGamemode == null) {
             outputStream.writeByte((byte) -1);
         } else {
@@ -138,8 +138,8 @@ public class JoinGamePacket implements ClientBoundPacket {
         }
 
         outputStream.writeList(worldNames, outputStream::writeIdentifier)
-                .writeNbtCompound(dimensionCodec)
-                .writeNbtCompound(dimension)
+                .writeCompoundTag(dimensionCodec)
+                .writeCompoundTag(dimension)
                 .writeIdentifier(worldName)
                 .writeVarInt(maxPlayers)
                 .writeVarInt(viewDistance)

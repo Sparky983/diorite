@@ -22,9 +22,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -32,26 +32,26 @@ import io.github.sparky983.diorite.util.Preconditions;
 public class CreativeInventoryActionPacket implements ServerBoundPacket {
 
     private final short slot;
-    private final @Nullable SlotData clickedItem;
+    private final @Nullable ItemStack clickedItem;
 
     @Contract(pure = true)
-    public CreativeInventoryActionPacket(final short slot, final @Nullable SlotData clickedItem) {
+    public CreativeInventoryActionPacket(final short slot, final @Nullable ItemStack clickedItem) {
 
         this.slot = slot;
         this.clickedItem = clickedItem;
     }
 
     @Contract(mutates = "param")
-    public CreativeInventoryActionPacket(final @NotNull MinecraftInputStream inputStream) {
+    public CreativeInventoryActionPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.slot = inputStream.readShort();
-        this.clickedItem = SlotData.read(inputStream).orElse(null);
+        this.clickedItem = ItemStack.read(inputStream).orElse(null);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -72,7 +72,7 @@ public class CreativeInventoryActionPacket implements ServerBoundPacket {
     }
 
     @Contract(pure = true)
-    public @NotNull Optional<SlotData> getClickedItem() {
+    public @NotNull Optional<ItemStack> getClickedItem() {
 
         return Optional.ofNullable(clickedItem);
     }

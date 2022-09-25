@@ -39,18 +39,18 @@ import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Velocity;
 
-final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInputStream {
+final class ByteArrayStreamInImpl implements ByteArrayStreamIn {
 
     private final ByteArrayInputStream byteArrayInputStream;
-    private final MinecraftInputStream delegate;
+    private final StreamIn delegate;
 
     @Contract(pure = true)
-    ByteArrayMinecraftInputStreamImpl(final @NotNull ByteArrayInputStream byteArrayInputStream) {
+    ByteArrayStreamInImpl(final @NotNull ByteArrayInputStream byteArrayInputStream) {
 
         Preconditions.requireNotNull(byteArrayInputStream, "byteArrayInputStream");
 
         this.byteArrayInputStream = byteArrayInputStream;
-        this.delegate = MinecraftInputStream.from(byteArrayInputStream);
+        this.delegate = StreamIn.from(byteArrayInputStream);
     }
 
     @Override
@@ -78,9 +78,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public @Range(from = 0, to = 0xFF) int readUByte() {
+    public @Range(from = 0, to = 0xFF) int readUnsignedByte() {
 
-        return delegate.readUByte();
+        return delegate.readUnsignedByte();
     }
 
     @Override
@@ -90,9 +90,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public @Range(from = 0, to = 0xFFFF) int readUShort() {
+    public @Range(from = 0, to = 0xFFFF) int readUnsignedShort() {
 
-        return delegate.readUShort();
+        return delegate.readUnsignedShort();
     }
 
     @Override
@@ -132,9 +132,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public @NotNull Component readChat() {
+    public @NotNull Component readComponent() {
 
-        return delegate.readChat();
+        return delegate.readComponent();
     }
 
     @Override
@@ -156,9 +156,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public @NotNull CompoundBinaryTag readNbtCompound() {
+    public @NotNull CompoundBinaryTag readCompoundTag() {
 
-        return delegate.readNbtCompound();
+        return delegate.readCompoundTag();
     }
 
     @Override
@@ -186,9 +186,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public byte @NotNull [] readLengthPrefixedBytes() {
+    public byte @NotNull [] readByteList() {
 
-        return delegate.readLengthPrefixedBytes();
+        return delegate.readByteList();
     }
 
     @Override
@@ -198,9 +198,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public int @NotNull [] readLengthPrefixedVarInts() {
+    public int @NotNull [] readVarIntList() {
 
-        return delegate.readLengthPrefixedVarInts();
+        return delegate.readVarIntList();
     }
 
     @Override
@@ -210,9 +210,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public long @NotNull [] readLengthPrefixedLongs() {
+    public long @NotNull [] readLongList() {
 
-        return delegate.readLengthPrefixedLongs();
+        return delegate.readLongList();
     }
 
     @Override
@@ -222,9 +222,9 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public long @NotNull [] readLengthPrefixedVarLongs() {
+    public long @NotNull [] readVarLongList() {
 
-        return delegate.readLengthPrefixedVarLongs();
+        return delegate.readVarLongList();
     }
 
     @Override
@@ -247,7 +247,7 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
 
     @Override
     public <T> @NotNull Optional<T> readOptional(
-            final @NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader) {
+            final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         return delegate.readOptional(reader);
     }
@@ -271,14 +271,14 @@ final class ByteArrayMinecraftInputStreamImpl implements ByteArrayMinecraftInput
     }
 
     @Override
-    public <T extends Enum<T>> @NotNull T readUByteEnum(final @NotNull Class<T> enumClass) {
+    public <T extends Enum<T>> @NotNull T readUnsignedByteEnum(final @NotNull Class<T> enumClass) {
 
-        return delegate.readUByteEnum(enumClass);
+        return delegate.readUnsignedByteEnum(enumClass);
     }
 
     @Override
     public <T> @Unmodifiable @NotNull List<@NotNull T> readList(
-            final @NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader) {
+            final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         return delegate.readList(reader);
     }

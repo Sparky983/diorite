@@ -19,8 +19,8 @@ package io.github.sparky983.diorite.net.packet.clientbound.play;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -61,7 +61,7 @@ public class SoundEffectPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public SoundEffectPacket(final @NotNull MinecraftInputStream inputStream) {
+    public SoundEffectPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -81,7 +81,7 @@ public class SoundEffectPacket implements ClientBoundPacket {
     }
 
     private @NotNull Position decodeFixedPointNumberPosition(
-            final @NotNull MinecraftInputStream inputStream) {
+            final @NotNull StreamIn inputStream) {
 
         final int x = inputStream.readInt() / POSITION_SCALING_FACTOR;
         final int y = inputStream.readInt() / POSITION_SCALING_FACTOR;
@@ -91,7 +91,7 @@ public class SoundEffectPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -105,7 +105,7 @@ public class SoundEffectPacket implements ClientBoundPacket {
     }
 
     private void writeFixedPointNumberPosition(final @NotNull Position position,
-            final @NotNull MinecraftOutputStream outputStream) {
+            final @NotNull StreamOut outputStream) {
 
         outputStream.writeInt((int) (position.getX() * POSITION_SCALING_FACTOR))
                 .writeInt((int) (position.getY() * POSITION_SCALING_FACTOR))

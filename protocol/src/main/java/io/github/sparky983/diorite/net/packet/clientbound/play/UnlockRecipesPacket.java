@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -79,7 +79,7 @@ public class UnlockRecipesPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public UnlockRecipesPacket(final @NotNull MinecraftInputStream inputStream) {
+    public UnlockRecipesPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -92,17 +92,17 @@ public class UnlockRecipesPacket implements ClientBoundPacket {
         this.blastFurnaceFilterActive = inputStream.readBoolean();
         this.smokerBookOpen = inputStream.readBoolean();
         this.smokerFilterActive = inputStream.readBoolean();
-        this.recipes = inputStream.readList(MinecraftInputStream::readIdentifier);
+        this.recipes = inputStream.readList(StreamIn::readIdentifier);
 
         if (action == Action.INIT) {
-            this.toBeDisplayed = inputStream.readList(MinecraftInputStream::readIdentifier);
+            this.toBeDisplayed = inputStream.readList(StreamIn::readIdentifier);
         } else {
             this.toBeDisplayed = null;
         }
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -115,11 +115,11 @@ public class UnlockRecipesPacket implements ClientBoundPacket {
                 .writeBoolean(blastFurnaceFilterActive)
                 .writeBoolean(smokerBookOpen)
                 .writeBoolean(smokerFilterActive)
-                .writeList(recipes, MinecraftOutputStream::writeIdentifier);
+                .writeList(recipes, StreamOut::writeIdentifier);
 
         if (action == Action.INIT) {
             assert toBeDisplayed != null : "[toBeDisplayed] was null when action is init";
-            outputStream.writeList(toBeDisplayed, MinecraftOutputStream::writeIdentifier);
+            outputStream.writeList(toBeDisplayed, StreamOut::writeIdentifier);
         }
     }
 

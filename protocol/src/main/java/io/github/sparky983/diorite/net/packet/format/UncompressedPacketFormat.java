@@ -19,10 +19,10 @@ package io.github.sparky983.diorite.net.packet.format;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.ByteArrayMinecraftOutputStream;
+import io.github.sparky983.diorite.io.ByteArrayStreamOut;
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
 import io.github.sparky983.diorite.net.packet.PacketDecoder;
@@ -42,13 +42,13 @@ final class UncompressedPacketFormat implements PacketFormat {
 
     @Override
     public void encode(final @NotNull Packet packet,
-                       final @NotNull MinecraftOutputStream outputStream) {
+                       final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(packet, "packet");
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        final ByteArrayMinecraftOutputStream byteArrayOutputStream =
-                MinecraftOutputStream.createByteArrayOutputStream();
+        final ByteArrayStreamOut byteArrayOutputStream =
+                StreamOut.createByteArrayStream();
 
         byteArrayOutputStream.writeVarInt(packet.getId());
 
@@ -57,12 +57,12 @@ final class UncompressedPacketFormat implements PacketFormat {
         final byte[] data = byteArrayOutputStream.toByteArray();
 
          synchronized (this) {
-             outputStream.writeLengthPrefixedBytes(data);
+             outputStream.writeByteList(data);
          }
     }
 
     @Override
-    public @NotNull Packet decode(final @NotNull MinecraftInputStream inputStream) {
+    public @NotNull Packet decode(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -70,7 +70,7 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final byte[] data = inputStream.readBytes(length);
 
-        final MinecraftInputStream byteArrayInputStream = MinecraftInputStream.createByteArrayInputStream(data);
+        final StreamIn byteArrayInputStream = StreamIn.createByteArrayInputStream(data);
 
         final int id = byteArrayInputStream.readVarInt();
 

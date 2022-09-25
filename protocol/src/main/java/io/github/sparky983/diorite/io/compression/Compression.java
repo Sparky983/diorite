@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 
 /**
  * Compresses and decompress a stream.
@@ -54,7 +54,7 @@ public interface Compression {
      */
     @Contract(pure = true)
     @NotNull
-    MinecraftInputStream decompressed(@NotNull MinecraftInputStream inputStream);
+    StreamIn decompressed(@NotNull StreamIn inputStream);
 
     /**
      * Returns a version of inputStream that apply decompression.
@@ -78,7 +78,7 @@ public interface Compression {
      */
     @Contract(pure = true)
     @NotNull
-    MinecraftOutputStream compressed(@NotNull MinecraftOutputStream outputStream);
+    StreamOut compressed(@NotNull StreamOut outputStream);
 
     /**
      * Returns a version of outputStream with compression applied.

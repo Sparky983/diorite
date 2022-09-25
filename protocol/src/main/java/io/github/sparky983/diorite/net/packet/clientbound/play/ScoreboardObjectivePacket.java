@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -48,7 +48,7 @@ public class ScoreboardObjectivePacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public ScoreboardObjectivePacket(final @NotNull MinecraftInputStream inputStream) {
+    public ScoreboardObjectivePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -57,7 +57,7 @@ public class ScoreboardObjectivePacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -121,7 +121,7 @@ public class ScoreboardObjectivePacket implements ClientBoundPacket {
             this.type = type;
         }
 
-        public static @Nullable Action readAction(final @NotNull MinecraftInputStream inputStream) {
+        public static @Nullable Action readAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -131,7 +131,7 @@ public class ScoreboardObjectivePacket implements ClientBoundPacket {
                 return null;
             }
 
-            final Component objectiveValue = inputStream.readChat();
+            final Component objectiveValue = inputStream.readComponent();
             final Type type = inputStream.readVarIntEnum(Type.class);
 
             return new Action(
@@ -142,12 +142,12 @@ public class ScoreboardObjectivePacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
             outputStream.writeVarIntEnum(mode)
-                    .writeChat(objectiveValue)
+                    .writeComponent(objectiveValue)
                     .writeVarIntEnum(type);
         }
 

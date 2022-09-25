@@ -35,15 +35,15 @@ import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Velocity;
 
-final class ByteArrayMinecraftOutputStreamImpl implements ByteArrayMinecraftOutputStream {
+final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
 
     private final ByteArrayOutputStream byteArrayOutputStream;
-    private final MinecraftOutputStream delegate;
+    private final StreamOut delegate;
 
-    ByteArrayMinecraftOutputStreamImpl(final @NotNull ByteArrayOutputStream byteArrayOutputStream) {
+    ByteArrayStreamOutImpl(final @NotNull ByteArrayOutputStream byteArrayOutputStream) {
 
         this.byteArrayOutputStream = byteArrayOutputStream;
-        this.delegate = MinecraftOutputStream.from(byteArrayOutputStream);
+        this.delegate = StreamOut.from(byteArrayOutputStream);
     }
 
     @Override
@@ -59,211 +59,211 @@ final class ByteArrayMinecraftOutputStreamImpl implements ByteArrayMinecraftOutp
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeBoolean(final boolean data) {
+    public @NotNull ByteArrayStreamOut writeBoolean(final boolean data) {
 
         delegate.writeBoolean(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeByte(final byte data) {
+    public @NotNull ByteArrayStreamOut writeByte(final byte data) {
 
         delegate.writeByte(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeUByte(final @Range(from = 0, to = 0xFF) int data) {
+    public @NotNull ByteArrayStreamOut writeUnsignedByte(final @Range(from = 0, to = 0xFF) int data) {
 
-        delegate.writeUByte(data);
+        delegate.writeUnsignedByte(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeShort(final short data) {
+    public @NotNull ByteArrayStreamOut writeShort(final short data) {
 
         delegate.writeShort(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeUShort(final @Range(from = 0, to = 0xFFFF) int data) {
+    public @NotNull ByteArrayStreamOut writeUnsignedShort(final @Range(from = 0, to = 0xFFFF) int data) {
 
-        delegate.writeUShort(data);
+        delegate.writeUnsignedShort(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeInt(final int data) {
+    public @NotNull ByteArrayStreamOut writeInt(final int data) {
 
         delegate.writeInt(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeLong(final long data) {
+    public @NotNull ByteArrayStreamOut writeLong(final long data) {
 
         delegate.writeLong(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeFloat(final float data) {
+    public @NotNull ByteArrayStreamOut writeFloat(final float data) {
 
         delegate.writeFloat(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeDouble(final double data) {
+    public @NotNull ByteArrayStreamOut writeDouble(final double data) {
 
         delegate.writeDouble(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeString(final @NotNull String data) {
+    public @NotNull ByteArrayStreamOut writeString(final @NotNull String data) {
 
         delegate.writeString(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeChat(final @NotNull Component data) {
+    public @NotNull ByteArrayStreamOut writeComponent(final @NotNull Component data) {
 
-        delegate.writeChat(data);
+        delegate.writeComponent(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeIdentifier(final @NotNull Identifier data) {
+    public @NotNull ByteArrayStreamOut writeIdentifier(final @NotNull Identifier data) {
 
         delegate.writeIdentifier(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeVarInt(final int data) {
+    public @NotNull ByteArrayStreamOut writeVarInt(final int data) {
 
         delegate.writeVarInt(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeVarLong(final long data) {
+    public @NotNull ByteArrayStreamOut writeVarLong(final long data) {
 
         delegate.writeVarLong(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeNbtCompound(final @NotNull CompoundBinaryTag data) {
+    public @NotNull ByteArrayStreamOut writeCompoundTag(final @NotNull CompoundBinaryTag data) {
 
-        delegate.writeNbtCompound(data);
+        delegate.writeCompoundTag(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeBlockPosition(final @NotNull BlockPosition data) {
+    public @NotNull ByteArrayStreamOut writeBlockPosition(final @NotNull BlockPosition data) {
 
         delegate.writeBlockPosition(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeUuid(final @NotNull UUID data) {
+    public @NotNull ByteArrayStreamOut writeUuid(final @NotNull UUID data) {
 
         delegate.writeUuid(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeBytes(final byte @NotNull [] data) {
+    public @NotNull ByteArrayStreamOut writeBytes(final byte @NotNull [] data) {
 
         delegate.writeBytes(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeLengthPrefixedBytes(final byte @NotNull [] data) {
+    public @NotNull ByteArrayStreamOut writeByteList(final byte @NotNull [] data) {
 
-        delegate.writeLengthPrefixedBytes(data);
+        delegate.writeByteList(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarInts(final int @NotNull [] data) {
+    public @NotNull StreamOut writeVarInts(final int @NotNull [] data) {
 
         delegate.writeVarInts(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedVarInts(final int @NotNull [] data) {
+    public @NotNull StreamOut writeVarIntList(final int @NotNull [] data) {
 
-        delegate.writeLengthPrefixedVarInts(data);
+        delegate.writeVarIntList(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeLongs(final long @NotNull [] data) {
 
         delegate.writeLongs(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeLongList(final long @NotNull [] data) {
 
-        delegate.writeLengthPrefixedLongs(data);
+        delegate.writeLongList(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeVarLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeVarLongs(final long @NotNull [] data) {
 
         delegate.writeVarLongs(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeLengthPrefixedVarLongs(final long @NotNull [] data) {
+    public @NotNull StreamOut writeVarLongList(final long @NotNull [] data) {
 
-        delegate.writeLengthPrefixedVarLongs(data);
+        delegate.writeVarLongList(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writePosition(final @NotNull Position data) {
+    public @NotNull ByteArrayStreamOut writePosition(final @NotNull Position data) {
 
         delegate.writePosition(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeDirection(final @NotNull Direction data) {
+    public @NotNull ByteArrayStreamOut writeDirection(final @NotNull Direction data) {
 
         delegate.writeDirection(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeVelocity(final @NotNull Velocity data) {
+    public @NotNull ByteArrayStreamOut writeVelocity(final @NotNull Velocity data) {
 
         delegate.writeVelocity(data);
         return this;
     }
 
     @Override
-    public <T> @NotNull ByteArrayMinecraftOutputStream writeNullable(final @Nullable T data,
-            final @NotNull BiConsumer<@NotNull MinecraftOutputStream, @NotNull T> writer) {
+    public <T> @NotNull ByteArrayStreamOut writeNullable(final @Nullable T data,
+            final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         delegate.writeNullable(data, writer);
         return this;
     }
 
     @Override
-    public @NotNull <T> ByteArrayMinecraftOutputStream writeNullable(final @Nullable T data,
+    public @NotNull <T> ByteArrayStreamOut writeNullable(final @Nullable T data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         delegate.writeNullable(data, writer);
@@ -271,7 +271,7 @@ final class ByteArrayMinecraftOutputStreamImpl implements ByteArrayMinecraftOutp
     }
 
     @Override
-    public @NotNull <T> ByteArrayMinecraftOutputStream writeNullable(final @Nullable T data,
+    public @NotNull <T> ByteArrayStreamOut writeNullable(final @Nullable T data,
             final @NotNull Runnable writer) {
 
         delegate.writeNullable(data, writer);
@@ -279,36 +279,36 @@ final class ByteArrayMinecraftOutputStreamImpl implements ByteArrayMinecraftOutp
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeVarIntEnum(final @NotNull Enum<?> data) {
+    public @NotNull ByteArrayStreamOut writeVarIntEnum(final @NotNull Enum<?> data) {
 
         delegate.writeVarIntEnum(data);
         return this;
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeByteEnum(final @NotNull Enum<?> data) {
+    public @NotNull ByteArrayStreamOut writeByteEnum(final @NotNull Enum<?> data) {
 
         delegate.writeByteEnum(data);
         return this;
     }
 
     @Override
-    public @NotNull MinecraftOutputStream writeUByteEnum(final @NotNull Enum<?> data) {
+    public @NotNull StreamOut writeUnsignedByteEnum(final @NotNull Enum<?> data) {
 
-        delegate.writeUByteEnum(data);
+        delegate.writeUnsignedByteEnum(data);
         return this;
     }
 
     @Override
-    public @NotNull <T> ByteArrayMinecraftOutputStream writeList(final @NotNull List<T> data,
-            final @NotNull BiConsumer<@NotNull MinecraftOutputStream, @NotNull T> writer) {
+    public @NotNull <T> ByteArrayStreamOut writeList(final @NotNull List<T> data,
+            final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         delegate.writeList(data, writer);
         return this;
     }
 
     @Override
-    public @NotNull <T> ByteArrayMinecraftOutputStream writeList(final @NotNull List<T> data,
+    public @NotNull <T> ByteArrayStreamOut writeList(final @NotNull List<T> data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         delegate.writeList(data, writer);
@@ -316,7 +316,7 @@ final class ByteArrayMinecraftOutputStreamImpl implements ByteArrayMinecraftOutp
     }
 
     @Override
-    public @NotNull ByteArrayMinecraftOutputStream writeWritable(final @NotNull Writable writable) {
+    public @NotNull ByteArrayStreamOut writeWritable(final @NotNull Writable writable) {
 
         delegate.writeWritable(writable);
         return this;

@@ -25,8 +25,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -59,7 +59,7 @@ public class MapDataPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public MapDataPacket(final @NotNull MinecraftInputStream inputStream) {
+    public MapDataPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -68,13 +68,13 @@ public class MapDataPacket implements ClientBoundPacket {
         this.locked = inputStream.readBoolean();
         this.icons = inputStream.readList(Icon::new);
 
-        final int columns = inputStream.readUByte();
+        final int columns = inputStream.readUnsignedByte();
 
         if (columns > 0) {
             final byte rows = inputStream.readByte();
             final byte x = inputStream.readByte();
             final byte z = inputStream.readByte();
-            final byte[] data = inputStream.readLengthPrefixedBytes();
+            final byte[] data = inputStream.readByteList();
             this.patch = new MapPatch(columns, rows, x, z, data);
         } else {
             this.patch = null;
@@ -82,7 +82,7 @@ public class MapDataPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -97,7 +97,7 @@ public class MapDataPacket implements ClientBoundPacket {
         if (patch != null) {
             outputStream.writeWritable(patch);
         } else {
-            outputStream.writeUByte(0);
+            outputStream.writeUnsignedByte(0);
         }
     }
 
@@ -162,7 +162,7 @@ public class MapDataPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Icon(final @NotNull MinecraftInputStream inputStream) {
+        public Icon(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -170,11 +170,11 @@ public class MapDataPacket implements ClientBoundPacket {
             this.x = inputStream.readByte();
             this.z = inputStream.readByte();
             this.direction = inputStream.readByte();
-            this.displayName = inputStream.readOptional(MinecraftInputStream::readChat).orElse(null);
+            this.displayName = inputStream.readOptional(StreamIn::readComponent).orElse(null);
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -182,7 +182,7 @@ public class MapDataPacket implements ClientBoundPacket {
                     .writeByte(x)
                     .writeByte(z)
                     .writeByte(direction)
-                    .writeNullable(displayName, MinecraftOutputStream::writeChat);
+                    .writeNullable(displayName, StreamOut::writeComponent);
         }
 
         @Contract(pure = true)
@@ -273,7 +273,7 @@ public class MapDataPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 

@@ -19,7 +19,7 @@ package io.github.sparky983.diorite.net.packet;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
@@ -46,7 +46,7 @@ public interface Packet extends Writable {
      */
     @Contract(mutates = "param")
     @Override
-    void write(@NotNull MinecraftOutputStream outputStream);
+    void write(@NotNull StreamOut outputStream);
 
     /**
      * Returns the id of the packet.

@@ -25,8 +25,8 @@ import java.net.Socket;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Channel;
@@ -45,8 +45,8 @@ import reactor.core.publisher.Sinks;
 final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacket> {
 
     private final Socket client;
-    private final MinecraftOutputStream outputStream;
-    private final MinecraftInputStream inputStream;
+    private final StreamOut outputStream;
+    private final StreamIn inputStream;
 
     private final PacketListener packetListener;
 
@@ -65,8 +65,8 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
 
         try {
             client = new Socket(address.getAddress(), address.getPort());
-            outputStream = MinecraftOutputStream.from(client.getOutputStream());
-            inputStream = MinecraftInputStream.from(client.getInputStream());
+            outputStream = StreamOut.from(client.getOutputStream());
+            inputStream = StreamIn.from(client.getInputStream());
         } catch (final IOException e) {
             throw new RuntimeIOException(e);
         }

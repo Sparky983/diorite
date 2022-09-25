@@ -46,7 +46,7 @@ import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Velocity;
 
-final class MinecraftInputStreamImpl implements MinecraftInputStream {
+final class StreamInImpl implements StreamIn {
 
     private final static int MAX_UTF_8_CHAR_LENGTH = 4;
 
@@ -56,7 +56,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
 
     private final DataInputStream inputStream;
 
-    public MinecraftInputStreamImpl(final @NotNull DataInputStream inputStream) {
+    public StreamInImpl(final @NotNull DataInputStream inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -103,7 +103,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public @Range(from = 0, to = 0xFF) int readUByte() {
+    public @Range(from = 0, to = 0xFF) int readUnsignedByte() {
 
         try {
             return inputStream.readUnsignedByte();
@@ -123,7 +123,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public @Range(from = 0, to = 0xFFFF) int readUShort() {
+    public @Range(from = 0, to = 0xFFFF) int readUnsignedShort() {
 
         try {
             return inputStream.readUnsignedShort();
@@ -203,7 +203,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public @NotNull Component readChat() {
+    public @NotNull Component readComponent() {
 
         try {
             return COMPONENT_SERIALIZER.deserialize(readString());
@@ -263,7 +263,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public @NotNull CompoundBinaryTag readNbtCompound() {
+    public @NotNull CompoundBinaryTag readCompoundTag() {
 
         try {
             return BINARY_TAG_READER.read((DataInput) inputStream);
@@ -310,7 +310,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public byte @NotNull [] readLengthPrefixedBytes() {
+    public byte @NotNull [] readByteList() {
 
         final int length = readVarInt();
 
@@ -330,7 +330,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public int @NotNull [] readLengthPrefixedVarInts() {
+    public int @NotNull [] readVarIntList() {
 
         final int length = readVarInt();
         return readVarInts(length);
@@ -349,7 +349,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public long @NotNull [] readLengthPrefixedLongs() {
+    public long @NotNull [] readLongList() {
 
         final int length = readVarInt();
         return readLongs(length);
@@ -368,7 +368,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public long @NotNull [] readLengthPrefixedVarLongs() {
+    public long @NotNull [] readVarLongList() {
 
         final int length = readVarInt();
         return readVarLongs(length);
@@ -405,7 +405,7 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
 
     @Override
     public @NotNull <T> Optional<T> readOptional(
-            final @NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader) {
+            final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         Preconditions.requireNotNull(reader, "reader");
 
@@ -463,16 +463,16 @@ final class MinecraftInputStreamImpl implements MinecraftInputStream {
     }
 
     @Override
-    public <T extends Enum<T>> @NotNull T readUByteEnum(final @NotNull Class<T> enumClass) {
+    public <T extends Enum<T>> @NotNull T readUnsignedByteEnum(final @NotNull Class<T> enumClass) {
 
         Preconditions.requireNotNull(enumClass);
 
-        return getEnumById(enumClass, readUByte());
+        return getEnumById(enumClass, readUnsignedByte());
     }
 
     @Override
     public @Unmodifiable @NotNull <T> List<@NotNull T> readList(
-            final @NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader) {
+            final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         Preconditions.requireNotNull(reader, "reader");
 

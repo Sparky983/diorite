@@ -16,15 +16,13 @@
 
 package io.github.sparky983.diorite;
 
-import net.kyori.adventure.nbt.BinaryTagIO;
-
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
+import io.github.sparky983.diorite.io.StreamIn;
 import io.github.sparky983.diorite.net.ChannelState;
 import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
@@ -38,13 +36,13 @@ final class PacketListener implements Runnable {
 
     private final Sinks.Many<Packet> packets;
     private final Stateful stateful;
-    private final MinecraftInputStream inputStream;
+    private final StreamIn inputStream;
     private PacketFormat packetFormat;
 
     @Contract(pure = true)
     public PacketListener(final @NotNull Sinks.Many<Packet> packets,
                           final @NotNull Stateful stateful,
-                          final @NotNull MinecraftInputStream inputStream,
+                          final @NotNull StreamIn inputStream,
                           final @NotNull PacketFormat initialPacketFormat) {
 
         this.packets = packets;

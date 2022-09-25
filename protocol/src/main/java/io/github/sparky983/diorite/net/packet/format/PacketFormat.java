@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Stateful;
 import io.github.sparky983.diorite.net.packet.Packet;
@@ -78,7 +78,7 @@ public interface PacketFormat {
      * @since 1.0.0
      */
     void encode(@NotNull Packet packet,
-                @NotNull MinecraftOutputStream outputStream);
+                @NotNull StreamOut outputStream);
 
     /**
      * Decodes the formatted packet from the input stream using the specified decoder to decoder the
@@ -88,5 +88,5 @@ public interface PacketFormat {
      * @return The decoded packet.
      * @throws NullPointerException if decoder or inputStream are {@code null}.
      */
-    @NotNull Packet decode(@NotNull MinecraftInputStream inputStream);
+    @NotNull Packet decode(@NotNull StreamIn inputStream);
 }

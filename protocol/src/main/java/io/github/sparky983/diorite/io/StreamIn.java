@@ -51,7 +51,7 @@ import io.github.sparky983.diorite.world.Velocity;
  * @author Sparky983
  * @since 1.0.0
  */
-public interface MinecraftInputStream extends Closeable {
+public interface StreamIn extends Closeable {
 
     /**
      * Creates a minecraft input stream from the specified input stream.
@@ -62,7 +62,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static @NotNull MinecraftInputStream from(final @NotNull InputStream inputStream) {
+    static @NotNull StreamIn from(final @NotNull InputStream inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -78,9 +78,9 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static @NotNull MinecraftInputStream from(final @NotNull DataInputStream inputStream) {
+    static @NotNull StreamIn from(final @NotNull DataInputStream inputStream) {
 
-        return new MinecraftInputStreamImpl(inputStream);
+        return new StreamInImpl(inputStream);
     }
 
     /**
@@ -91,12 +91,11 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> new", pure = true)
-    static @NotNull ByteArrayMinecraftInputStream createByteArrayInputStream(
-            final byte @NotNull [] input) {
+    static @NotNull ByteArrayStreamIn createByteArrayStream(final byte @NotNull [] input) {
 
         Preconditions.requireNotNull(input, "input");
 
-        return new ByteArrayMinecraftInputStreamImpl(new ByteArrayInputStream(input));
+        return new ByteArrayStreamInImpl(new ByteArrayInputStream(input));
     }
 
     @Contract(pure = true)
@@ -147,7 +146,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    @Range(from = 0, to = 0xFF) int readUByte();
+    @Range(from = 0, to = 0xFF) int readUnsignedByte();
 
     /**
      * Reads the next short from the input stream
@@ -169,7 +168,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    @Range(from = 0, to = 0xFFFF) int readUShort();
+    @Range(from = 0, to = 0xFFFF) int readUnsignedShort();
 
     /**
      * Reads the next int from the input stream
@@ -248,7 +247,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    @NotNull Component readChat();
+    @NotNull Component readComponent();
 
     /**
      * Reads the next identifier to from the input stream.
@@ -292,7 +291,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    @NotNull CompoundBinaryTag readNbtCompound();
+    @NotNull CompoundBinaryTag readCompoundTag();
 
     /**
      * Reads the next position from the input stream.
@@ -348,7 +347,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    byte @NotNull [] readLengthPrefixedBytes();
+    byte @NotNull [] readByteList();
 
     /**
      * Reads the specified number of var ints from the input stream.
@@ -371,7 +370,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    int @NotNull [] readLengthPrefixedVarInts();
+    int @NotNull [] readVarIntList();
 
     /**
      * Reads the specified number of longs from the input stream.
@@ -394,7 +393,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    long @NotNull [] readLengthPrefixedLongs();
+    long @NotNull [] readLongList();
 
     /**
      * Reads the specified number of var longs from the input stream.
@@ -417,7 +416,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    long @NotNull [] readLengthPrefixedVarLongs();
+    long @NotNull [] readVarLongList();
 
     /**
      * Reads the next position from the input stream
@@ -466,7 +465,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    <T> @NotNull Optional<T> readOptional(@NotNull Function<@NotNull MinecraftInputStream, @NotNull T> reader);
+    <T> @NotNull Optional<T> readOptional(@NotNull Function<@NotNull StreamIn, @NotNull T> reader);
 
     /**
      * Reads an optional from the input stream. Reads from the specified reader if the optional is
@@ -477,13 +476,13 @@ public interface MinecraftInputStream extends Closeable {
      * Example:
      * With {@link #readOptional(Function)}
      * <pre>
-     * MinecraftInputStream input;
+     * StreamIn input;
      *
      * input.readOptional((in) -> in.readString());
      * </pre>
      * , and with this method:
      * <pre>
-     * MinecraftInputStream input;
+     * StreamIn input;
      *
      * input.readOptional(() -> input.readString());
      * </pre>
@@ -534,7 +533,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    <T extends Enum<T>> @NotNull T readUByteEnum(@NotNull Class<T> enumClass);
+    <T extends Enum<T>> @NotNull T readUnsignedByteEnum(@NotNull Class<T> enumClass);
 
     /**
      * Reads a list from the input stream, reading each element with the specified reader.
@@ -546,7 +545,7 @@ public interface MinecraftInputStream extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    <T> @Unmodifiable @NotNull List<T> readList(@NotNull Function<@NotNull MinecraftInputStream, T> reader);
+    <T> @Unmodifiable @NotNull List<T> readList(@NotNull Function<@NotNull StreamIn, T> reader);
 
     /**
      * Reads a list from the input stream, reading each element with the specified reader.
@@ -556,13 +555,13 @@ public interface MinecraftInputStream extends Closeable {
      * Example:
      * With {@link #readList(Function)}
      * <pre>
-     * MinecraftInputStream input;
+     * StreamIn input;
      *
      * input.readCollection((in) -> in.readString());
      * </pre>
      * , and with this method:
      * <pre>
-     * MinecraftInputStream input;
+     * StreamIn input;
      *
      * input.readCollection(() -> input.readString());
      * </pre>

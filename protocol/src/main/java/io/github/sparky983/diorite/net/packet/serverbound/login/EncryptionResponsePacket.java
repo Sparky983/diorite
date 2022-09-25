@@ -19,8 +19,8 @@ package io.github.sparky983.diorite.net.packet.serverbound.login;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -41,17 +41,17 @@ public class EncryptionResponsePacket implements ServerBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public EncryptionResponsePacket(final @NotNull MinecraftInputStream inputStream) {
+    public EncryptionResponsePacket(final @NotNull StreamIn inputStream) {
 
-        this.sharedSecret = inputStream.readLengthPrefixedBytes();
-        this.verifyToken = inputStream.readLengthPrefixedBytes();
+        this.sharedSecret = inputStream.readByteList();
+        this.verifyToken = inputStream.readByteList();
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
-        outputStream.writeLengthPrefixedBytes(sharedSecret)
-                .writeLengthPrefixedBytes(verifyToken);
+        outputStream.writeByteList(sharedSecret)
+                .writeByteList(verifyToken);
     }
 
     @Override

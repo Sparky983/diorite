@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.util.Preconditions;
 
@@ -35,14 +35,15 @@ import io.github.sparky983.diorite.util.Preconditions;
  * @author Sparky983
  * @since 1.0.0
  */
-public final class SlotData implements Writable {
+// TODO(Sparky983): move to world module
+public final class ItemStack implements Writable {
 
     private final int itemId;
     private final byte itemCount;
     private final CompoundBinaryTag nbt;
 
     @Contract(pure = true)
-    public SlotData(final int itemId, final byte itemCount, final @NotNull CompoundBinaryTag nbt) {
+    public ItemStack(final int itemId, final byte itemCount, final @NotNull CompoundBinaryTag nbt) {
 
         Preconditions.requireNotNull(nbt, "nbt");
 
@@ -53,38 +54,38 @@ public final class SlotData implements Writable {
     }
 
     @Contract(mutates = "param")
-    public static @NotNull Optional<SlotData> read(final @NotNull MinecraftInputStream inputStream) {
+    public static @NotNull Optional<ItemStack> read(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        return inputStream.readOptional(() -> new SlotData(
+        return inputStream.readOptional(() -> new ItemStack(
                 inputStream.readVarInt(),
                 inputStream.readByte(),
-                inputStream.readNbtCompound()
+                inputStream.readCompoundTag()
         ));
     }
 
     @Contract(mutates = "param")
-    public static @Nullable SlotData readNullable(final @NotNull MinecraftInputStream inputStream) {
+    public static @Nullable ItemStack readNullable(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         return inputStream.readOptional(() -> {
             final int id = inputStream.readVarInt();
             final byte count = inputStream.readByte();
-            final CompoundBinaryTag nbt = inputStream.readNbtCompound();
+            final CompoundBinaryTag nbt = inputStream.readCompoundTag();
 
-            return new SlotData(id, count, nbt);
+            return new ItemStack(id, count, nbt);
         }).orElse(null);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(itemId)
                 .writeByte(itemCount)
-                .writeNbtCompound(nbt);
+                .writeCompoundTag(nbt);
     }
 }

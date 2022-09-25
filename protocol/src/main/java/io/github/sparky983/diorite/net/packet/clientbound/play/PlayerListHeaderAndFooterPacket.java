@@ -21,8 +21,8 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -44,21 +44,21 @@ public class PlayerListHeaderAndFooterPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public PlayerListHeaderAndFooterPacket(final @NotNull MinecraftInputStream inputStream) {
+    public PlayerListHeaderAndFooterPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.header = inputStream.readChat();
-        this.footer = inputStream.readChat();
+        this.header = inputStream.readComponent();
+        this.footer = inputStream.readComponent();
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeChat(header)
-                .writeChat(footer);
+        outputStream.writeComponent(header)
+                .writeComponent(footer);
     }
 
     @Override

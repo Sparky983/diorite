@@ -23,9 +23,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -47,7 +47,7 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public EntityEquipmentPacket(final @NotNull MinecraftInputStream inputStream) {
+    public EntityEquipmentPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -60,7 +60,7 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
 
             final EquipmentSlot equipmentSlot = EquipmentSlot.values()[Math.abs(equipmentId)];
 
-            equipment.add(new Equipment(equipmentSlot, SlotData.readNullable(inputStream)));
+            equipment.add(new Equipment(equipmentSlot, ItemStack.readNullable(inputStream)));
 
             if (equipmentId > 0) {
                 break;
@@ -71,7 +71,7 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream);
 
@@ -82,7 +82,7 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
             final byte equipmentId = (byte) (equipment.getEquipmentSlot().ordinal() *
                     (i == this.equipment.size() - 1 ? 1 : -1));
             outputStream.writeByte(equipmentId);
-            outputStream.writeNullable(equipment.getItem(), MinecraftOutputStream::writeWritable);
+            outputStream.writeNullable(equipment.getItem(), StreamOut::writeWritable);
         }
     }
 
@@ -107,10 +107,10 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
     public static final class Equipment {
 
         private final EquipmentSlot equipmentSlot;
-        private final @Nullable SlotData item;
+        private final @Nullable ItemStack item;
 
         @Contract(pure = true)
-        public Equipment(final @NotNull EquipmentSlot equipmentSlot, final @Nullable SlotData item) {
+        public Equipment(final @NotNull EquipmentSlot equipmentSlot, final @Nullable ItemStack item) {
 
             Preconditions.requireNotNull(equipmentSlot, "equipmentSlot");
             Preconditions.requireNotNull(item, "item");
@@ -126,7 +126,7 @@ public class EntityEquipmentPacket implements ClientBoundPacket {
         }
 
         @Contract(pure = true)
-        public @Nullable SlotData getItem() {
+        public @Nullable ItemStack getItem() {
 
             return item;
         }

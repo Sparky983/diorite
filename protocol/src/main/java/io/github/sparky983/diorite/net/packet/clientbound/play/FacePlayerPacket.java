@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -49,7 +49,7 @@ public class FacePlayerPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public FacePlayerPacket(final @NotNull MinecraftInputStream inputStream) {
+    public FacePlayerPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -59,13 +59,13 @@ public class FacePlayerPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(bodyPart.ordinal())
                 .writePosition(targetPosition)
-                .writeNullable(targetInfo, MinecraftOutputStream::writeWritable);
+                .writeNullable(targetInfo, StreamOut::writeWritable);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class FacePlayerPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public TargetInfo(final @NotNull MinecraftInputStream inputStream) {
+        public TargetInfo(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -116,7 +116,7 @@ public class FacePlayerPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 

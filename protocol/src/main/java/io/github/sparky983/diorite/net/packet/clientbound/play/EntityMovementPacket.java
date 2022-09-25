@@ -19,8 +19,8 @@ package io.github.sparky983.diorite.net.packet.clientbound.play;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -55,7 +55,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
      * Used by callers to get input stream null check.
      */
     @Contract(pure = true)
-    protected EntityMovementPacket(final @NotNull MinecraftInputStream inputStream,
+    protected EntityMovementPacket(final @NotNull StreamIn inputStream,
                                    final int entityId,
                                    final @NotNull Vector delta,
                                    final @NotNull Direction direction,
@@ -105,7 +105,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Position(final @NotNull MinecraftInputStream inputStream) {
+        public Position(final @NotNull StreamIn inputStream) {
 
             super(
                     inputStream,
@@ -121,7 +121,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             outputStream.writeVarInt(entityId)
                     .writeDouble(delta.getX())
@@ -150,7 +150,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public PositionAndRotation(final @NotNull MinecraftInputStream inputStream) {
+        public PositionAndRotation(final @NotNull StreamIn inputStream) {
 
             super(
                     inputStream,
@@ -166,7 +166,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             outputStream.writeVarInt(entityId)
                     .writeDouble(delta.getX())
@@ -195,7 +195,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Rotation(final @NotNull MinecraftInputStream inputStream) {
+        public Rotation(final @NotNull StreamIn inputStream) {
 
             super(
                     inputStream,
@@ -207,7 +207,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             outputStream.writeVarInt(entityId)
                     .writeDirection(direction)

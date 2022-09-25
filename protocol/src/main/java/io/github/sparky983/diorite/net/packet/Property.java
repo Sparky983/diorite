@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.util.Preconditions;
 
@@ -45,23 +45,23 @@ public final class Property implements Writable {
     }
 
     @Contract(mutates = "param")
-    public Property(final @NotNull MinecraftInputStream inputStream) {
+    public Property(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.name = inputStream.readString();
         this.value = inputStream.readString();
-        this.signature = inputStream.readOptional(MinecraftInputStream::readString).orElse(null);
+        this.signature = inputStream.readOptional(StreamIn::readString).orElse(null);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeString(name)
                 .writeString(value)
-                .writeNullable(signature, MinecraftOutputStream::writeString);
+                .writeNullable(signature, StreamOut::writeString);
     }
 
     @Contract(pure = true)

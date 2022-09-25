@@ -21,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -48,7 +48,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public UpdateScorePacket(final @NotNull MinecraftInputStream inputStream) {
+    public UpdateScorePacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -58,7 +58,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -100,7 +100,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public CreateOrUpdateAction(final @NotNull MinecraftInputStream inputStream) {
+        public CreateOrUpdateAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -109,7 +109,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -150,7 +150,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public RemoveAction(final @NotNull MinecraftInputStream inputStream) {
+        public RemoveAction(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -158,7 +158,7 @@ public class UpdateScorePacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -192,15 +192,15 @@ public class UpdateScorePacket implements ClientBoundPacket {
         CREATE_OR_UPDATE(CreateOrUpdateAction::new),
         REMOVE(RemoveAction::new);
 
-        private final Function<MinecraftInputStream, Action> factory;
+        private final Function<StreamIn, Action> factory;
 
         @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull MinecraftInputStream, @NotNull Action> factory) {
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
 
             this.factory = factory;
         }
 
-        public @NotNull Action create(final @NotNull MinecraftInputStream inputStream) {
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
 
             return factory.apply(inputStream);
         }

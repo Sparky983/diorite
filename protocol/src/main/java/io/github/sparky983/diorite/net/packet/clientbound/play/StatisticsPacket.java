@@ -21,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
@@ -41,7 +41,7 @@ public class StatisticsPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public StatisticsPacket(final @NotNull MinecraftInputStream inputStream) {
+    public StatisticsPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -49,11 +49,11 @@ public class StatisticsPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeList(statistics, MinecraftOutputStream::writeWritable);
+        outputStream.writeList(statistics, StreamOut::writeWritable);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class StatisticsPacket implements ClientBoundPacket {
         }
 
         @Contract(mutates = "param")
-        public Statistic(final @NotNull MinecraftInputStream inputStream) {
+        public Statistic(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
@@ -93,7 +93,7 @@ public class StatisticsPacket implements ClientBoundPacket {
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream, "outputStream");
 

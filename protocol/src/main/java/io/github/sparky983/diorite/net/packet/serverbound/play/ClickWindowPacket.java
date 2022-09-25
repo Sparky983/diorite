@@ -24,10 +24,10 @@ import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.List;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -40,7 +40,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
     private final byte button;
     private final Mode mode;
     private final @Unmodifiable List<Slot> slots;
-    private final @Nullable SlotData clickedItem;
+    private final @Nullable ItemStack clickedItem;
 
     @Contract(pure = true)
     public ClickWindowPacket(
@@ -50,7 +50,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
             final byte button,
             final @NotNull Mode mode,
             final @NotNull List<Slot> slots,
-            final @Nullable SlotData clickedItem) {
+            final @Nullable ItemStack clickedItem) {
 
         Preconditions.requireRange(windowId, 0x00, 0xFF, "windowId");
         Preconditions.requireNotNull(mode, "mode");
@@ -67,21 +67,21 @@ public class ClickWindowPacket implements ServerBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public ClickWindowPacket(final @NotNull MinecraftInputStream inputStream) {
+    public ClickWindowPacket(final @NotNull StreamIn inputStream) {
 
-        this.windowId = inputStream.readUByte();
+        this.windowId = inputStream.readUnsignedByte();
         this.stateId = inputStream.readVarInt();
         this.slot = inputStream.readShort();
         this.button = inputStream.readByte();
         this.mode = inputStream.readVarIntEnum(Mode.class);
         this.slots = inputStream.readList(Slot::new);
-        this.clickedItem = SlotData.read(inputStream).orElse(null);
+        this.clickedItem = ItemStack.read(inputStream).orElse(null);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
-        outputStream.writeUByte(windowId)
+        outputStream.writeUnsignedByte(windowId)
                 .writeVarInt(stateId)
                 .writeShort(slot)
                 .writeByte(button)
@@ -93,7 +93,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
                                 () -> outputStream.writeWritable(slot)
                         )
                 )
-                .writeNullable(clickedItem, MinecraftOutputStream::writeWritable);
+                .writeNullable(clickedItem, StreamOut::writeWritable);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
     }
 
     @Contract(pure = true)
-    public @Nullable SlotData getClickedItem() {
+    public @Nullable ItemStack getClickedItem() {
 
         return clickedItem;
     }
@@ -361,31 +361,31 @@ public class ClickWindowPacket implements ServerBoundPacket {
     public static final class Slot implements Writable {
 
         private final short slotNumber;
-        private final @Nullable SlotData slot;
+        private final @Nullable ItemStack slot;
 
         @Contract(pure = true)
-        public Slot(final short slotNumber, final @Nullable SlotData slot) {
+        public Slot(final short slotNumber, final @Nullable ItemStack slot) {
 
             this.slotNumber = slotNumber;
             this.slot = slot;
         }
 
         @Contract(mutates = "param")
-        public Slot(final @NotNull MinecraftInputStream inputStream) {
+        public Slot(final @NotNull StreamIn inputStream) {
 
             Preconditions.requireNotNull(inputStream, "inputStream");
 
             this.slotNumber = inputStream.readShort();
-            this.slot = SlotData.read(inputStream).orElse(null);
+            this.slot = ItemStack.read(inputStream).orElse(null);
         }
 
         @Override
-        public void write(final @NotNull MinecraftOutputStream outputStream) {
+        public void write(final @NotNull StreamOut outputStream) {
 
             Preconditions.requireNotNull(outputStream);
 
             outputStream.writeShort(slotNumber)
-                    .writeNullable(slot, MinecraftOutputStream::writeWritable);
+                    .writeNullable(slot, StreamOut::writeWritable);
         }
     }
 }

@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -84,24 +84,24 @@ public class UpdateLightPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public UpdateLightPacket(final @NotNull MinecraftInputStream inputStream) {
+    public UpdateLightPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.chunkX = inputStream.readVarInt();
         this.chunkZ = inputStream.readVarInt();
         this.trustEdges = inputStream.readBoolean();
-        this.skyLightMask = inputStream.readLengthPrefixedLongs();
-        this.blockLightMask = inputStream.readLengthPrefixedLongs();
-        this.emptySkyLightMask = inputStream.readLengthPrefixedLongs();
-        this.emptyBlockLightMask = inputStream.readLengthPrefixedLongs();
+        this.skyLightMask = inputStream.readLongList();
+        this.blockLightMask = inputStream.readLongList();
+        this.emptySkyLightMask = inputStream.readLongList();
+        this.emptyBlockLightMask = inputStream.readLongList();
 
         // TODO(Sparky983): Create read array method
 
         final int skyLightArraysLength = inputStream.readVarInt();
         final byte[][] skyLightArrays = new byte[skyLightArraysLength][];
         for (int i = 0; i < skyLightArraysLength; i++) {
-            final byte[] skyLightArray = inputStream.readLengthPrefixedBytes();
+            final byte[] skyLightArray = inputStream.readByteList();
             if (skyLightArray.length != LIGHT_ARRAY_LENGTH) {
                 throw new DecodeException("skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
             }
@@ -112,7 +112,7 @@ public class UpdateLightPacket implements ClientBoundPacket {
         final int blockLightArraysLength = inputStream.readVarInt();
         final byte[][] blockLightArrays = new byte[blockLightArraysLength][];
         for (int i = 0; i < blockLightArraysLength; i++) {
-            final byte[] blockLightArray = inputStream.readLengthPrefixedBytes();
+            final byte[] blockLightArray = inputStream.readByteList();
             if (blockLightArray.length != LIGHT_ARRAY_LENGTH) {
                 throw new DecodeException("blockLightArrays[" + i + "] length must be 2048");
             }
@@ -123,7 +123,7 @@ public class UpdateLightPacket implements ClientBoundPacket {
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
@@ -137,12 +137,12 @@ public class UpdateLightPacket implements ClientBoundPacket {
 
         outputStream.writeVarInt(skyLightArrays.length);
         for (final byte[] skyLightArray : skyLightArrays) {
-            outputStream.writeLengthPrefixedBytes(skyLightArray);
+            outputStream.writeByteList(skyLightArray);
         }
 
         outputStream.writeVarInt(blockLightArrays.length);
         for (final byte[] blockLightArray : blockLightArrays) {
-            outputStream.writeLengthPrefixedBytes(blockLightArray);
+            outputStream.writeByteList(blockLightArray);
         }
     }
 

@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
 
-public interface ByteArrayMinecraftInputStream extends MinecraftInputStream {
+public interface ByteArrayStreamIn extends StreamIn {
 
     @Override
     @NotNull ByteArrayInputStream toInputStream();

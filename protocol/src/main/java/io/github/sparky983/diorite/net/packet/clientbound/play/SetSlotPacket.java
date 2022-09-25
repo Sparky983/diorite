@@ -20,9 +20,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
-import io.github.sparky983.diorite.io.MinecraftOutputStream;
-import io.github.sparky983.diorite.net.packet.SlotData;
+import io.github.sparky983.diorite.io.StreamIn;
+import io.github.sparky983.diorite.io.StreamOut;
+import io.github.sparky983.diorite.net.packet.ItemStack;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
@@ -32,40 +32,40 @@ public class SetSlotPacket implements ClientBoundPacket {
     private final byte windowId;
     private final int stateId;
     private final short slot;
-    private final @Nullable SlotData slotData;
+    private final @Nullable ItemStack itemStack;
 
     @Contract(pure = true)
     public SetSlotPacket(final byte windowId,
                          final int stateId,
                          final short slot,
-                         final @NotNull SlotData slotData) {
+                         final @NotNull ItemStack itemStack) {
 
         this.windowId = windowId;
         this.stateId = stateId;
         this.slot = slot;
-        this.slotData = slotData;
+        this.itemStack = itemStack;
     }
 
     @Contract(mutates = "param")
-    public SetSlotPacket(final @NotNull MinecraftInputStream inputStream) {
+    public SetSlotPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
         this.windowId = inputStream.readByte();
         this.stateId = inputStream.readVarInt();
         this.slot = inputStream.readShort();
-        this.slotData = SlotData.readNullable(inputStream);
+        this.itemStack = ItemStack.readNullable(inputStream);
     }
 
     @Override
-    public void write(final @NotNull MinecraftOutputStream outputStream) {
+    public void write(final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeByte(windowId)
                 .writeVarInt(stateId)
                 .writeShort(slot)
-                .writeNullable(slotData, outputStream::writeWritable);
+                .writeNullable(itemStack, outputStream::writeWritable);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class SetSlotPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    public @Nullable SlotData getSlotData() {
+    public @Nullable ItemStack getSlotData() {
 
-        return slotData;
+        return itemStack;
     }
 }

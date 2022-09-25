@@ -18,7 +18,7 @@ package io.github.sparky983.diorite.net.packet;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.github.sparky983.diorite.io.MinecraftInputStream;
+import io.github.sparky983.diorite.io.StreamIn;
 
 /**
  * Decodes packets.
@@ -36,5 +36,5 @@ public interface PacketDecoder<T extends Packet> {
      * @param inputStream The input stream to decode the packet from.
      * @return The decoded packet.
      */
-    @NotNull T decode(@NotNull MinecraftInputStream inputStream);
+    @NotNull T decode(@NotNull StreamIn inputStream);
 }
