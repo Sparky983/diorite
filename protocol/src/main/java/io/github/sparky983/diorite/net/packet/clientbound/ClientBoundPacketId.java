@@ -162,8 +162,7 @@ public final class ClientBoundPacketId {
         public static final int CAMERA = 0x47;
         public static final int HELD_ITEM_CHANGE = 0x48;
         public static final int UPDATE_VIEW_POSITION = 0x49;
-        // only sent in single-player
-        // public static final int UPDATE_VIEW_DISTANCE = 0x4A;
+        public static final int UPDATE_VIEW_DISTANCE = 0x4A;
         public static final int SPAWN_POSITION = 0x4B;
         public static final int DISPLAY_SCOREBOARD = 0x4C;
         public static final int ENTITY_METADATA = 0x4D;
