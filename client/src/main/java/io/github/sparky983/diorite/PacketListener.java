@@ -16,6 +16,8 @@
 
 package io.github.sparky983.diorite;
 
+import net.kyori.adventure.nbt.BinaryTagIO;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -74,12 +76,15 @@ final class PacketListener implements Runnable {
                 packets.emitNext(packet, Sinks.EmitFailureHandler.FAIL_FAST);
             } catch (final DecodeException e) {
                 if (!e.isIgnorable()) {
-                    throw e;
+                    e.printStackTrace();
+                    stateful.close();
+                    break;
                 }
                 LOGGER.warn("Ignorable error ({}): {}", stateful.getState(), e.getMessage());
             } catch (final Exception e) {
                 e.printStackTrace();
-                throw e;
+                stateful.close();
+                break;
             }
         }
     }

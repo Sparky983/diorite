@@ -137,7 +137,8 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
 
         switch (state) {
             case NOT_CONNECTED:
-                throw new IllegalArgumentException("Cannot set state to NOT_CONNECTED");
+                this.packetRegistry = PacketRegistry.EMPTY;
+                break;
             case HANDSHAKING:
                 this.packetRegistry = PacketRegistries.Client.HANDSHAKING;
                 break;
@@ -164,6 +165,8 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     public void close() {
 
         try {
+            setState(ChannelState.NOT_CONNECTED);
+            packets.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
             client.close();
         } catch (final IOException e) {
             throw new RuntimeIOException(e);

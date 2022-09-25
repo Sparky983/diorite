@@ -18,6 +18,9 @@ package io.github.sparky983.diorite.net;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import io.github.sparky983.diorite.net.packet.PacketRegistry;
 
 /**
@@ -26,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.PacketRegistry;
  * @author Sparky983
  * @since 1.0.0
  */
-public interface Stateful {
+public interface Stateful extends Closeable {
 
     /**
      * Returns the current state.
@@ -55,4 +58,7 @@ public interface Stateful {
      * @since 1.0.0
      */
     @NotNull PacketRegistry getPacketRegistry();
+
+    @Override
+    void close();
 }
