@@ -118,8 +118,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeBoolean(boolean data);
+    @NotNull StreamOut writeBoolean(boolean data);
 
     /**
      * Writes the specified byte to the output stream.
@@ -130,8 +129,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeByte(byte data);
+    @NotNull StreamOut writeByte(byte data);
 
     /**
      * Writes the specified unsigned byte to the output stream.
@@ -144,8 +142,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeUnsignedByte(@Range(from = 0, to = 0xFF) int data);
+    @NotNull StreamOut writeUnsignedByte(@Range(from = 0, to = 0xFF) int data);
 
     /**
      * Writes the specified short to the output stream.
@@ -156,8 +153,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeShort(short data);
+    @NotNull StreamOut writeShort(short data);
 
     /**
      * Writes the specified unsigned short to the output stream.
@@ -170,8 +166,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeUnsignedShort(@Range(from = 0, to = 0xFFFF) int data);
+    @NotNull StreamOut writeUnsignedShort(@Range(from = 0, to = 0xFFFF) int data);
 
     /**
      * Writes the specified int to the output stream.
@@ -182,8 +177,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeInt(int data);
+    @NotNull StreamOut writeInt(int data);
 
     /**
      * Writes the specified long to the output stream.
@@ -194,8 +188,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeLong(long data);
+    @NotNull StreamOut writeLong(long data);
 
     /**
      * Writes the specified float to the output stream.
@@ -206,8 +199,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeFloat(float data);
+    @NotNull StreamOut writeFloat(float data);
 
     /**
      * Writes the specified double to the output stream.
@@ -218,8 +210,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeDouble(double data);
+    @NotNull StreamOut writeDouble(double data);
 
     /**
      * Writes the specified string to the output stream.
@@ -231,8 +222,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeString(@NotNull String data);
+    @NotNull StreamOut writeString(@NotNull String data);
 
     /**
      * Writes the specified chat component to the output stream.
@@ -244,8 +234,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeComponent(@NotNull Component data);
+    @NotNull StreamOut writeComponent(@NotNull Component data);
 
     /**
      * Writes the specified identifier to the output stream.
@@ -257,8 +246,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeIdentifier(@NotNull Identifier data);
+    @NotNull StreamOut writeIdentifier(@NotNull Identifier data);
 
     /**
      * Writes the specified var int to the output stream.
@@ -269,8 +257,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarInt(int data);
+    @NotNull StreamOut writeVarInt(int data);
 
     /**
      * Writes the specified var long to the output stream.
@@ -281,8 +268,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarLong(long data);
+    @NotNull StreamOut writeVarLong(long data);
 
     /**
      * Writes the specified nbt tag to the output stream.
@@ -293,8 +279,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeCompoundTag(@NotNull CompoundBinaryTag data);
+    @NotNull StreamOut writeCompoundTag(@NotNull CompoundBinaryTag data);
 
     /**
      * Writes the specified position to the output stream.
@@ -305,8 +290,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeBlockPosition(@NotNull BlockPosition data);
+    @NotNull StreamOut writeBlockPosition(@NotNull BlockPosition data);
 
     /**
      * Writes the specified uuid to the output stream.
@@ -318,8 +302,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeUuid(@NotNull UUID data);
+    @NotNull StreamOut writeUuid(@NotNull UUID data);
 
     /**
      * Writes the specified byte array to the output stream.
@@ -331,8 +314,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeBytes(byte @NotNull [] data);
+    @NotNull StreamOut writeBytes(byte @NotNull [] data);
 
     /**
      * Writes the specified byte array, prefixed by its length to the output stream.
@@ -344,8 +326,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeByteList(byte @NotNull [] data);
+    @NotNull StreamOut writeByteList(byte @NotNull [] data);
 
 
     /**
@@ -358,8 +339,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarInts(int @NotNull [] data);
+    @NotNull StreamOut writeVarInts(int @NotNull [] data);
 
     /**
      * Writes the specified var int array, prefixed by its length to the output stream.
@@ -371,8 +351,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarIntList(int @NotNull [] data);
+    @NotNull StreamOut writeVarIntList(int @NotNull [] data);
 
     /**
      * Writes the specified long array to the output stream.
@@ -384,8 +363,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeLongs(long @NotNull [] data);
+    @NotNull StreamOut writeLongs(long @NotNull [] data);
 
     /**
      * Writes the specified long array, prefixed by its length to the output stream.
@@ -397,8 +375,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeLongList(long @NotNull [] data);
+    @NotNull StreamOut writeLongList(long @NotNull [] data);
 
     /**
      * Writes the specified var long array to the output stream.
@@ -410,8 +387,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarLongs(long @NotNull [] data);
+    @NotNull StreamOut writeVarLongs(long @NotNull [] data);
 
     /**
      * Writes the specified var long array, prefixed by its length to the output stream.
@@ -423,10 +399,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarLongList(long @NotNull [] data);
-
-    // TODO(Sparky983): put @NotNull annotation on same line as type
+    @NotNull StreamOut writeVarLongList(long @NotNull [] data);
 
     /**
      * Writes the specified position to the output stream.
@@ -510,8 +483,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeVarIntEnum(@NotNull Enum<?> data);
+    @NotNull StreamOut writeVarIntEnum(@NotNull Enum<?> data);
 
     /**
      * Writes the specified enum encoded as a byte to the output stream.
@@ -523,8 +495,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeByteEnum(@NotNull Enum<?> data);
+    @NotNull StreamOut writeByteEnum(@NotNull Enum<?> data);
 
     /**
      * Writes the specified enum encoded as an unsigned byte to the output stream.
@@ -536,8 +507,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_ -> this", mutates = "this")
-    @NotNull
-    StreamOut writeUnsignedByteEnum(@NotNull Enum<?> data);
+    @NotNull StreamOut writeUnsignedByteEnum(@NotNull Enum<?> data);
 
     /**
      * Writes the specified list to the output stream, writing each element with the specified.
@@ -550,7 +520,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_, _ -> this", mutates = "this")
-    <T> @NotNull StreamOut writeList(@NotNull List<T> data, @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer);
+    <T> @NotNull StreamOut writeList(@NotNull List<T> data, @NotNull BiConsumer<@NotNull StreamOut, T> writer);
 
     /**
      * Writes the specified list to the output stream, writing each element with the specified.
@@ -563,7 +533,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_, _ -> this", mutates = "this")
-    <T> @NotNull StreamOut writeList(@NotNull List<T> data, @NotNull Consumer<@NotNull T> writer);
+    <T> @NotNull StreamOut writeList(@NotNull List<T> data, @NotNull Consumer<T> writer);
 
     /**
      * Writes the specified writable to the output stream.

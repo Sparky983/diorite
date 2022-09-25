@@ -253,7 +253,7 @@ final class ByteArrayStreamInImpl implements ByteArrayStreamIn {
     }
 
     @Override
-    public @NotNull <T> Optional<T> readOptional(final @NotNull Supplier<@NotNull T> reader) {
+    public <T> @NotNull Optional<T> readOptional(final @NotNull Supplier<@NotNull T> reader) {
 
         return delegate.readOptional(reader);
     }

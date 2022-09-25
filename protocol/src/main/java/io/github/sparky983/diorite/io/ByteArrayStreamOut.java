@@ -134,11 +134,11 @@ public interface ByteArrayStreamOut extends StreamOut {
             @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer);
 
     @Override
-    @NotNull <T> ByteArrayStreamOut writeNullable(@Nullable T data,
+    <T> @NotNull ByteArrayStreamOut writeNullable(@Nullable T data,
             @NotNull Consumer<@NotNull T> writer);
 
     @Override
-    @NotNull <T> ByteArrayStreamOut writeNullable(@Nullable T data, @NotNull Runnable writer);
+    <T> @NotNull ByteArrayStreamOut writeNullable(@Nullable T data, @NotNull Runnable writer);
 
     @Override
     @NotNull ByteArrayStreamOut writeVarIntEnum(@NotNull Enum<?> data);
@@ -147,12 +147,12 @@ public interface ByteArrayStreamOut extends StreamOut {
     @NotNull ByteArrayStreamOut writeByteEnum(@NotNull Enum<?> data);
 
     @Override
-    @NotNull <T> ByteArrayStreamOut writeList(@NotNull List<T> data,
-            @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer);
+    <T> @NotNull ByteArrayStreamOut writeList(@NotNull List<T> data,
+            @NotNull BiConsumer<@NotNull StreamOut, T> writer);
 
     @Override
-    @NotNull <T> ByteArrayStreamOut writeList(@NotNull List<T> data,
-            @NotNull Consumer<@NotNull T> writer);
+    <T> @NotNull ByteArrayStreamOut writeList(@NotNull List<T> data,
+            @NotNull Consumer<T> writer);
 
     @Override
     @NotNull ByteArrayStreamOut writeWritable(@NotNull Writable writable);

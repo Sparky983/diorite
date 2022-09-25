@@ -263,7 +263,7 @@ final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
     }
 
     @Override
-    public @NotNull <T> ByteArrayStreamOut writeNullable(final @Nullable T data,
+    public <T> @NotNull ByteArrayStreamOut writeNullable(final @Nullable T data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         delegate.writeNullable(data, writer);
@@ -271,7 +271,7 @@ final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
     }
 
     @Override
-    public @NotNull <T> ByteArrayStreamOut writeNullable(final @Nullable T data,
+    public <T> @NotNull ByteArrayStreamOut writeNullable(final @Nullable T data,
             final @NotNull Runnable writer) {
 
         delegate.writeNullable(data, writer);
@@ -300,16 +300,16 @@ final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
     }
 
     @Override
-    public @NotNull <T> ByteArrayStreamOut writeList(final @NotNull List<T> data,
-            final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
+    public <T> @NotNull ByteArrayStreamOut writeList(final @NotNull List<T> data,
+            final @NotNull BiConsumer<@NotNull StreamOut, T> writer) {
 
         delegate.writeList(data, writer);
         return this;
     }
 
     @Override
-    public @NotNull <T> ByteArrayStreamOut writeList(final @NotNull List<T> data,
-            final @NotNull Consumer<@NotNull T> writer) {
+    public <T> @NotNull ByteArrayStreamOut writeList(final @NotNull List<T> data,
+            final @NotNull Consumer<T> writer) {
 
         delegate.writeList(data, writer);
         return this;

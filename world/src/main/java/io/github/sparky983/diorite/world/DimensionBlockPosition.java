@@ -40,8 +40,10 @@ public interface DimensionBlockPosition extends BlockPosition {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    static DimensionBlockPosition of(final @NotNull Dimension dimension, final int x, final int y,
-            final int z) {
+    static @NotNull DimensionBlockPosition of(final @NotNull Dimension dimension,
+                                              final int x,
+                                              final int y,
+                                              final int z) {
 
         return new DimensionBlockPositionImpl(dimension, x, y, z);
     }
@@ -56,10 +58,11 @@ public interface DimensionBlockPosition extends BlockPosition {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    static DimensionBlockPosition of(final @NotNull Dimension dimension,
-            final @NotNull BlockPosition blockPosition) {
+    static @NotNull DimensionBlockPosition of(final @NotNull Dimension dimension,
+                                              final @NotNull BlockPosition blockPosition) {
 
         Preconditions.requireNotNull(blockPosition, "blockPosition");
+
         return of(dimension, blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
     }
 
@@ -67,6 +70,5 @@ public interface DimensionBlockPosition extends BlockPosition {
      * Returns the dimension of the position.
      */
     @Contract(pure = true)
-    @NotNull
-    Dimension getDimension();
+    @NotNull Dimension getDimension();
 }

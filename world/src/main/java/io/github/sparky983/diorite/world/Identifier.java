@@ -67,14 +67,8 @@ public interface Identifier {
      */
     @Contract(value = "_, _ -> new", pure = true)
     static Identifier of(
-            @Subst(DEFAULT_NAMESPACE) final
-            @Pattern(NAMESPACE_PATTERN)
-            @NotNull
-            String namespace,
-            @Subst("zombie") final
-            @Pattern(VALUE_PATTERN)
-            @NotNull
-            String value) {
+            @Subst(DEFAULT_NAMESPACE) final @Pattern(NAMESPACE_PATTERN) @NotNull String namespace,
+            @Subst("zombie") final @Pattern(VALUE_PATTERN) @NotNull String value) {
 
         return new IdentifierImpl(namespace, value);
     }
@@ -89,7 +83,7 @@ public interface Identifier {
      * @since 1.0..0
      */
     @Contract(value = "_ -> new", pure = true)
-    static Identifier of(final @Subst(DEFAULT_NAMESPACE) @NotNull String value) {
+    static Identifier of(@Subst(DEFAULT_NAMESPACE) final @NotNull String value) {
 
         return of(DEFAULT_NAMESPACE, value);
     }
@@ -127,8 +121,7 @@ public interface Identifier {
      */
     @Contract(pure = true)
     @Pattern(NAMESPACE_PATTERN)
-    @NotNull
-    String getNamespace();
+    @NotNull String getNamespace();
 
     /**
      * Returns the value.
@@ -137,8 +130,7 @@ public interface Identifier {
      */
     @Contract(pure = true)
     @Pattern(VALUE_PATTERN)
-    @NotNull
-    String getValue();
+    @NotNull String getValue();
 
     /**
      * Returns a string representation of the identifier that is parsable by
@@ -146,6 +138,6 @@ public interface Identifier {
      *
      * @since 1.0.0
      */
-    @NotNull
-    String toString();
+    @Contract(pure = true)
+    @NotNull String toString();
 }

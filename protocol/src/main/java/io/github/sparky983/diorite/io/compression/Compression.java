@@ -53,8 +53,7 @@ public interface Compression {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    StreamIn decompressed(@NotNull StreamIn inputStream);
+    @NotNull StreamIn decompressed(@NotNull StreamIn inputStream);
 
     /**
      * Returns a version of inputStream that apply decompression.
@@ -65,8 +64,7 @@ public interface Compression {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    InputStream decompressed(@NotNull InputStream inputStream);
+    @NotNull InputStream decompressed(@NotNull InputStream inputStream);
 
     /**
      * Returns a version of outputStream with compression applied.
@@ -77,8 +75,7 @@ public interface Compression {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    StreamOut compressed(@NotNull StreamOut outputStream);
+    @NotNull StreamOut compressed(@NotNull StreamOut outputStream);
 
     /**
      * Returns a version of outputStream with compression applied.
@@ -89,6 +86,5 @@ public interface Compression {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    OutputStream compressed(@NotNull OutputStream outputStream);
+    @NotNull OutputStream compressed(@NotNull OutputStream outputStream);
 }

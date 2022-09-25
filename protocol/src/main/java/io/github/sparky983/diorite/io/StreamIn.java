@@ -574,7 +574,7 @@ public interface StreamIn extends Closeable {
      * @since 1.0.0
      */
     @Contract(mutates = "this")
-    <T> @Unmodifiable @NotNull List<@NotNull T> readList(@NotNull Supplier<@NotNull T> reader);
+    <T> @Unmodifiable @NotNull List<T> readList(@NotNull Supplier<T> reader);
 
     /**
      * @throws RuntimeIOException if an io exception occurred.

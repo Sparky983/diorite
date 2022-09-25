@@ -106,7 +106,7 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     }
 
     @Override
-    public @NotNull <T extends ClientBoundPacket> Flux<T> on(final @NotNull Class<T> packetType) {
+    public <T extends ClientBoundPacket> @NotNull Flux<T> on(final @NotNull Class<T> packetType) {
 
         return packetListener.getPackets()
                 .asFlux()

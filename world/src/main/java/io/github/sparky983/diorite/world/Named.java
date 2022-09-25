@@ -33,6 +33,5 @@ public interface Named {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    String getName();
+    @NotNull String getName();
 }

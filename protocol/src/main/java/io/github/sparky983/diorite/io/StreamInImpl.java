@@ -404,7 +404,7 @@ final class StreamInImpl implements StreamIn {
     }
 
     @Override
-    public @NotNull <T> Optional<T> readOptional(
+    public <T> @NotNull Optional<T> readOptional(
             final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         Preconditions.requireNotNull(reader, "reader");
@@ -447,7 +447,7 @@ final class StreamInImpl implements StreamIn {
     }
 
     @Override
-    public @NotNull <T extends Enum<T>> T readVarIntEnum(final @NotNull Class<T> enumClass) {
+    public <T extends Enum<T>> @NotNull T readVarIntEnum(final @NotNull Class<T> enumClass) {
 
         Preconditions.requireNotNull(enumClass, "enumClass");
 
@@ -471,7 +471,7 @@ final class StreamInImpl implements StreamIn {
     }
 
     @Override
-    public @Unmodifiable @NotNull <T> List<@NotNull T> readList(
+    public <T> @Unmodifiable @NotNull List<@NotNull T> readList(
             final @NotNull Function<@NotNull StreamIn, @NotNull T> reader) {
 
         Preconditions.requireNotNull(reader, "reader");

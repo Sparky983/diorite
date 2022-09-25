@@ -33,6 +33,5 @@ public interface Identified {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    Identifier getIdentifier();
+    @NotNull Identifier getIdentifier();
 }

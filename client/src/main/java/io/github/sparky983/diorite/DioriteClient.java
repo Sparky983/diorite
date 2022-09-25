@@ -52,8 +52,7 @@ public interface DioriteClient extends AutoCloseable {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @NotNull
-    String getHost();
+    @NotNull String getHost();
 
     /**
      * Returns the port.
@@ -61,32 +60,28 @@ public interface DioriteClient extends AutoCloseable {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    @Port
-    int getPort();
+    @Port int getPort();
 
     /**
      * Returns the client's state.
      *
      * @since 1.0.0
      */
-    @NotNull
-    ChannelState getState();
+    @NotNull ChannelState getState();
 
     /**
      * Returns the client's username.
      *
      * @since 1.0.0
      */
-    @NotNull
-    String getName();
+    @NotNull String getName();
 
     /**
      * Returns the protocol version.
      *
      * @since 1.0.0
      */
-    @Range(from = 0, to = Integer.MAX_VALUE)
-    int getProtocolVersion();
+    @Range(from = 0, to = Integer.MAX_VALUE) int getProtocolVersion();
 
     /**
      * Connects and logs in the client (blocking) to the server, and returns itself.
@@ -96,15 +91,12 @@ public interface DioriteClient extends AutoCloseable {
      */
     @Contract("-> this")
     @Blocking
-    @NotNull
-    DioriteClient connect();
+    @NotNull DioriteClient connect();
+
+    @Blocking int ping();
 
     @Blocking
-    int ping();
-
-    @Blocking
-    @NotNull
-    String status();
+    @NotNull String status();
 
     /**
      * Sends the specified chat message.
@@ -114,8 +106,7 @@ public interface DioriteClient extends AutoCloseable {
      * @throws IllegalStateException if the player is not in play state.
      * @since 1.0.0
      */
-    @NotNull
-    Mono<Void> chat(@NotNull String message);
+    @NotNull Mono<Void> chat(@NotNull String message);
 
     /**
      * Sends the specified command.
@@ -124,8 +115,7 @@ public interface DioriteClient extends AutoCloseable {
      * @param args The command arguments.
      * @return A completable that completes if the command was sent successfully.
      */
-    @NotNull
-    Mono<Void> command(@NotNull String command, @NotNull String @NotNull ... args);
+    @NotNull Mono<Void> command(@NotNull String command, @NotNull String @NotNull ... args);
 
     /**
      * Disconnects the client from the server.
@@ -133,8 +123,7 @@ public interface DioriteClient extends AutoCloseable {
      * @throws IllegalStateException if the player is not connected.
      * @since 1.0.0
      */
-    @NotNull
-    Mono<Void> disconnect();
+    @NotNull Mono<Void> disconnect();
 
     @Override
     void close();
@@ -163,8 +152,7 @@ public interface DioriteClient extends AutoCloseable {
          * @since 1.0.0
          */
         @Contract(value = "_ -> this")
-        @NotNull
-        Builder host(@NotNull String host);
+        @NotNull Builder host(@NotNull String host);
 
         /**
          * Specifies the server port.
@@ -175,13 +163,11 @@ public interface DioriteClient extends AutoCloseable {
          * @since 1.0.0
          */
         @Contract(value = "_ -> this")
-        @NotNull
-        Builder port(@Port int port);
+        @NotNull Builder port(@Port int port);
 
         @ApiStatus.Experimental
         @Contract(value = "_ -> this")
-        @NotNull
-        Builder name(@NotNull String name);
+        @NotNull Builder name(@NotNull String name);
 
         /**
          * Sets the protocol version.
@@ -195,8 +181,7 @@ public interface DioriteClient extends AutoCloseable {
          */
         @ApiStatus.Experimental
         @Contract(value = "_ -> this")
-        @NotNull
-        Builder unsafe_ProtocolVersion(@Range(from = 0, to = Integer.MAX_VALUE) int protocolVersion);
+        @NotNull Builder unsafe_ProtocolVersion(@Range(from = 0, to = Integer.MAX_VALUE) int protocolVersion);
 
         /**
          * Builds the client.
@@ -204,7 +189,6 @@ public interface DioriteClient extends AutoCloseable {
          * @since 1.0.0
          */
         @Contract(value = "-> new")
-        @NotNull
-        DioriteClient build();
+        @NotNull DioriteClient build();
     }
 }

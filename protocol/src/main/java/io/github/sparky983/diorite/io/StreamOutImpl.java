@@ -360,7 +360,7 @@ final class StreamOutImpl implements StreamOut {
     }
 
     @Override
-    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
+    public <T> @NotNull StreamOut writeNullable(final @Nullable T data,
             final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -369,7 +369,7 @@ final class StreamOutImpl implements StreamOut {
     }
 
     @Override
-    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
+    public <T> @NotNull StreamOut writeNullable(final @Nullable T data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -381,7 +381,7 @@ final class StreamOutImpl implements StreamOut {
     }
 
     @Override
-    public @NotNull <T> StreamOut writeNullable(final @Nullable T data,
+    public <T> @NotNull StreamOut writeNullable(final @Nullable T data,
                                                             final @NotNull Runnable writer) {
 
         Preconditions.requireNotNull(writer, "writer");
@@ -420,7 +420,7 @@ final class StreamOutImpl implements StreamOut {
     }
 
     @Override
-    public @NotNull <T> StreamOut writeList(final @NotNull List<T> data,
+    public <T> @NotNull StreamOut writeList(final @NotNull List<T> data,
             final @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer) {
 
         Preconditions.requireNotNull(data, "data");
@@ -429,7 +429,7 @@ final class StreamOutImpl implements StreamOut {
     }
 
     @Override
-    public @NotNull <T> StreamOut writeList(final @NotNull List<T> data,
+    public <T> @NotNull StreamOut writeList(final @NotNull List<T> data,
             final @NotNull Consumer<@NotNull T> writer) {
 
         Preconditions.requireNotNull(writer, "writer");
