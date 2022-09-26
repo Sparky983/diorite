@@ -68,7 +68,7 @@ final class PacketListener implements Runnable {
     @Override
     public void run() {
 
-        while (stateful.getState() != ChannelState.NOT_CONNECTED) {
+        while (stateful.getState() != ChannelState.DISCONNECTED) {
             try {
                 final Packet packet = packetFormat.decode(inputStream);
                 packets.emitNext(packet, Sinks.EmitFailureHandler.FAIL_FAST);

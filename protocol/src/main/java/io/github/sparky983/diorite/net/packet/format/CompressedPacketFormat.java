@@ -89,7 +89,7 @@ final class CompressedPacketFormat implements PacketFormat {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        try (final ByteArrayStreamIn packetInputStream = StreamIn.createByteArrayInputStream(inputStream.readByteList())) {
+        try (final ByteArrayStreamIn packetInputStream = StreamIn.createByteArrayStream(inputStream.readByteList())) {
             final int dataLength = packetInputStream.readVarInt();
 
             final StreamIn decompressedDataInputStream;

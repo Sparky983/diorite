@@ -30,7 +30,7 @@ public enum ChannelState {
      *
      * @since 1.0.0
      */
-    NOT_CONNECTED,
+    DISCONNECTED,
 
     /**
      * The handshaking state.

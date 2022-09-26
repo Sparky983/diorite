@@ -19,7 +19,6 @@ package io.github.sparky983.diorite.net;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 import io.github.sparky983.diorite.net.packet.PacketRegistry;
 
@@ -44,7 +43,7 @@ public interface Stateful extends Closeable {
      * Note: this is not thread-safe as the only time the state should change is during handshake
      * and login which is done synchronously.
      *
-     * @throws IllegalArgumentException if the specified state is {@link ChannelState#NOT_CONNECTED}.
+     * @throws IllegalArgumentException if the specified state is {@link ChannelState#DISCONNECTED}.
      * @throws IllegalStateException if the state cannot be changed to the specified state.
      * @since 1.0.0
      */
@@ -53,7 +52,7 @@ public interface Stateful extends Closeable {
     /**
      * Returns a packet registry containing all usable packets in the current state.
      * <p>
-     * A {@link ChannelState#NOT_CONNECTED} returns an empty packet registry.
+     * A {@link ChannelState#DISCONNECTED} returns an empty packet registry.
      *
      * @since 1.0.0
      */

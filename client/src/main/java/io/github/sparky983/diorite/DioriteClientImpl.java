@@ -21,7 +21,6 @@ import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +31,7 @@ import io.github.sparky983.diorite.net.annotations.Port;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.LoginSuccessPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.SetCompressionPacket;
-import io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket;
+import io.github.sparky983.diorite.net.packet.serverbound.play.KeepAlivePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.handshaking.HandshakePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.login.LoginStartPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.play.ChatMessagePacket;
@@ -44,23 +43,20 @@ final class DioriteClientImpl implements DioriteClient {
 
     private static final ComponentLogger LOGGER = ComponentLogger.logger(DioriteClientImpl.class);
 
-    private final ExecutorService executor = Executors.newCachedThreadPool();
-
-    private final String host;
-    private final int port;
+    private final ExecutorService executor;
 
     private final String name;
     private final int protocolVersion;
 
-    private ClientChannel clientChannel;
+    private final ClientChannel clientChannel;
 
-    private DioriteClientImpl(final @NotNull String host,
-                              final @Port int port,
+    private DioriteClientImpl(final @NotNull ClientChannel clientChannel,
+                              final @NotNull ExecutorService executor,
                               final int protocolVersion,
                               final @NotNull String name) {
 
-        this.host = host;
-        this.port = port;
+        this.clientChannel = clientChannel;
+        this.executor = executor;
         this.protocolVersion = protocolVersion;
         this.name = name;
     }
@@ -68,13 +64,13 @@ final class DioriteClientImpl implements DioriteClient {
     @Override
     public @NotNull String getHost() {
 
-        return host;
+        return clientChannel.getHost();
     }
 
     @Override
     public @Port int getPort() {
 
-        return port;
+        return clientChannel.getPort();
     }
 
     @Override
@@ -92,68 +88,7 @@ final class DioriteClientImpl implements DioriteClient {
     @Override
     public @NotNull ChannelState getState() {
 
-        if (clientChannel == null) {
-            return ChannelState.NOT_CONNECTED;
-        }
-
         return clientChannel.getState();
-    }
-
-    @Override
-    public @NotNull DioriteClient connect() {
-
-        handshake(ChannelState.LOGIN);
-
-        clientChannel.sendPacket(new LoginStartPacket(name))
-                .block();
-
-        clientChannel.on(SetCompressionPacket.class)
-                .subscribe((packet) -> clientChannel.setCompression(packet.getThreshold()));
-
-        final LoginSuccessPacket loginSuccess = clientChannel.on(LoginSuccessPacket.class)
-                .blockFirst();
-
-        clientChannel.setState(ChannelState.PLAY);
-
-        clientChannel.on(KeepAlivePacket.class)
-                .flatMap((packet) ->
-                        clientChannel.sendPacket(new io.github.sparky983.diorite.net.packet.serverbound.play.KeepAlivePacket(packet.getKeepAliveId()))
-                )
-                .subscribe();
-
-        return this;
-    }
-
-    private void handshake(final @NotNull ChannelState nextState) {
-
-        if (getState() != ChannelState.NOT_CONNECTED) {
-            throw new IllegalStateException("Client is already connected.");
-        }
-
-        clientChannel = new ClientChannel(
-                new InetSocketAddress(host, port),
-                executor,
-                Sinks.many().replay().all()
-        );
-
-        clientChannel.sendPacket(new HandshakePacket(protocolVersion, host, port, ChannelState.LOGIN))
-                .block();
-
-        clientChannel.setState(nextState);
-    }
-
-    @Override
-    public int ping() {
-
-        // TODO(Sparky983): Implement ping
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
-    public @NotNull String status() {
-
-        // TODO(Sparky983): Implement status
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
@@ -189,7 +124,7 @@ final class DioriteClientImpl implements DioriteClient {
     @Override
     public @NotNull Mono<Void> disconnect() {
 
-        return Mono.fromFuture(CompletableFuture.runAsync(() -> clientChannel.close(), executor));
+        return Mono.fromFuture(CompletableFuture.runAsync(clientChannel::close, executor));
     }
 
     @Override
@@ -206,10 +141,11 @@ final class DioriteClientImpl implements DioriteClient {
 
     static class BuilderImpl implements Builder {
 
-        private String name;
-        private String host;
-        private int port;
-        private int protocolVersion;
+        private String name = "diorite_client";
+        private String host = DEFAULT_HOST;
+        private int port = DEFAULT_PORT;
+        private int protocolVersion = 758;
+        private volatile ClientChannel clientChannel;
 
         @Override
         public @NotNull Builder host(final @NotNull String host) {
@@ -244,26 +180,72 @@ final class DioriteClientImpl implements DioriteClient {
             return this;
         }
 
+        private void handshake(final @NotNull ExecutorService executor, final @NotNull ChannelState nextState) {
+
+            if (clientChannel != null) {
+                throw new IllegalStateException("Already connecting");
+            }
+
+            clientChannel = new ClientChannel(
+                    host,
+                    port,
+                    executor,
+                    Sinks.many().replay().all()
+            );
+
+            clientChannel.sendPacket(new HandshakePacket(protocolVersion, host, port, ChannelState.LOGIN)).block();
+            clientChannel.setState(nextState);
+        }
+
+        private @NotNull DioriteClient connect(final @NotNull ExecutorService executor) {
+
+            handshake(executor, ChannelState.LOGIN);
+
+            clientChannel.sendPacket(new LoginStartPacket(name)).block();
+
+            clientChannel.on(SetCompressionPacket.class)
+                    .subscribe((packet) -> clientChannel.setCompression(packet.getThreshold()));
+
+            final LoginSuccessPacket loginSuccess = clientChannel.on(LoginSuccessPacket.class)
+                    .blockFirst();
+
+            clientChannel.setState(ChannelState.PLAY);
+
+            clientChannel.on(io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket.class)
+                    .subscribe((packet) ->
+                            clientChannel.sendPacket(new KeepAlivePacket(packet.getKeepAliveId()))
+                                    .subscribe()
+                    );
+
+            return new DioriteClientImpl(
+                    clientChannel,
+                    executor,
+                    758,
+                    name
+            );
+        }
+
+        // TODO(Sparky983): Make connect (blocking) wait for connectAsync, not the other way around
+
         @Override
-        public @NotNull DioriteClient build() {
+        public @NotNull DioriteClient connect() {
 
-            if (host == null) {
-                host = DEFAULT_HOST;
-            }
+            final ExecutorService executorService = Executors.newCachedThreadPool();
 
-            if (port == 0) {
-                port = DEFAULT_PORT;
-            }
+            return connect(executorService);
+        }
 
-            if (protocolVersion == 0) {
-                protocolVersion = 758;
-            }
+        @Override
+        public @NotNull Mono<DioriteClient> connectAsync() {
 
-            if (name == null) {
-                name = "diorite_client";
-            }
+            final ExecutorService executorS = Executors.newCachedThreadPool();
 
-            return new DioriteClientImpl(host, port, protocolVersion, name);
+            return Mono.fromFuture(
+                    CompletableFuture.supplyAsync(
+                            this::connect,
+                            executorS
+                    )
+            ) ;
         }
     }
 }

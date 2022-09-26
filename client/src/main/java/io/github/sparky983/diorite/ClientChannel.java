@@ -16,11 +16,11 @@
 
 package io.github.sparky983.diorite;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +31,7 @@ import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Channel;
 import io.github.sparky983.diorite.net.ChannelState;
+import io.github.sparky983.diorite.net.annotations.Port;
 import io.github.sparky983.diorite.net.packet.Packet;
 import io.github.sparky983.diorite.net.packet.PacketRegistries;
 import io.github.sparky983.diorite.net.packet.PacketRegistry;
@@ -44,6 +45,8 @@ import reactor.core.publisher.Sinks;
 
 final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacket> {
 
+    private final String host;
+    private final int port;
     private final Socket client;
     private final StreamOut outputStream;
     private final StreamIn inputStream;
@@ -54,24 +57,26 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
 
     private final Sinks.Many<Packet> packets;
 
-    private ChannelState state;
+    private ChannelState state = ChannelState.HANDSHAKING;
     private PacketFormat packetFormat = PacketFormat.uncompressed(this);
 
     private PacketRegistry packetRegistry = PacketRegistry.EMPTY;
 
-    public ClientChannel(final @NotNull InetSocketAddress address,
+    public ClientChannel(final @NotNull String host,
+                         final @Port int port,
                          final @NotNull ExecutorService executor,
                          final Sinks.@NotNull Many<Packet> packets) {
 
         try {
-            client = new Socket(address.getAddress(), address.getPort());
+            client = new Socket(host, port);
             outputStream = StreamOut.from(client.getOutputStream());
             inputStream = StreamIn.from(client.getInputStream());
         } catch (final IOException e) {
             throw new RuntimeIOException(e);
         }
 
-        state = ChannelState.HANDSHAKING;
+        this.host = host;
+        this.port = port;
         this.executor = executor;
         this.packets = packets;
         this.packetListener = new PacketListener(packets, this, inputStream, packetFormat);
@@ -136,7 +141,7 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
         Preconditions.requireNotNull(state, "state");
 
         switch (state) {
-            case NOT_CONNECTED:
+            case DISCONNECTED:
                 this.packetRegistry = PacketRegistry.EMPTY;
                 break;
             case HANDSHAKING:
@@ -165,11 +170,23 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     public void close() {
 
         try {
-            setState(ChannelState.NOT_CONNECTED);
+            setState(ChannelState.DISCONNECTED);
             packets.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
             client.close();
         } catch (final IOException e) {
             throw new RuntimeIOException(e);
         }
+    }
+
+    @Contract(pure = true)
+    public @NotNull String getHost() {
+
+        return host;
+    }
+
+    @Contract(pure = true)
+    public int getPort() {
+
+        return port;
     }
 }

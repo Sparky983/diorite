@@ -32,9 +32,6 @@ import reactor.core.publisher.Mono;
  * @author Sparky983
  * @since 1.0.0
  */
-// TODO(Sparky983): Remove not connected state, clients should be initialized as already connected.
-// add connectAsync() for builder and remove build() method to ensure clients can only exist once
-// they are connected.
 public interface DioriteClient extends AutoCloseable {
 
     String DEFAULT_HOST = "localhost";
@@ -82,21 +79,6 @@ public interface DioriteClient extends AutoCloseable {
      * @since 1.0.0
      */
     @Range(from = 0, to = Integer.MAX_VALUE) int getProtocolVersion();
-
-    /**
-     * Connects and logs in the client (blocking) to the server, and returns itself.
-     *
-     * @throws IllegalStateException if the client has already connected.
-     * @since 1.0.0
-     */
-    @Contract("-> this")
-    @Blocking
-    @NotNull DioriteClient connect();
-
-    @Blocking int ping();
-
-    @Blocking
-    @NotNull String status();
 
     /**
      * Sends the specified chat message.
@@ -184,11 +166,22 @@ public interface DioriteClient extends AutoCloseable {
         @NotNull Builder unsafe_ProtocolVersion(@Range(from = 0, to = Integer.MAX_VALUE) int protocolVersion);
 
         /**
-         * Builds the client.
+         * Connects the client to the server.
          *
+         * @return The client.
+         * @since 1.0.0
+         */
+        @Blocking
+        @Contract(value = "-> new")
+        @NotNull DioriteClient connect();
+
+        /**
+         * Connects the client to the server asynchronously.
+         *
+         * @return Once connected, the client.
          * @since 1.0.0
          */
         @Contract(value = "-> new")
-        @NotNull DioriteClient build();
+        @NotNull Mono<DioriteClient> connectAsync();
     }
 }

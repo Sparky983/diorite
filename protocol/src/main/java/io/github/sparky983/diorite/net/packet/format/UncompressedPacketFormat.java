@@ -70,7 +70,7 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final byte[] data = inputStream.readBytes(length);
 
-        final StreamIn byteArrayInputStream = StreamIn.createByteArrayInputStream(data);
+        final StreamIn byteArrayInputStream = StreamIn.createByteArrayStream(data);
 
         final int id = byteArrayInputStream.readVarInt();
 
