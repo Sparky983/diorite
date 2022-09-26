@@ -94,11 +94,15 @@ final class DioriteClientImpl implements DioriteClient {
     @Override
     public @NotNull Mono<Void> chat(final @NotNull String message) {
 
+        assert getState() == ChannelState.PLAY;
+
         return clientChannel.sendPacket(new ChatMessagePacket(message));
     }
 
     @Override
     public @NotNull Mono<Void> command(final @NotNull String command, final @NotNull String @NotNull ... args) {
+
+        assert getState() == ChannelState.PLAY;
 
         final StringBuilder absoluteCommand = new StringBuilder('/' + command + ' ');
 
