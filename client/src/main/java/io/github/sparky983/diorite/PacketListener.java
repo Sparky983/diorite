@@ -40,7 +40,7 @@ final class PacketListener implements Runnable {
     private PacketFormat packetFormat;
 
     @Contract(pure = true)
-    public PacketListener(final @NotNull Sinks.Many<Packet> packets,
+    public PacketListener(final Sinks.@NotNull Many<Packet> packets,
                           final @NotNull Stateful stateful,
                           final @NotNull StreamIn inputStream,
                           final @NotNull PacketFormat initialPacketFormat) {
