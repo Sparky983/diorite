@@ -84,7 +84,7 @@ public final class PacketRegistries {
                 .registerPacket(OPEN_HORSE_WINDOW, OpenHorseWindowPacket::new)
                 .registerPacket(INITIALIZE_WORLD_BORDER, InitializeWorldBorderPacket::new)
                 .registerPacket(KEEP_ALIVE, KeepAlivePacket::new)
-                .registerPacket(CHUNK_DATA, ChunkDataPacket::new)
+                .registerPacket(CHUNK_DATA, ChunkDataAndUpdateLightPacket::new)
                 .registerPacket(EFFECT, EffectPacket::new)
                 .registerPacket(PARTICLE, ParticlePacket::new)
                 .registerPacket(UPDATE_LIGHT, UpdateLightPacket::new)

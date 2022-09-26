@@ -16,24 +16,28 @@
 
 package io.github.sparky983.diorite.net.packet.clientbound.play;
 
-import org.jetbrains.annotations.ApiStatus;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import io.github.sparky983.diorite.io.DecodeException;
 import io.github.sparky983.diorite.io.StreamIn;
 import io.github.sparky983.diorite.io.StreamOut;
+import io.github.sparky983.diorite.io.Writable;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-@ApiStatus.Experimental
-public class UpdateLightPacket implements ClientBoundPacket {
-
-    static final int LIGHT_ARRAY_LENGTH = 2048;
+public class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
 
     private final int chunkX;
     private final int chunkZ;
+    private final CompoundBinaryTag heightmaps;
+    private final byte[] data;
+    private final List<BlockEntity> blockEntities;
     private final boolean trustEdges;
     private final long[] skyLightMask;
     private final long[] blockLightMask;
@@ -43,15 +47,22 @@ public class UpdateLightPacket implements ClientBoundPacket {
     private final byte[][] blockLightArrays;
 
     @Contract(pure = true)
-    public UpdateLightPacket(final int chunkX,
-                             final int chunkZ,
-                             final boolean trustEdges,
-                             final long @NotNull [] skyLightMask,
-                             final long @NotNull [] blockLightMask,
-                             final long @NotNull [] emptySkyLightMask,
-                             final long @NotNull [] emptyBlockLightMask,
-                             final byte @NotNull [] @NotNull [] skyLightArrays,
-                             final byte @NotNull [] @NotNull [] blockLightArrays) {
+    public ChunkDataAndUpdateLightPacket(final int chunkX,
+                                         final int chunkZ,
+                                         final @NotNull CompoundBinaryTag heightmaps,
+                                         final byte @NotNull [] data,
+                                         final @NotNull List<@NotNull BlockEntity> blockEntities,
+                                         final boolean trustEdges,
+                                         final long[] skyLightMask,
+                                         final long[] blockLightMask,
+                                         final long[] emptySkyLightMask,
+                                         final long[] emptyBlockLightMask,
+                                         final byte[][] skyLightArrays,
+                                         final byte[][] blockLightArrays) {
+
+        Preconditions.requireNotNull(heightmaps, "heightmaps");
+        Preconditions.requireNotNull(data, "data");
+        Preconditions.requireContainsNoNulls(blockEntities, "blockEntities");
 
         Preconditions.requireNotNull(skyLightMask, "skyLightMask");
         Preconditions.requireNotNull(blockLightMask, "blockLightMask");
@@ -61,19 +72,22 @@ public class UpdateLightPacket implements ClientBoundPacket {
         for (int i = 0; i < skyLightArrays.length; i++) {
             final byte[] skyLightArray = skyLightArrays[i];
             Preconditions.requireNotNull(skyLightArray, "skyLightArrays[" + i + "]");
-            Preconditions.requireTrue(skyLightArray.length == LIGHT_ARRAY_LENGTH,
-                                  "skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
+            Preconditions.requireTrue(skyLightArray.length == UpdateLightPacket.LIGHT_ARRAY_LENGTH,
+                    "skyLightArrays[" + i + "] length must be " + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
         }
 
         for (int i = 0; i < blockLightArrays.length; i++) {
             final byte[] blockLightArray = blockLightArrays[i];
             Preconditions.requireNotNull(blockLightArray, "blockLightArrays[" + i + "]");
-            Preconditions.requireTrue(blockLightArray.length ==  LIGHT_ARRAY_LENGTH,
+            Preconditions.requireTrue(blockLightArray.length ==  UpdateLightPacket.LIGHT_ARRAY_LENGTH,
                     "blockLightArrays[" + i + "] length must be 2048");
         }
 
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
+        this.heightmaps = heightmaps;
+        this.data = data;
+        this.blockEntities = blockEntities;
         this.trustEdges = trustEdges;
         this.skyLightMask = skyLightMask;
         this.blockLightMask = blockLightMask;
@@ -84,12 +98,16 @@ public class UpdateLightPacket implements ClientBoundPacket {
     }
 
     @Contract(mutates = "param")
-    public UpdateLightPacket(final @NotNull StreamIn inputStream) {
+    public ChunkDataAndUpdateLightPacket(final @NotNull StreamIn inputStream) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        this.chunkX = inputStream.readVarInt();
-        this.chunkZ = inputStream.readVarInt();
+        this.chunkX = inputStream.readInt();
+        this.chunkZ = inputStream.readInt();
+        this.heightmaps = inputStream.readCompoundTag();
+        this.data = inputStream.readByteList();
+        this.blockEntities = inputStream.readList(BlockEntity::new);
+
         this.trustEdges = inputStream.readBoolean();
         this.skyLightMask = inputStream.readLongList();
         this.blockLightMask = inputStream.readLongList();
@@ -102,8 +120,8 @@ public class UpdateLightPacket implements ClientBoundPacket {
         final byte[][] skyLightArrays = new byte[skyLightArraysLength][];
         for (int i = 0; i < skyLightArraysLength; i++) {
             final byte[] skyLightArray = inputStream.readByteList();
-            if (skyLightArray.length != LIGHT_ARRAY_LENGTH) {
-                throw new DecodeException("skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
+            if (skyLightArray.length != UpdateLightPacket.LIGHT_ARRAY_LENGTH) {
+                throw new DecodeException("skyLightArrays[" + i + "] length must be " + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
             }
             skyLightArrays[i] = skyLightArray;
         }
@@ -113,12 +131,13 @@ public class UpdateLightPacket implements ClientBoundPacket {
         final byte[][] blockLightArrays = new byte[blockLightArraysLength][];
         for (int i = 0; i < blockLightArraysLength; i++) {
             final byte[] blockLightArray = inputStream.readByteList();
-            if (blockLightArray.length != LIGHT_ARRAY_LENGTH) {
+            if (blockLightArray.length != UpdateLightPacket.LIGHT_ARRAY_LENGTH) {
                 throw new DecodeException("blockLightArrays[" + i + "] length must be 2048");
             }
             blockLightArrays[i] = blockLightArray;
         }
         this.blockLightArrays = blockLightArrays;
+
     }
 
     @Override
@@ -126,8 +145,11 @@ public class UpdateLightPacket implements ClientBoundPacket {
 
         Preconditions.requireNotNull(outputStream, "outputStream");
 
-        outputStream.writeVarInt(this.chunkX)
-                .writeVarInt(chunkZ)
+        outputStream.writeInt(chunkX)
+                .writeInt(chunkZ)
+                .writeCompoundTag(heightmaps)
+                .writeByteList(data)
+                .writeList(blockEntities, StreamOut::writeWritable)
                 .writeBoolean(trustEdges)
                 .writeLongs(skyLightMask)
                 .writeLongs(blockLightMask)
@@ -148,7 +170,7 @@ public class UpdateLightPacket implements ClientBoundPacket {
     @Override
     public int getId() {
 
-        return ClientBoundPacketId.Play.UPDATE_LIGHT;
+        return ClientBoundPacketId.Play.CHUNK_DATA;
     }
 
     @Contract(pure = true)
@@ -161,6 +183,18 @@ public class UpdateLightPacket implements ClientBoundPacket {
     public int getChunkZ() {
 
         return chunkZ;
+    }
+
+    @Contract(pure = true)
+    public @NotNull CompoundBinaryTag getHeightmaps() {
+
+        return heightmaps;
+    }
+
+    @Contract(pure = true)
+    public byte @NotNull [] getData() {
+
+        return data;
     }
 
     @Contract(pure = true)
@@ -203,5 +237,80 @@ public class UpdateLightPacket implements ClientBoundPacket {
     public byte @NotNull [] @NotNull [] getBlockLightArrays() {
 
         return blockLightArrays;
+    }
+
+    @Contract(pure = true)
+    public @NotNull List<@NotNull BlockEntity> getBlockEntities() {
+
+        return blockEntities;
+    }
+
+    public static final class BlockEntity implements Writable {
+
+        private final byte packedXZ;
+        private final short y;
+        private final int type;
+        private final CompoundBinaryTag data;
+
+        @Contract(pure = true)
+        public BlockEntity(final byte packedXZ,
+                           final short y,
+                           final int type,
+                           final @NotNull CompoundBinaryTag data) {
+
+            Preconditions.requireNotNull(data, "data");
+
+            this.packedXZ = packedXZ;
+            this.y = y;
+            this.type = type;
+            this.data = data;
+        }
+
+        @Contract(mutates = "param")
+        public BlockEntity(final @NotNull StreamIn inputStream) {
+
+            Preconditions.requireNotNull(inputStream, "inputStream");
+
+            this.packedXZ = inputStream.readByte();
+            this.y = inputStream.readShort();
+            this.type = inputStream.readVarInt();
+            this.data = inputStream.readCompoundTag();
+        }
+
+        @Override
+        public void write(final @NotNull StreamOut outputStream) {
+
+            Preconditions.requireNotNull(outputStream, "outputStream");
+
+            outputStream.writeByte(packedXZ)
+                    .writeShort(y)
+                    .writeVarInt(type)
+                    .writeCompoundTag(data);
+        }
+
+        @Contract(pure = true)
+        public byte getPackedXZ() {
+
+            return packedXZ;
+        }
+
+        @Contract(pure = true)
+        public short getY() {
+
+            return y;
+        }
+
+        @Contract(pure = true)
+        public int getType() {
+
+            return type;
+        }
+
+        @Contract(pure = true)
+        public @NotNull CompoundBinaryTag getData() {
+
+            return data;
+        }
+
     }
 }
