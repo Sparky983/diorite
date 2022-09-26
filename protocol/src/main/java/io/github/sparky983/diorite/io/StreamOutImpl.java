@@ -17,6 +17,7 @@
 package io.github.sparky983.diorite.io;
 
 import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -223,6 +224,8 @@ final class StreamOutImpl implements StreamOut {
 
     @Override
     public @NotNull StreamOut writeCompoundTag(final @NotNull CompoundBinaryTag data) {
+
+        // TODO(Sparky983): Empty compound tag should write an END tag
 
         try {
             BINARY_TAG_WRITER.write(data, (DataOutput) outputStream);

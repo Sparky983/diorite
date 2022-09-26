@@ -16,14 +16,20 @@
 
 package io.github.sparky983.diorite.net.packet;
 
+import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.Optional;
 
+import io.github.sparky983.diorite.io.DecodeException;
+import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.StreamIn;
 import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;
@@ -38,17 +44,17 @@ import io.github.sparky983.diorite.util.Preconditions;
 // TODO(Sparky983): move to world module
 public final class ItemStack implements Writable {
 
-    private final int itemId;
-    private final byte itemCount;
+    private final int itemId; // Use ItemType enum
+    private final byte amount;
     private final CompoundBinaryTag nbt;
 
     @Contract(pure = true)
-    public ItemStack(final int itemId, final byte itemCount, final @NotNull CompoundBinaryTag nbt) {
+    public ItemStack(final int itemId, final byte amount, final @NotNull CompoundBinaryTag nbt) {
 
         Preconditions.requireNotNull(nbt, "nbt");
 
         this.itemId = itemId;
-        this.itemCount = itemCount;
+        this.amount = amount;
 
         this.nbt = nbt;
     }
@@ -58,11 +64,13 @@ public final class ItemStack implements Writable {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        return inputStream.readOptional(() -> new ItemStack(
-                inputStream.readVarInt(),
-                inputStream.readByte(),
-                inputStream.readCompoundTag()
-        ));
+        return inputStream.readOptional(() -> {
+            final int itemId = inputStream.readVarInt();
+            final byte itemCount = inputStream.readByte();
+            final CompoundBinaryTag nbt = inputStream.readCompoundTag();
+
+            return new ItemStack(itemId, itemCount, nbt);
+        });
     }
 
     @Contract(mutates = "param")
@@ -70,13 +78,7 @@ public final class ItemStack implements Writable {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        return inputStream.readOptional(() -> {
-            final int id = inputStream.readVarInt();
-            final byte count = inputStream.readByte();
-            final CompoundBinaryTag nbt = inputStream.readCompoundTag();
-
-            return new ItemStack(id, count, nbt);
-        }).orElse(null);
+        return read(inputStream).orElse(null);
     }
 
     @Override
@@ -85,7 +87,26 @@ public final class ItemStack implements Writable {
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         outputStream.writeVarInt(itemId)
-                .writeByte(itemCount)
+                .writeByte(amount)
                 .writeCompoundTag(nbt);
+    }
+
+    @ApiStatus.Experimental
+    @Contract(pure = true)
+    public int getItemId() {
+
+        return itemId;
+    }
+
+    @Contract(pure = true)
+    public byte getAmount() {
+
+        return amount;
+    }
+
+    @Contract(pure = true)
+    public @NotNull CompoundBinaryTag getNbt() {
+
+        return nbt;
     }
 }

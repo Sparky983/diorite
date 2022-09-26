@@ -16,7 +16,10 @@
 
 package io.github.sparky983.diorite.io;
 
+import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.BinaryTagType;
+import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -265,11 +268,26 @@ final class StreamInImpl implements StreamIn {
     @Override
     public @NotNull CompoundBinaryTag readCompoundTag() {
 
-        try {
-            return BINARY_TAG_READER.read((DataInput) inputStream);
-        } catch (final IOException e) {
-            throw new RuntimeIOException(e);
+        final byte tagType = readByte();
+
+        final CompoundBinaryTag nbt;
+
+        if (tagType == BinaryTagTypes.END.id()) {
+            // inputStream.readTag(BinaryTagTypes.END);
+            nbt = CompoundBinaryTag.empty();
+        } else if (tagType == BinaryTagTypes.COMPOUND.id()) {
+            skip(readUnsignedShort());
+            try {
+                nbt = BinaryTagTypes.COMPOUND.read(inputStream);
+            } catch (final IOException e) {
+                throw new RuntimeIOException(e);
+            }
+        } else {
+            throw new DecodeException(
+                    "Expected EMPTY or COMPOUND tag. Was 0x" + Integer.toHexString(tagType));
         }
+
+        return nbt;
     }
 
     @Override
