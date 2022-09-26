@@ -26,27 +26,33 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Direction;
 import io.github.sparky983.diorite.world.Vector;
+import io.github.sparky983.diorite.world.Velocity;
 
 public abstract class EntityMovementPacket implements ClientBoundPacket {
 
     private static final int BLOCK_SCALING_FACTOR = 32 * 128;
 
     protected final int entityId;
-    protected final Vector delta;
+    protected final short dx;
+    protected final short dy;
+    protected final short dz;
     protected final Direction direction;
     protected final boolean isOnGround;
 
     @Contract(pure = true)
     protected EntityMovementPacket(final int entityId,
-                                   final @NotNull Vector delta,
+                                   final short dx,
+                                   final short dy,
+                                   final short dz,
                                    final @NotNull Direction direction,
                                    final boolean isOnGround) {
 
-        Preconditions.requireNotNull(delta, "delta");
         Preconditions.requireNotNull(direction, "direction");
 
         this.entityId = entityId;
-        this.delta = delta;
+        this.dx = dx;
+        this.dy = dy;
+        this.dz = dz;
         this.direction = direction;
         this.isOnGround = isOnGround;
     }
@@ -57,16 +63,19 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
     @Contract(pure = true)
     protected EntityMovementPacket(final @NotNull StreamIn inputStream,
                                    final int entityId,
-                                   final @NotNull Vector delta,
+                                   final short dx,
+                                   final short dy,
+                                   final short dz,
                                    final @NotNull Direction direction,
                                    final boolean isOnGround) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
-        Preconditions.requireNotNull(delta, "delta");
         Preconditions.requireNotNull(direction, "direction");
 
         this.entityId = entityId;
-        this.delta = delta;
+        this.dx = dx;
+        this.dy = dy;
+        this.dz = dz;
         this.direction = direction;
         this.isOnGround = isOnGround;
     }
@@ -78,9 +87,21 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    public @NotNull Vector getDelta() {
+    public short getDx() {
 
-        return delta;
+        return dx;
+    }
+
+    @Contract(pure = true)
+    public short getDy() {
+
+        return dy;
+    }
+
+    @Contract(pure = true)
+    public short getDz() {
+
+        return dz;
     }
 
     @Contract(pure = true)
@@ -98,10 +119,14 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
     public static final class Position extends EntityMovementPacket {
 
         @Contract(pure = true)
-        public Position(final int entityId, final @NotNull Vector delta, final boolean isOnGround) {
+        public Position(final int entityId,
+                        final short dx,
+                        final short dy,
+                        final short dz,
+                        final boolean isOnGround) {
 
             // TODO(Sparky983): Use singleton zero direction
-            super(entityId, delta, Direction.of((byte) 0, (byte) 0), isOnGround);
+            super(entityId, dx, dy, dz, Direction.of((byte) 0, (byte) 0), isOnGround);
         }
 
         @Contract(mutates = "param")
@@ -110,11 +135,9 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
             super(
                     inputStream,
                     inputStream.readVarInt(),
-                    Vector.of(
-                            inputStream.readDouble(),
-                            inputStream.readDouble(),
-                            inputStream.readDouble()
-                    ),
+                    inputStream.readShort(),
+                    inputStream.readShort(),
+                    inputStream.readShort(),
                     Direction.of((byte) 0, (byte) 0),
                     inputStream.readBoolean()
             );
@@ -124,9 +147,9 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         public void write(final @NotNull StreamOut outputStream) {
 
             outputStream.writeVarInt(entityId)
-                    .writeDouble(delta.getX())
-                    .writeDouble(delta.getY())
-                    .writeDouble(delta.getZ())
+                    .writeDouble(dx)
+                    .writeDouble(dy)
+                    .writeDouble(dz)
                     .writeBoolean(isOnGround);
         }
 
@@ -141,12 +164,13 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public PositionAndRotation(final int entityId,
-                                   final @NotNull Vector delta,
+                                   final short dx,
+                                   final short dy,
+                                   final short dz,
                                    final @NotNull Direction direction,
                                    final boolean isOnGround) {
 
-            // TODO(Sparky983): Use singleton zero direction
-            super(entityId, delta, direction, isOnGround);
+            super(entityId, dx, dy, dz, direction, isOnGround);
         }
 
         @Contract(mutates = "param")
@@ -155,11 +179,9 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
             super(
                     inputStream,
                     inputStream.readVarInt(),
-                    Vector.of(
-                            inputStream.readDouble(),
-                            inputStream.readDouble(),
-                            inputStream.readDouble()
-                    ),
+                    inputStream.readShort(),
+                    inputStream.readShort(),
+                    inputStream.readShort(),
                     inputStream.readDirection(),
                     inputStream.readBoolean()
             );
@@ -169,9 +191,9 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
         public void write(final @NotNull StreamOut outputStream) {
 
             outputStream.writeVarInt(entityId)
-                    .writeDouble(delta.getX())
-                    .writeDouble(delta.getY())
-                    .writeDouble(delta.getZ())
+                    .writeDouble(dx)
+                    .writeDouble(dy)
+                    .writeDouble(dz)
                     .writeDirection(direction)
                     .writeBoolean(isOnGround);
         }
@@ -190,8 +212,7 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
                         final @NotNull Direction direction,
                         final boolean isOnGround) {
 
-            // TODO(Sparky983): Use singleton zero vector
-            super(entityId, Vector.of(0, 0, 0), direction, isOnGround);
+            super(entityId, (short) 0, (short) 0, (short) 0, direction, isOnGround);
         }
 
         @Contract(mutates = "param")
@@ -200,7 +221,9 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
             super(
                     inputStream,
                     inputStream.readVarInt(),
-                    Vector.of(0, 0, 0),
+                    (short) 0,
+                    (short) 0,
+                    (short) 0,
                     inputStream.readDirection(),
                     inputStream.readBoolean()
             );
