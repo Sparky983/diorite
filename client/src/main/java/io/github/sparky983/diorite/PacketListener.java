@@ -78,7 +78,7 @@ final class PacketListener implements Runnable {
                     stateful.close();
                     break;
                 }
-                LOGGER.warn("Ignorable error ({}): {}", stateful.getState(), e.getMessage());
+                LOGGER.warn("Ignorable error: {}", e.getMessage());
             } catch (final Exception e) {
                 e.printStackTrace();
                 stateful.close();
