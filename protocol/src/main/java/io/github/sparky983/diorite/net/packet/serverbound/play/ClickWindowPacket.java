@@ -151,6 +151,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Clicks</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -182,6 +183,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Shift clicks</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -203,6 +205,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Num keys</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -239,6 +242,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Middle clicks</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -255,6 +259,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Drops</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -276,6 +281,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Drags</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
@@ -291,6 +297,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
          *         <td>Normal</td>
          *         <td>Add slot for left-mouse drag</td>
          *     </tr>
+         *     <tr>
          *         <td>2</td>
          *         <td>-999</td>
          *         <td>Ending left-mouse drag</td>
@@ -316,7 +323,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Starting middle mouse drag, only defined for creative players in non-player
          *             inventories. (Note: the vanilla client will still incorrectly send this for
-         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</)
+         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          *     <tr>
@@ -325,7 +332,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Add slot for middle-mouse drag, only defined for creative players in
          *             non-player inventories. (Note: the vanilla client will still incorrectly send
-         *             this for non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</)
+         *             this for non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          *     <tr>
@@ -334,7 +341,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Ending middle mouse drag, only defined for creative players in non-player
          *             inventories. (Note: the vanilla client will still incorrectly send this for
-         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</)
+         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          * </table>
@@ -343,6 +350,7 @@ public class ClickWindowPacket implements ServerBoundPacket {
 
         /**
          * <table>
+         *     <caption>Double click</caption>
          *     <tr>
          *         <th>Button</th>
          *         <th>Slot</th>
