@@ -16,9 +16,6 @@
 
 package io.github.sparky983.diorite.world;
 
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A dimension.
  *
@@ -27,9 +24,4 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Dimension extends Named, Identified {
 
-    @ApiStatus.Internal
-    static Dimension of(final @NotNull Identifier name) {
-
-        return new DimensionImpl(name);
-    }
 }
