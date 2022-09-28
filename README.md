@@ -3,6 +3,12 @@
 Diorite is a fast, powerful, reactive library to enable the quick and easy creation of Minecraft 
 bots. 
 
+## Quick Links
+
+- Wiki: https://github.com/Sparky983/diorite/wiki
+- Maven Repository: https://repo.sparky983.me/
+- Github: https://github.com/sparky983/diorite
+
 ## Installation
 
 Gradle (kotlin)
