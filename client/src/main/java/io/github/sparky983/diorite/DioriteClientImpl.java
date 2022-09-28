@@ -41,8 +41,6 @@ import reactor.core.publisher.Sinks;
 
 final class DioriteClientImpl implements DioriteClient {
 
-    private static final ComponentLogger LOGGER = ComponentLogger.logger(DioriteClientImpl.class);
-
     private final ExecutorService executor;
 
     private final String name;
