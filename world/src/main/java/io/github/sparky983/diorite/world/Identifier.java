@@ -44,12 +44,16 @@ public interface Identifier {
 
     /**
      * The pattern all values must follow.
+     *
+     * @since 1.0.0
      */
     @Language("RegExp")
     String VALUE_PATTERN = "[\\da-z_/.-]+";
 
     /**
      * The default namespace. This is used if a namespace is not specified in an identifier.
+     *
+     * @since 1.0.0
      */
     @Pattern(NAMESPACE_PATTERN)
     String DEFAULT_NAMESPACE = "minecraft";

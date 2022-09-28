@@ -16,7 +16,47 @@
 
 package io.github.sparky983.diorite.world;
 
+/**
+ * Minecraft difficulties.
+ *
+ * @author Sparky983
+ * @since 1.0.0
+ */
 public enum Difficulty {
 
-    PEACEFUL, EASY, NORMAL, HARD
+    /**
+     * Peaceful mode.
+     * <p>
+     * Neutral and hostile mobs don't spawn in this difficulty.
+     *
+     * @since 1.0.0
+     */
+    PEACEFUL,
+
+    /**
+     * Easy mode.
+     * <p>
+     * All mobs can spawn in this mode.
+     *
+     * @since 1.0.0
+     */
+    EASY,
+
+    /**
+     * Normal mode.
+     * <p>
+     * All mobs can spawn in this mode.
+     *
+     * @since 1.0.0
+     */
+    NORMAL,
+
+    /**
+     * Hard mode.
+     * <p>
+     * All mobs can spawn in this mode.
+     *
+     * @since 1.0.0
+     */
+    HARD
 }

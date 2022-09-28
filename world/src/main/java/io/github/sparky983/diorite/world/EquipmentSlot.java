@@ -16,12 +16,53 @@
 
 package io.github.sparky983.diorite.world;
 
+/**
+ * A slot for equipment.
+ *
+ * @author Sparky983
+ * @since 1.0.0
+ */
 public enum EquipmentSlot {
 
+    /**
+     * The player's main hand.
+     *
+     * @since 1.0.0
+     */
     MAIN_HAND,
+
+    /**
+     * The player's off hand.
+     *
+     * @since 1.0.0
+     */
     OFF_HAND,
+
+    /**
+     * The player's boot slot.
+     *
+     * @since 1.0.0
+     */
     BOOTS,
+
+    /**
+     * The player's leggings slot.
+     *
+     * @since 1.0.0
+     */
     LEGGINGS,
+
+    /**
+     * The player's chestplate slot.
+     *
+     * @since 1.0.0
+     */
     CHESTPLATE,
+
+    /**
+     * The player's helmet slot.
+     *
+     * @since 1.0.0
+     */
     HELMET
 }

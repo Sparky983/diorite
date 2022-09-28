@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Something that has an {@link Identifier}.
+ * Something that has is identified by an {@link Identifier}.
  *
  * @author Sparky983
  * @since 1.0.0

@@ -34,9 +34,26 @@ import reactor.core.publisher.Mono;
  */
 public interface DioriteClient extends AutoCloseable {
 
+    /**
+     * The default host if none was specified.
+     *
+     * @since 1.0.0
+     */
     String DEFAULT_HOST = "localhost";
+
+    /**
+     * The default port if none was specified.
+     *
+     * @since 1.0.0
+     */
     @Port int DEFAULT_PORT = 25565;
 
+    /**
+     * Creates a new client builder.
+     *
+     * @return The created builder.
+     * @since 1.0.0
+     */
     @Contract(value = "-> new", pure = true)
     static @NotNull Builder builder() {
 
@@ -107,6 +124,7 @@ public interface DioriteClient extends AutoCloseable {
      */
     @NotNull Mono<Void> disconnect();
 
+    @Blocking
     @Override
     void close();
 
@@ -119,7 +137,7 @@ public interface DioriteClient extends AutoCloseable {
     void awaitDisconnect();
 
     /**
-     * A client builder.
+     * The client builder.
      *
      * @since 1.0.0
      */

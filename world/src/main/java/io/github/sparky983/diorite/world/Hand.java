@@ -16,6 +16,12 @@
 
 package io.github.sparky983.diorite.world;
 
+/**
+ * A player's hand.
+ *
+ * @author Sparky983
+ * @since 1.0.0
+ */
 public enum Hand {
 
     /**

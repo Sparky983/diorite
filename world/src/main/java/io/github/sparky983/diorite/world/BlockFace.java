@@ -16,12 +16,53 @@
 
 package io.github.sparky983.diorite.world;
 
+/**
+ * A block face.
+ *
+ * @author Sparky983
+ * @since 1.0.0
+ */
 public enum BlockFace {
 
+    /**
+     * The bottom face of a block.
+     *
+     * @since 1.0.0
+     */
     BOTTOM,
+
+    /**
+     * The top face of a block.
+     *
+     * @since 1.0.0
+     */
     TOP,
+
+    /**
+     * the north face of a block.
+     *
+     * @since 1.0.0
+     */
     NORTH,
+
+    /**
+     * The south face of a block.
+     *
+     * @since 1.0.0
+     */
     SOUTH,
+
+    /**
+     * The west face of a block.
+     *
+     * @since 1.0.0
+     */
     WEST,
+
+    /**
+     * The east face of a block.
+     *
+     * @since 1.0.0
+     */
     EAST
 }

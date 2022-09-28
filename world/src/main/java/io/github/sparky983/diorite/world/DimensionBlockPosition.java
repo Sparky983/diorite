@@ -68,6 +68,8 @@ public interface DimensionBlockPosition extends BlockPosition {
 
     /**
      * Returns the dimension of the position.
+     *
+     * @since 1.0.0
      */
     @Contract(pure = true)
     @NotNull Dimension getDimension();

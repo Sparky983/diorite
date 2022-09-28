@@ -21,8 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.github.sparky983.diorite.util.Preconditions;
 
-final class DimensionBlockPositionImpl implements
-        DimensionBlockPosition {
+final class DimensionBlockPositionImpl implements DimensionBlockPosition {
 
     private final Dimension dimension;
     private final int x;

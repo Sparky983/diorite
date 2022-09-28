@@ -24,8 +24,36 @@ package io.github.sparky983.diorite.world;
  */
 public enum CardinalDirection {
 
+    /*
+     * Not in order of NESW.
+     * Done inorder to match the ids in https://web.archive.org/web/20220303180956/https://wiki.vg/Protocol#Spawn_Painting.
+     */
+
+    /**
+     * South.
+     *
+     * @since 1.0.0
+     */
     SOUTH,
+
+    /**
+     * West.
+     *
+     * @since 1.0.0
+     */
     WEST,
+
+    /**
+     * North.
+     *
+     * @since 1.0.0
+     */
     NORTH,
+
+    /**
+     * East.
+     *
+     * @since 1.0.0
+     */
     EAST
 }
