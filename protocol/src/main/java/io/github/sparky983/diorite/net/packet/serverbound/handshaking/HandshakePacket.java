@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class HandshakePacket implements ServerBoundPacket {
+public final class HandshakePacket implements ServerBoundPacket {
 
     private final int protocolVersion;
     private final String serverAddress;

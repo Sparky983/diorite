@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class VehicleMovePacket implements ServerBoundPacket {
+public final class VehicleMovePacket implements ServerBoundPacket {
 
     private final double x;
     private final double y;

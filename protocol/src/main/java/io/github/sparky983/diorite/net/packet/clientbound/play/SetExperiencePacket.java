@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SetExperiencePacket implements ClientBoundPacket {
+public final class SetExperiencePacket implements ClientBoundPacket {
 
     private final float experienceBar;
     private final int level;

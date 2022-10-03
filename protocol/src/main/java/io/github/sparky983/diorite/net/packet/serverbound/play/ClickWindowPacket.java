@@ -32,7 +32,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ClickWindowPacket implements ServerBoundPacket {
+public final class ClickWindowPacket implements ServerBoundPacket {
 
     private final int windowId;
     private final int stateId;

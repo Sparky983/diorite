@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class BlockChangePacket implements ClientBoundPacket {
+public final class BlockChangePacket implements ClientBoundPacket {
 
     private final BlockPosition location;
     private final int blockId;

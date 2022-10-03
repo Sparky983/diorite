@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class DisplayScoreboardPacket implements ClientBoundPacket {
+public final class DisplayScoreboardPacket implements ClientBoundPacket {
 
     private final static int MAX_SCORE_NAME_LENGTH = 16;
 

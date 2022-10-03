@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SetRecipeBookStatePacket implements ServerBoundPacket {
+public final class SetRecipeBookStatePacket implements ServerBoundPacket {
 
     private final Book book;
     private final boolean isOpen;

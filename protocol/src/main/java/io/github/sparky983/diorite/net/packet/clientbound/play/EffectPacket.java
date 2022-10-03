@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
 @ApiStatus.Experimental
-public class EffectPacket implements ClientBoundPacket {
+public final class EffectPacket implements ClientBoundPacket {
 
     private final int effectId; // TODO(Sparky983): enum
     private final BlockPosition location;

@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class LoginSuccessPacket implements ClientBoundPacket {
+public final class LoginSuccessPacket implements ClientBoundPacket {
 
     private static final int MAX_USERNAME_LENGTH = 16;
 

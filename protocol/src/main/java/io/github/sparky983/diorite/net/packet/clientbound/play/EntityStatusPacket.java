@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class EntityStatusPacket implements ClientBoundPacket {
+public final class EntityStatusPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final byte entityStatus; // Use entity statuses enum

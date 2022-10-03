@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ChangeGameStatePacket implements ClientBoundPacket {
+public final class ChangeGameStatePacket implements ClientBoundPacket {
 
     private final Reason reason;
     private final float value;

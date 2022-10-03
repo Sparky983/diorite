@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class AdvancementsPacket implements ClientBoundPacket {
+public final class AdvancementsPacket implements ClientBoundPacket {
 
     // TODO(Sparky983): Parse this, can't be bothered
 

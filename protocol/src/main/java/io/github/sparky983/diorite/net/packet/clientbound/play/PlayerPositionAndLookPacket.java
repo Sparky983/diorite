@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class PlayerPositionAndLookPacket implements ClientBoundPacket {
+public final class PlayerPositionAndLookPacket implements ClientBoundPacket {
 
     private final byte X_IS_RELATIVE_BIT = 0b00000001;
     private final byte Y_IS_RELATIVE_BIT = 0b00000010;

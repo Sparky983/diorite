@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 
-public class NamedSoundEffectPacket implements ClientBoundPacket {
+public final class NamedSoundEffectPacket implements ClientBoundPacket {
 
     private static final int POSITION_SCALING_FACTOR = 8; // 3 bits
 

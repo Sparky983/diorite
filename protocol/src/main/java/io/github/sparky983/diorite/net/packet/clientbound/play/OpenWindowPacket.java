@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class OpenWindowPacket implements ClientBoundPacket {
+public final class OpenWindowPacket implements ClientBoundPacket {
 
     private final int windowId;
     private final int windowType; // TODO(Sparky983): Represent as an inventory type enum

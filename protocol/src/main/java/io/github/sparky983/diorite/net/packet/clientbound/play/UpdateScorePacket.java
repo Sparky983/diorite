@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class UpdateScorePacket implements ClientBoundPacket {
+public final class UpdateScorePacket implements ClientBoundPacket {
 
     private final static int MAX_ENTITY_NAME_LENGTH = 40;
     private final static int MAX_OBJECTIVE_NAME_LENGTH = 40;

@@ -31,7 +31,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.EquipmentSlot;
 
-public class EntityEquipmentPacket implements ClientBoundPacket {
+public final class EntityEquipmentPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final List<Equipment> equipment;

@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ChatMessagePacket implements ServerBoundPacket {
+public final class ChatMessagePacket implements ServerBoundPacket {
 
     private static final int MAX_MESSAGE_LENGTH = 256;
 

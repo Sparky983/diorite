@@ -32,7 +32,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class TeamsPacket implements ClientBoundPacket {
+public final class TeamsPacket implements ClientBoundPacket {
 
     private static final int MAX_TEAM_NAME_LENGTH = 16;
 

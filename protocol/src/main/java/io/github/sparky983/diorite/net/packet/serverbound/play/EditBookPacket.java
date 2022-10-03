@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Hand;
 
-public class EditBookPacket implements ServerBoundPacket {
+public final class EditBookPacket implements ServerBoundPacket {
 
     private final Hand hand;
     private final List<String> entries;

@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ChatMessagePacket implements ClientBoundPacket {
+public final class ChatMessagePacket implements ClientBoundPacket {
 
     private final Component message;
     private final Position position;

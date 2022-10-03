@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Direction;
 import io.github.sparky983.diorite.world.Position;
 
-public class EntityTeleportPacket implements ClientBoundPacket {
+public final class EntityTeleportPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final Position location;

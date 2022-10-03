@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class EnterCombatEventPacket implements ClientBoundPacket {
+public final class EnterCombatEventPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public EnterCombatEventPacket() {

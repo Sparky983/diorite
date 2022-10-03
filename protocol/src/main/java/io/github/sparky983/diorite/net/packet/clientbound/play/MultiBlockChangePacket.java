@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class MultiBlockChangePacket implements ClientBoundPacket {
+public final class MultiBlockChangePacket implements ClientBoundPacket {
 
     // TODO(Sparky983): do better decoding of chunk section position and blocks
     private final long chunkSectionPosition;

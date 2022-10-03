@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class EntityEffectPacket implements ClientBoundPacket {
+public final class EntityEffectPacket implements ClientBoundPacket {
 
     private static final byte AMBIENT_BIT = 0b00000001;
     private static final byte SHOW_PARTICLES_BIT = 0b00000010;

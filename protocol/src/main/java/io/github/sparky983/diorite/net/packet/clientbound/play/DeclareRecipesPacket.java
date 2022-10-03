@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class DeclareRecipesPacket implements ClientBoundPacket {
+public final class DeclareRecipesPacket implements ClientBoundPacket {
 
     private final byte[] recipes; // TOOD(Sparky983): Do proper parsing of recipes
 

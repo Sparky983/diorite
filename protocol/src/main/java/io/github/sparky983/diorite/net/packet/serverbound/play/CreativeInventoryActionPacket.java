@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class CreativeInventoryActionPacket implements ServerBoundPacket {
+public final class CreativeInventoryActionPacket implements ServerBoundPacket {
 
     private final short slot;
     private final @Nullable ItemStack clickedItem;

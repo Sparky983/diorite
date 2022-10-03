@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class UpdateViewPositionPacket implements ClientBoundPacket {
+public final class UpdateViewPositionPacket implements ClientBoundPacket {
 
     private final int chunkX;
     private final int chunkZ;

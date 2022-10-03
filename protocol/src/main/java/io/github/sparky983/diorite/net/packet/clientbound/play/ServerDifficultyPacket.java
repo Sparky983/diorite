@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Difficulty;
 
-public class ServerDifficultyPacket implements ClientBoundPacket {
+public final class ServerDifficultyPacket implements ClientBoundPacket {
 
     private final Difficulty difficulty;
     private final boolean isLocked;

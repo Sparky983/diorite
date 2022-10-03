@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class UpdateHealthPacket implements ClientBoundPacket {
+public final class UpdateHealthPacket implements ClientBoundPacket {
 
     private final float health;
     private final int food;

@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class OpenHorseWindowPacket implements ClientBoundPacket {
+public final class OpenHorseWindowPacket implements ClientBoundPacket {
 
     private final byte windowId;
     private final int slots;

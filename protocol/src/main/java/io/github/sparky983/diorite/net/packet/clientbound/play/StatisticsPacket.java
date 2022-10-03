@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class StatisticsPacket implements ClientBoundPacket {
+public final class StatisticsPacket implements ClientBoundPacket {
 
     private final List<Statistic> statistics;
 
@@ -68,7 +68,7 @@ public class StatisticsPacket implements ClientBoundPacket {
         return statistics;
     }
 
-    public static class Statistic implements Writable {
+    public static final class Statistic implements Writable {
 
         private final int categoryId;
         private final int statisticId;

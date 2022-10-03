@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SetTitleTimesPacket implements ClientBoundPacket {
+public final class SetTitleTimesPacket implements ClientBoundPacket {
 
     private final int fadeIn;
     private final int stay;

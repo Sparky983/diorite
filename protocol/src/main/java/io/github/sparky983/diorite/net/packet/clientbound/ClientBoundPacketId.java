@@ -82,7 +82,7 @@ public final class ClientBoundPacketId {
      *
      * @since 1.0.0
      */
-    public static class Play {
+    public static final class Play {
 
         private Play() {
 

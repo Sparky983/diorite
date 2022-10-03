@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.play.PlayerDiggingPack
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class AcknowledgePlayerDiggingPacket implements ClientBoundPacket {
+public final class AcknowledgePlayerDiggingPacket implements ClientBoundPacket {
 
     private final Position location;
     private final int block;

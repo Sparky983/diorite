@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class SpawnExperienceOrbPacket implements ClientBoundPacket {
+public final class SpawnExperienceOrbPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final Position location;

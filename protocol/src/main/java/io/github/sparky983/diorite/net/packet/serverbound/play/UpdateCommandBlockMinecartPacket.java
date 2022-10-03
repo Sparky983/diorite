@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.util.Protocol;
 
-public class UpdateCommandBlockMinecartPacket implements ServerBoundPacket {
+public final class UpdateCommandBlockMinecartPacket implements ServerBoundPacket {
 
     private final int entityId;
     private final String command;

@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class SetDisplayedRecipePacket implements ServerBoundPacket {
+public final class SetDisplayedRecipePacket implements ServerBoundPacket {
 
     private final Identifier recipe;
 

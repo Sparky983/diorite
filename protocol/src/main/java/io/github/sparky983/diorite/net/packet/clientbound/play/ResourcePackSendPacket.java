@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ResourcePackSendPacket implements ClientBoundPacket {
+public final class ResourcePackSendPacket implements ClientBoundPacket {
 
     private static final int MAX_HASH_LENGTH = 40;
 

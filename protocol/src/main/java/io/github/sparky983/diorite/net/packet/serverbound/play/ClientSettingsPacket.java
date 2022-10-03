@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ClientSettingsPacket implements ServerBoundPacket {
+public final class ClientSettingsPacket implements ServerBoundPacket {
 
     private static final byte CAPE_ENABLED_BIT = (byte) 0b00000001;
     private static final byte JACKET_ENABLED_BIT = (byte) 0b00000010;

@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class FacePlayerPacket implements ClientBoundPacket {
+public final class FacePlayerPacket implements ClientBoundPacket {
 
     private final BodyPart bodyPart;
     private final Position targetPosition;

@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class QueryEntityNbtPacket implements ServerBoundPacket {
+public final class QueryEntityNbtPacket implements ServerBoundPacket {
 
     private final int transactionId;
     private final int entityId;

@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class RemoveEntityEffectPacket implements ClientBoundPacket {
+public final class RemoveEntityEffectPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final byte effectId; // TODO(Sparky983): better representation? enum?

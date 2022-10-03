@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class CollectItemPacket implements ClientBoundPacket {
+public final class CollectItemPacket implements ClientBoundPacket {
 
     private final int collectedEntityId;
     private final int collectorEntityId;

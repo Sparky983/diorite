@@ -67,7 +67,7 @@ public final class PacketRegistry {
         return Optional.ofNullable(packetDecoders.get(packetId));
     }
 
-    public static class Builder {
+    public static final class Builder {
 
         private final Map<Integer, PacketDecoder<?>> packetDecoders = new TreeMap<>();
 

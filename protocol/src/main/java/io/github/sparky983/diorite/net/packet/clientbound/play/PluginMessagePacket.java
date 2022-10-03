@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class PluginMessagePacket implements ClientBoundPacket {
+public final class PluginMessagePacket implements ClientBoundPacket {
 
     private final Identifier channel;
     private final byte[] data;

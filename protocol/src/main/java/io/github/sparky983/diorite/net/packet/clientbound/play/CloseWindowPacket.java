@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class CloseWindowPacket implements ClientBoundPacket {
+public final class CloseWindowPacket implements ClientBoundPacket {
 
     private final int windowId;
 

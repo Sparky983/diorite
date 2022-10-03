@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Hand;
 
-public class UseItemPacket implements ServerBoundPacket {
+public final class UseItemPacket implements ServerBoundPacket {
 
     private final Hand hand;
 

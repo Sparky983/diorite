@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class EntityHeadLookPacket implements ClientBoundPacket {
+public final class EntityHeadLookPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final byte headYaw;

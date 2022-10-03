@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.util.Protocol;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class UpdateCommandBlockPacket implements ServerBoundPacket {
+public final class UpdateCommandBlockPacket implements ServerBoundPacket {
 
     private static final byte TRACK_OUTPUT_BIT = 0b00000001;
     private static final byte CONDITIONAL = 0b00000010;

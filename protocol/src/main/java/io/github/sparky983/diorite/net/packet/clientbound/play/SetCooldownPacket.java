@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SetCooldownPacket implements ClientBoundPacket {
+public final class SetCooldownPacket implements ClientBoundPacket {
 
     private final int itemId;
     private final int cooldownTicks;

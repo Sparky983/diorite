@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class VehicleMovePacket implements ClientBoundPacket {
+public final class VehicleMovePacket implements ClientBoundPacket {
 
     private final Position location;
     private final float yaw;

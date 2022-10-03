@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class DeclareCommandsPacket implements ClientBoundPacket {
+public final class DeclareCommandsPacket implements ClientBoundPacket {
 
     private final int nodeCount;
     private final byte[] nodes; // TODO: Add node data type and implement parsers

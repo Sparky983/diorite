@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.world.BlockFace;
 import io.github.sparky983.diorite.world.BlockPosition;
 import io.github.sparky983.diorite.world.Hand;
 
-public class PlayerBlockPlacementPacket implements ServerBoundPacket {
+public final class PlayerBlockPlacementPacket implements ServerBoundPacket {
 
     private final Hand hand;
     private final BlockPosition location;

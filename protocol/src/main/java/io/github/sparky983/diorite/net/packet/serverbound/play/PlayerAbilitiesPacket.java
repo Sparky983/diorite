@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class PlayerAbilitiesPacket implements ServerBoundPacket {
+public final class PlayerAbilitiesPacket implements ServerBoundPacket {
 
     private static final byte FLYING_BIT = 0b00000010;
 

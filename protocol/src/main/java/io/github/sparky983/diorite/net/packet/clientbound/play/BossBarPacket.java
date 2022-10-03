@@ -32,7 +32,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class BossBarPacket implements ClientBoundPacket {
+public final class BossBarPacket implements ClientBoundPacket {
 
     private final UUID bossbarId;
     private final Action action;

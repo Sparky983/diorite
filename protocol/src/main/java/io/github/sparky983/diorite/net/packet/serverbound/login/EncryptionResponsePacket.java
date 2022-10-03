@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class EncryptionResponsePacket implements ServerBoundPacket {
+public final class EncryptionResponsePacket implements ServerBoundPacket {
 
     private final byte[] sharedSecret;
     private final byte[] verifyToken;

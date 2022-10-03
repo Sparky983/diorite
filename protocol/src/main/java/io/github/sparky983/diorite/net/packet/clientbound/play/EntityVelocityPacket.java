@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Velocity;
 
-public class EntityVelocityPacket implements ClientBoundPacket {
+public final class EntityVelocityPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final Velocity velocity;

@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class AdvancementTabPacket implements ServerBoundPacket {
+public final class AdvancementTabPacket implements ServerBoundPacket {
 
     private final Action action;
     private final @UnknownNullability Identifier tab;

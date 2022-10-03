@@ -32,7 +32,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class WindowItemsPacket implements ClientBoundPacket {
+public final class WindowItemsPacket implements ClientBoundPacket {
 
     private final int windowId;
     private final int stateId;

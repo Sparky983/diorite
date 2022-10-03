@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class EncryptionRequestPacket implements ClientBoundPacket {
+public final class EncryptionRequestPacket implements ClientBoundPacket {
 
     private static final int MAX_SERVER_ID_LENGTH = 20;
 

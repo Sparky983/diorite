@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Vector;
 
-public class ExplosionPacket implements ClientBoundPacket {
+public final class ExplosionPacket implements ClientBoundPacket {
 
     private final Position location; // encoded as 3 floats
     private final float strength;

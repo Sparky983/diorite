@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class NbtQueryResponsePacket implements ClientBoundPacket {
+public final class NbtQueryResponsePacket implements ClientBoundPacket {
 
     private final int transactionId;
     private final CompoundBinaryTag nbt;

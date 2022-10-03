@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Hand;
 
-public class OpenBookPacket implements ClientBoundPacket {
+public final class OpenBookPacket implements ClientBoundPacket {
 
     private final Hand hand;
 

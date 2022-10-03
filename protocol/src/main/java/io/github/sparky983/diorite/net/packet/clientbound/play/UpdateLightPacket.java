@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
 @ApiStatus.Experimental
-public class UpdateLightPacket implements ClientBoundPacket {
+public final class UpdateLightPacket implements ClientBoundPacket {
 
     static final int LIGHT_ARRAY_LENGTH = 2048;
 

@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class LoginStartPacket implements ServerBoundPacket {
+public final class LoginStartPacket implements ServerBoundPacket {
 
     private static final int MAX_NAME_LENGTH = 16;
 

@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class UnlockRecipesPacket implements ClientBoundPacket {
+public final class UnlockRecipesPacket implements ClientBoundPacket {
 
     private final Action action;
     private final boolean craftingBookOpen;

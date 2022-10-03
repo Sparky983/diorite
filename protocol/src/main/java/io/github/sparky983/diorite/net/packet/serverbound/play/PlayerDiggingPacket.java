@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockFace;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class PlayerDiggingPacket implements ServerBoundPacket {
+public final class PlayerDiggingPacket implements ServerBoundPacket {
 
     private final Status status;
     private final BlockPosition location;

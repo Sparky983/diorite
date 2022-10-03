@@ -30,7 +30,7 @@ import io.github.sparky983.diorite.world.Direction;
 import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Velocity;
 
-public class SpawnLivingEntityPacket implements ClientBoundPacket {
+public final class SpawnLivingEntityPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final UUID entityUuid;

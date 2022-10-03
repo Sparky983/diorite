@@ -31,7 +31,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
+public final class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
 
     private final int chunkX;
     private final int chunkZ;

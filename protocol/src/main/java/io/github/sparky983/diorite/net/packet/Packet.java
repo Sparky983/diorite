@@ -36,8 +36,6 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
  */
 public interface Packet extends Writable {
 
-    // TODO(Sparky983): Make all packets final
-
     /**
      * Writes the packet to the outputStream.
      *

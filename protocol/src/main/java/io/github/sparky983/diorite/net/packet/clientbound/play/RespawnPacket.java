@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Gamemode;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class RespawnPacket implements ClientBoundPacket {
+public final class RespawnPacket implements ClientBoundPacket {
 
     private final CompoundBinaryTag dimension;
     private final Identifier worldName;

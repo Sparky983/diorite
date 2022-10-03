@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 import io.github.sparky983.diorite.world.Position;
 
-public class SculkVibrationSignalPacket implements ClientBoundPacket {
+public final class SculkVibrationSignalPacket implements ClientBoundPacket {
 
     private final Position sourceLocation;
     private final Identifier destinationIdentifier;

@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class PlayerListHeaderAndFooterPacket implements ClientBoundPacket {
+public final class PlayerListHeaderAndFooterPacket implements ClientBoundPacket {
 
     private final Component header;
     private final Component footer;

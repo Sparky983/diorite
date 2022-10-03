@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class OpenSignEditorPacket implements ClientBoundPacket {
+public final class OpenSignEditorPacket implements ClientBoundPacket {
 
     private final BlockPosition location;
 

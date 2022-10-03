@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class UpdateJigsawBlockPacket implements ServerBoundPacket {
+public final class UpdateJigsawBlockPacket implements ServerBoundPacket {
 
     private final BlockPosition location;
     private final Identifier name;

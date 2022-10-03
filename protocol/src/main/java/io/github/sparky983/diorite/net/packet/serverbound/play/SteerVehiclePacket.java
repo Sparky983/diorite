@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SteerVehiclePacket implements ServerBoundPacket {
+public final class SteerVehiclePacket implements ServerBoundPacket {
 
     private static final byte JUMP_BIT = 0b00000001;
     private static final byte UNMOUNT_BIT = 0b00000010;

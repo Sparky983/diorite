@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class TabCompletePacket implements ServerBoundPacket {
+public final class TabCompletePacket implements ServerBoundPacket {
 
     private static final int MAX_TEXT_LENGTH = 32500;
 

@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class StopSoundPacket implements ClientBoundPacket {
+public final class StopSoundPacket implements ClientBoundPacket {
 
     private static final byte SOURCE_BIT = 0b00000001;
     private static final byte SOUND_BIT = 0b00000010;

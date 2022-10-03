@@ -35,7 +35,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Gamemode;
 
-public class PlayerInfoPacket implements ClientBoundPacket {
+public final class PlayerInfoPacket implements ClientBoundPacket {
 
     private final ActionType actionType;
     private final List<Player> players;

@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class CraftRecipeResponsePacket implements ClientBoundPacket {
+public final class CraftRecipeResponsePacket implements ClientBoundPacket {
 
     private final byte windowId;
     private final Identifier recipe;

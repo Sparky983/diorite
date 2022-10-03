@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class UpdateStructureBlockPacket implements ServerBoundPacket {
+public final class UpdateStructureBlockPacket implements ServerBoundPacket {
 
     private static final byte IGNORE_ENTITIES_BIT = 0b00000001;
     private static final byte SHOW_AIR_BIT = 0b00000010;

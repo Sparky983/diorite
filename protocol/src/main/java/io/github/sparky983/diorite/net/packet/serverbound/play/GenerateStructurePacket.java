@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class GenerateStructurePacket implements ServerBoundPacket {
+public final class GenerateStructurePacket implements ServerBoundPacket {
 
     private final BlockPosition location;
     private final int levels;

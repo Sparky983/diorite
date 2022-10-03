@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class SteerBoatPacket implements ServerBoundPacket {
+public final class SteerBoatPacket implements ServerBoundPacket {
 
     private final boolean leftPaddleIsTurning;
     private final boolean rightPaddleIsTurning;

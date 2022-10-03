@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.CardinalDirection;
 import io.github.sparky983.diorite.world.Position;
 
-public class SpawnPaintingPacket implements ClientBoundPacket {
+public final class SpawnPaintingPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final UUID entityUuid;

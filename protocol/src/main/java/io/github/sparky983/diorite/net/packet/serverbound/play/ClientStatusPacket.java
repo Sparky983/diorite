@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ClientStatusPacket implements ServerBoundPacket {
+public final class ClientStatusPacket implements ServerBoundPacket {
 
     private final Action action;
 

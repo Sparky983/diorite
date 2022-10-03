@@ -26,7 +26,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class SpawnPositionPacket implements ClientBoundPacket {
+public final class SpawnPositionPacket implements ClientBoundPacket {
 
     private final BlockPosition spawnLocation;
     private final byte angle;

@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ClickWindowButtonPacket implements ServerBoundPacket {
+public final class ClickWindowButtonPacket implements ServerBoundPacket {
 
     private final byte windowId;
     private final byte buttonId;

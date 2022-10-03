@@ -28,7 +28,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Hand;
 
-public class InteractEntityPacket implements ServerBoundPacket {
+public final class InteractEntityPacket implements ServerBoundPacket {
 
     private final int entityId;
     private final Type type;

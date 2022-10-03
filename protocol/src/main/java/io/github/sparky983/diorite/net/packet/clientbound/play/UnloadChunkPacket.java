@@ -25,7 +25,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class UnloadChunkPacket implements ClientBoundPacket {
+public final class UnloadChunkPacket implements ClientBoundPacket {
 
     private final int chunkX;
     private final int chunkZ;

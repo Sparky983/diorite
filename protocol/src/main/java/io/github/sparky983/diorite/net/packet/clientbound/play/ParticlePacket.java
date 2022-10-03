@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.world.Position;
 import io.github.sparky983.diorite.world.Vector;
 
 @ApiStatus.Experimental
-public class ParticlePacket implements ClientBoundPacket {
+public final class ParticlePacket implements ClientBoundPacket {
 
     private final int particleId; // TODO(Sparky983): enum
     private final boolean longDistance;

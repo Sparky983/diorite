@@ -30,7 +30,7 @@ import io.github.sparky983.diorite.net.packet.serverbound.ServerBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.BlockPosition;
 
-public class UpdateSignPacket implements ServerBoundPacket {
+public final class UpdateSignPacket implements ServerBoundPacket {
 
     private static final int MAX_LINE_LENGTH = 384;
 

@@ -33,7 +33,7 @@ import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Gamemode;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class JoinGamePacket implements ClientBoundPacket {
+public final class JoinGamePacket implements ClientBoundPacket {
 
     private final int entityId;
     private final boolean isHardcore;

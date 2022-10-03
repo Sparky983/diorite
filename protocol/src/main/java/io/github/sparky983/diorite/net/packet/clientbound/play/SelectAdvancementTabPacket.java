@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Identifier;
 
-public class SelectAdvancementTabPacket implements ClientBoundPacket {
+public final class SelectAdvancementTabPacket implements ClientBoundPacket {
 
     private final @Nullable Identifier identifier;
 

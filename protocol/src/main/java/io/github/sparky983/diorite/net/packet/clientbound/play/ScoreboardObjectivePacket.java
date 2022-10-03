@@ -29,7 +29,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 
-public class ScoreboardObjectivePacket implements ClientBoundPacket {
+public final class ScoreboardObjectivePacket implements ClientBoundPacket {
 
     private static final int MAX_OBJECTIVE_NAME_LENGTH = 16;
 

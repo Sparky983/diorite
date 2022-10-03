@@ -27,7 +27,7 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Position;
 
-public class BlockBreakAnimationPacket implements ClientBoundPacket {
+public final class BlockBreakAnimationPacket implements ClientBoundPacket {
 
     private final int entityId;
     private final Position location;
