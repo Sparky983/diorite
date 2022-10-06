@@ -31,7 +31,8 @@ public final class EncryptionResponsePacket implements ServerBoundPacket {
     private final byte[] verifyToken;
 
     @Contract(pure = true)
-    public EncryptionResponsePacket(final byte @NotNull [] sharedSecret, final byte @NotNull [] verifyToken) {
+    public EncryptionResponsePacket(final byte @NotNull [] sharedSecret,
+            final byte @NotNull [] verifyToken) {
 
         Preconditions.requireNotNull(sharedSecret, "sharedSecret");
         Preconditions.requireNotNull(verifyToken, "verifyToken");

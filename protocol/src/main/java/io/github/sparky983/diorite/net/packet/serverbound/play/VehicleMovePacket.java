@@ -35,10 +35,10 @@ public final class VehicleMovePacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public VehicleMovePacket(final double x,
-                             final double y,
-                             final double z,
-                             final float yaw,
-                             final float pitch) {
+            final double y,
+            final double z,
+            final float yaw,
+            final float pitch) {
 
         this.x = x;
         this.y = y;

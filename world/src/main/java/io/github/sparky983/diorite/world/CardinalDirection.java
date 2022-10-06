@@ -26,7 +26,8 @@ public enum CardinalDirection {
 
     /*
      * Not in order of NESW.
-     * Done inorder to match the ids in https://web.archive.org/web/20220303180956/https://wiki.vg/Protocol#Spawn_Painting.
+     * Done inorder to match the ids in https://web.archive.org/web/20220303180956/https://wiki
+     * .vg/Protocol#Spawn_Painting.
      */
 
     /**

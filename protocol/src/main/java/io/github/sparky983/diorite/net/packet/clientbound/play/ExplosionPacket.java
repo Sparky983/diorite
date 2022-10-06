@@ -36,9 +36,9 @@ public final class ExplosionPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ExplosionPacket(final @NotNull Position location,
-                           final float strength,
-                           final byte @NotNull [] records,
-                           final @NotNull Vector playerMotion) {
+            final float strength,
+            final byte @NotNull [] records,
+            final @NotNull Vector playerMotion) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(records, "records");
@@ -104,7 +104,7 @@ public final class ExplosionPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    public byte  @NotNull [] getRecords() {
+    public byte @NotNull [] getRecords() {
 
         return records;
     }

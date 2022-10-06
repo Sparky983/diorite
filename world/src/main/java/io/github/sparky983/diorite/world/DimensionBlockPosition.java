@@ -41,9 +41,9 @@ public interface DimensionBlockPosition extends BlockPosition {
      */
     @Contract(pure = true)
     static @NotNull DimensionBlockPosition of(final @NotNull Dimension dimension,
-                                              final int x,
-                                              final int y,
-                                              final int z) {
+            final int x,
+            final int y,
+            final int z) {
 
         return new DimensionBlockPositionImpl(dimension, x, y, z);
     }
@@ -59,7 +59,7 @@ public interface DimensionBlockPosition extends BlockPosition {
      */
     @Contract(pure = true)
     static @NotNull DimensionBlockPosition of(final @NotNull Dimension dimension,
-                                              final @NotNull BlockPosition blockPosition) {
+            final @NotNull BlockPosition blockPosition) {
 
         Preconditions.requireNotNull(blockPosition, "blockPosition");
 

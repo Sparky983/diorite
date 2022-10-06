@@ -33,7 +33,8 @@ public final class SetExperiencePacket implements ClientBoundPacket {
     private final int totalExperience;
 
     @Contract(pure = true)
-    public SetExperiencePacket(final float experienceBar, final int level, final int totalExperience) {
+    public SetExperiencePacket(final float experienceBar, final int level,
+            final int totalExperience) {
 
         if (experienceBar < 0 || experienceBar > 1) {
             throw new IllegalArgumentException("Experience bar must be between 0 and 1");

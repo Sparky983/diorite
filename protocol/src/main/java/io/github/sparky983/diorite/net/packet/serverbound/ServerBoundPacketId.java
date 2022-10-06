@@ -37,11 +37,11 @@ public final class ServerBoundPacketId {
      */
     public static final class Handshaking {
 
+        public static final int HANDSHAKE = 0x00;
+
         private Handshaking() {
 
         }
-
-        public static final int HANDSHAKE = 0x00;
     }
 
     /**
@@ -51,12 +51,11 @@ public final class ServerBoundPacketId {
      */
     public static final class Status {
 
+        public static final int REQUEST = 0x00;
+        public static final int PING = 0x01;
         private Status() {
 
         }
-
-        public static final int REQUEST = 0x00;
-        public static final int PING = 0x01;
     }
 
     /**
@@ -66,13 +65,12 @@ public final class ServerBoundPacketId {
      */
     public static final class Login {
 
-        private Login() {
-
-        }
-
         public static final int LOGIN_START = 0x00;
         public static final int ENCRYPTION_RESPONSE = 0x01;
         public static final int LOGIN_PLUGIN_RESPONSE = 0x02;
+        private Login() {
+
+        }
     }
 
     /**
@@ -81,10 +79,6 @@ public final class ServerBoundPacketId {
      * @since 1.0.0
      */
     public static final class Play {
-
-        private Play() {
-
-        }
 
         public static final int TELEPORT_CONFIRM = 0x00;
         public static final int QUERY_BLOCK_NBT = 0x01;
@@ -136,5 +130,8 @@ public final class ServerBoundPacketId {
         public static final int SPECTATE = 0x2D;
         public static final int PLAYER_BLOCK_PLACEMENT = 0x2E;
         public static final int USE_ITEM = 0x2F;
+        private Play() {
+
+        }
     }
 }

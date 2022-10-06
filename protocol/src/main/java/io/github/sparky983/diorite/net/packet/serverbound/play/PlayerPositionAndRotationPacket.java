@@ -36,11 +36,11 @@ public final class PlayerPositionAndRotationPacket implements ServerBoundPacket 
 
     @Contract(pure = true)
     public PlayerPositionAndRotationPacket(final double x,
-                                           final double y,
-                                           final double z,
-                                           final float yaw,
-                                           final float pitch,
-                                           final boolean isOnGround) {
+            final double y,
+            final double z,
+            final float yaw,
+            final float pitch,
+            final boolean isOnGround) {
 
         this.x = x;
         this.y = y;

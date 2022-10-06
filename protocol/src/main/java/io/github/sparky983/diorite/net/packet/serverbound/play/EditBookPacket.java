@@ -37,8 +37,8 @@ public final class EditBookPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public EditBookPacket(final @NotNull Hand hand,
-                          final @NotNull List<@NotNull String> entries,
-                          final @Nullable String title) {
+            final @NotNull List<@NotNull String> entries,
+            final @Nullable String title) {
 
         Preconditions.requireNotNull(hand, "hand");
         Preconditions.requireContainsNoNulls(entries, "entries");

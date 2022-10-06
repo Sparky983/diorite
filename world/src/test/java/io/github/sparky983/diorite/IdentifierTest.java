@@ -45,7 +45,8 @@ class IdentifierTest {
     static List<Arguments> provideEncodedIdentifiers() {
 
         return List.of(
-                Arguments.of(Identifier.of("minecraft", "minecraft-zombie"), "minecraft:minecraft-zombie"),
+                Arguments.of(Identifier.of("minecraft", "minecraft-zombie"),
+                        "minecraft:minecraft-zombie"),
                 Arguments.of(Identifier.of("minecraft", "zombie"), "minecraft:zombie"),
                 Arguments.of(Identifier.of("diorite", "diorite"), "diorite:diorite")
         );

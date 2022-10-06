@@ -136,7 +136,8 @@ public final class EntityMetadataPacket implements ClientBoundPacket {
         public static final class Value implements Writable {
 
             private final Type type;
-            private final byte[] value; // TODO(Sparky983): parse the actual value with the correct type
+            private final byte[] value;
+                    // TODO(Sparky983): parse the actual value with the correct type
 
             @ApiStatus.Experimental
             @Contract(pure = true)

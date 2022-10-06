@@ -42,13 +42,13 @@ public final class RespawnPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public RespawnPacket(final @NotNull CompoundBinaryTag dimension,
-                         final @NotNull Identifier worldName,
-                         final long hashedSeed,
-                         final @NotNull Gamemode gamemode,
-                         final @NotNull Gamemode previousGamemode,
-                         final boolean isDebug,
-                         final boolean isFlag,
-                         final boolean copyMetadata) {
+            final @NotNull Identifier worldName,
+            final long hashedSeed,
+            final @NotNull Gamemode gamemode,
+            final @NotNull Gamemode previousGamemode,
+            final boolean isDebug,
+            final boolean isFlag,
+            final boolean copyMetadata) {
 
         Preconditions.requireNotNull(dimension, "dimension");
         Preconditions.requireNotNull(worldName, "worldName");
@@ -68,16 +68,16 @@ public final class RespawnPacket implements ClientBoundPacket {
     @Contract(mutates = "param")
     public RespawnPacket(final @NotNull StreamIn inputStream) {
 
-            Preconditions.requireNotNull(inputStream, "inputStream");
+        Preconditions.requireNotNull(inputStream, "inputStream");
 
-            this.dimension = inputStream.readCompoundTag();
-            this.worldName = inputStream.readIdentifier();
-            this.hashedSeed = inputStream.readLong();
-            this.gamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
-            this.previousGamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
-            this.isDebug = inputStream.readBoolean();
-            this.isFlag = inputStream.readBoolean();
-            this.copyMetadata = inputStream.readBoolean();
+        this.dimension = inputStream.readCompoundTag();
+        this.worldName = inputStream.readIdentifier();
+        this.hashedSeed = inputStream.readLong();
+        this.gamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
+        this.previousGamemode = inputStream.readUnsignedByteEnum(Gamemode.class);
+        this.isDebug = inputStream.readBoolean();
+        this.isFlag = inputStream.readBoolean();
+        this.copyMetadata = inputStream.readBoolean();
     }
 
     @Override
@@ -102,7 +102,8 @@ public final class RespawnPacket implements ClientBoundPacket {
     }
 
     @Contract(pure = true)
-    @NotNull public CompoundBinaryTag getDimension() {
+    @NotNull
+    public CompoundBinaryTag getDimension() {
 
         return dimension;
     }

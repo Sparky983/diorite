@@ -78,7 +78,7 @@ public interface PacketFormat {
      * @since 1.0.0
      */
     void encode(@NotNull Packet packet,
-                @NotNull StreamOut outputStream);
+            @NotNull StreamOut outputStream);
 
     /**
      * Decodes the formatted packet from the input stream using the specified decoder to decoder the

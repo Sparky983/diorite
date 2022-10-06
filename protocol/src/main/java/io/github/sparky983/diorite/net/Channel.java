@@ -27,9 +27,9 @@ import reactor.core.publisher.Mono;
 /**
  * A channel is a two-way connection (client to server or server to client).
  *
- * @author Sparky983
  * @param <In> The incoming packet type.
  * @param <Out> The outgoing packet type.
+ * @author Sparky983
  * @since 1.0.0
  */
 public interface Channel<In extends Packet, Out extends Packet> extends Stateful, AutoCloseable {

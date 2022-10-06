@@ -41,11 +41,11 @@ public final class TradeListPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public TradeListPacket(final int windowId,
-                           final @NotNull List<@NotNull Trade> trades,
-                           final int villagerLevel,
-                           final int experience,
-                           final boolean isRegularVillager,
-                           final boolean canRestock) {
+            final @NotNull List<@NotNull Trade> trades,
+            final int villagerLevel,
+            final int experience,
+            final boolean isRegularVillager,
+            final boolean canRestock) {
 
         Preconditions.requireContainsNoNulls(trades, "trades");
 
@@ -141,16 +141,16 @@ public final class TradeListPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public Trade(final @Nullable ItemStack inputItem1,
-                     final @Nullable ItemStack outputItem,
-                     final boolean hasItem2,
-                     final @Nullable ItemStack inputItem2,
-                     final boolean isDisabled,
-                     final int uses,
-                     final int maxUses,
-                     final int xp,
-                     final int specialPrice,
-                     final float priceMultiplier,
-                     final int demand) {
+                final @Nullable ItemStack outputItem,
+                final boolean hasItem2,
+                final @Nullable ItemStack inputItem2,
+                final boolean isDisabled,
+                final int uses,
+                final int maxUses,
+                final int xp,
+                final int specialPrice,
+                final float priceMultiplier,
+                final int demand) {
 
             this.inputItem1 = inputItem1;
             this.outputItem = outputItem;

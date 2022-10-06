@@ -34,8 +34,8 @@ public final class GenerateStructurePacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public GenerateStructurePacket(final @NotNull BlockPosition location,
-                                   final int levels,
-                                   final boolean keepJigsaws) {
+            final int levels,
+            final boolean keepJigsaws) {
 
         Preconditions.requireNotNull(location, "location");
 

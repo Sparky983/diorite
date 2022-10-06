@@ -37,8 +37,8 @@ public final class OpenWindowPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public OpenWindowPacket(final int windowId,
-                            final int windowType,
-                            final @NotNull Component title) {
+            final int windowType,
+            final @NotNull Component title) {
 
         Preconditions.requireNotNull(title, "title");
 

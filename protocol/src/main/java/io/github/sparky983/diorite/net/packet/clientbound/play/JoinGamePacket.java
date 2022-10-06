@@ -52,19 +52,19 @@ public final class JoinGamePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public JoinGamePacket(final int entityId,
-                          final boolean isHardcore,
-                          final @NotNull Gamemode gamemode,
-                          final @Nullable Gamemode previousGamemode,
-                          final @NotNull List<@NotNull Identifier> worldNames,
-                          final @NotNull CompoundBinaryTag dimensionCodec,
-                          final @NotNull CompoundBinaryTag dimension,
-                          final @NotNull Identifier worldName,
-                          final int maxPlayers,
-                          final @Range(from = 2, to = 32) int viewDistance,
-                          final boolean reducedDebugInfo,
-                          final boolean enableRespawnScreen,
-                          final boolean isDebug,
-                          final boolean isFlat) {
+            final boolean isHardcore,
+            final @NotNull Gamemode gamemode,
+            final @Nullable Gamemode previousGamemode,
+            final @NotNull List<@NotNull Identifier> worldNames,
+            final @NotNull CompoundBinaryTag dimensionCodec,
+            final @NotNull CompoundBinaryTag dimension,
+            final @NotNull Identifier worldName,
+            final int maxPlayers,
+            final @Range(from = 2, to = 32) int viewDistance,
+            final boolean reducedDebugInfo,
+            final boolean enableRespawnScreen,
+            final boolean isDebug,
+            final boolean isFlat) {
 
         Preconditions.requireNotNull(gamemode, "gamemode");
         Preconditions.requireNotNull(worldName, "worldName");
@@ -114,7 +114,8 @@ public final class JoinGamePacket implements ClientBoundPacket {
         this.dimension = inputStream.readCompoundTag();
         this.worldName = inputStream.readIdentifier();
         this.maxPlayers = inputStream.readVarInt();
-        this.viewDistance = Math.min(32, Math.max(2, inputStream.readVarInt())); // Clamp value to 2-32
+        this.viewDistance = Math.min(32,
+                Math.max(2, inputStream.readVarInt())); // Clamp value to 2-32
         this.reducedDebugInfo = inputStream.readBoolean();
         this.enableRespawnScreen = inputStream.readBoolean();
         this.isDebug = inputStream.readBoolean();

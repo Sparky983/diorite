@@ -69,7 +69,8 @@ final class DimensionBlockPositionImpl implements DimensionBlockPosition {
     @Override
     public String toString() {
 
-        return "DimensionBlockPositionImpl(x=" + x + ",y=" + y + ",z=" + z + ",dimension=" + dimension
+        return "DimensionBlockPositionImpl(x=" + x + ",y=" + y + ",z=" + z + ",dimension="
+                + dimension
                 + ")";
     }
 }

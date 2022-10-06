@@ -36,7 +36,8 @@ public final class EntityPropertiesPacket implements ClientBoundPacket {
     private final List<Property> properties;
 
     @Contract(pure = true)
-    public EntityPropertiesPacket(final int entityId, final @NotNull List<@NotNull Property> properties) {
+    public EntityPropertiesPacket(final int entityId,
+            final @NotNull List<@NotNull Property> properties) {
 
         Preconditions.requireContainsNoNulls(properties, "properties");
 
@@ -88,8 +89,8 @@ public final class EntityPropertiesPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public Property(final @NotNull Identifier key,
-                        final double value,
-                        final @NotNull List<@NotNull Modifier> modifiers) {
+                final double value,
+                final @NotNull List<@NotNull Modifier> modifiers) {
 
             Preconditions.requireNotNull(key, "key");
             Preconditions.requireContainsNoNulls(modifiers, "modifiers");

@@ -14,5 +14,5 @@ protocol, this module's api cannot feasibly be stable either. For stable api, pl
 and server modules.
 
 Elements annotated with `@ApiStatus.Experiemental` are extremely unstable due to reasons such as not
-being properly implemented yet. No care will be taken to ensure any compatability with these 
+being properly implemented yet. No care will be taken to ensure any compatability with these
 elements.

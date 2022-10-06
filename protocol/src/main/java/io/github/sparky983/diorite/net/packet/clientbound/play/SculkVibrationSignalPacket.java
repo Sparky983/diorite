@@ -70,10 +70,10 @@ public final class SculkVibrationSignalPacket implements ClientBoundPacket {
 
         outputStream.writePosition(sourceLocation)
                 .writeIdentifier(destinationIdentifier)
-        // outputStream.writePosition(destination);
-        // for blocks
-        // outputStream.writeVarInt(destination);
-        // for entities
+                // outputStream.writePosition(destination);
+                // for blocks
+                // outputStream.writeVarInt(destination);
+                // for entities
                 .writeVarInt(arrivalTicks);
     }
 

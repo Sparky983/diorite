@@ -35,10 +35,10 @@ public final class EntitySoundEffectPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public EntitySoundEffectPacket(final int soundId,
-                                   final int soundCategory,
-                                   final int entityId,
-                                   final float volume,
-                                   final float pitch) {
+            final int soundCategory,
+            final int entityId,
+            final float volume,
+            final float pitch) {
 
         if (volume < 0 || volume > 1) {
             throw new IllegalArgumentException("Volume must be between 0 and 1");

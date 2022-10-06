@@ -34,8 +34,8 @@ public final class WindowPropertyPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public WindowPropertyPacket(final @Range(from = 0x00, to = 0xFF) int windowId,
-                                final short property,
-                                final short value) {
+            final short property,
+            final short value) {
 
         Preconditions.requireRange(windowId, 0x00, 0xFF, "windowId");
 

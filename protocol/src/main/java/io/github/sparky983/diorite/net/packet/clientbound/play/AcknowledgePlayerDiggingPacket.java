@@ -36,9 +36,9 @@ public final class AcknowledgePlayerDiggingPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public AcknowledgePlayerDiggingPacket(final @NotNull Position location,
-                                          final int block,
-                                          final PlayerDiggingPacket.@NotNull Status status,
-                                          final boolean successful) {
+            final int block,
+            final PlayerDiggingPacket.@NotNull Status status,
+            final boolean successful) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(status, "status");

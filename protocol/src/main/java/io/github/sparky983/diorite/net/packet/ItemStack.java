@@ -16,7 +16,6 @@
 
 package io.github.sparky983.diorite.net.packet;
 
-import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 
 import org.jetbrains.annotations.ApiStatus;
@@ -24,12 +23,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.Optional;
 
-import io.github.sparky983.diorite.io.DecodeException;
-import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.StreamIn;
 import io.github.sparky983.diorite.io.StreamOut;
 import io.github.sparky983.diorite.io.Writable;

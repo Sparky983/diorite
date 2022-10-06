@@ -38,13 +38,13 @@ public final class InitializeWorldBorderPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public InitializeWorldBorderPacket(final double x,
-                                       final double y,
-                                       final double previousDiameter,
-                                       final double newDiameter,
-                                       final long speed,
-                                       final int portalTeleportBoundary,
-                                       final int warningBlocks,
-                                       final int warningTime) {
+            final double y,
+            final double previousDiameter,
+            final double newDiameter,
+            final long speed,
+            final int portalTeleportBoundary,
+            final int warningBlocks,
+            final int warningTime) {
 
         this.x = x;
         this.y = y;

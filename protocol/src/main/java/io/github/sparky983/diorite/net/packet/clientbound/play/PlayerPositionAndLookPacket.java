@@ -43,11 +43,11 @@ public final class PlayerPositionAndLookPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public PlayerPositionAndLookPacket(final @NotNull Position location,
-                                       final float yaw,
-                                       final float pitch,
-                                       final byte flags,
-                                       final int teleportId,
-                                       final boolean dismountVehicle) {
+            final float yaw,
+            final float pitch,
+            final byte flags,
+            final int teleportId,
+            final boolean dismountVehicle) {
 
         Preconditions.requireNotNull(location, "location");
 

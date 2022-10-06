@@ -23,8 +23,8 @@ import io.github.sparky983.diorite.io.StreamIn;
 /**
  * Decodes packets.
  *
- * @author Sparky983
  * @param <T> The type of the packet to decode.
+ * @author Sparky983
  * @since 1.0.0
  */
 @FunctionalInterface

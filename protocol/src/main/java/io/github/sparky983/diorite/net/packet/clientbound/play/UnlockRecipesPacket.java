@@ -45,16 +45,16 @@ public final class UnlockRecipesPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public UnlockRecipesPacket(final @NotNull Action action,
-                               final boolean craftingBookOpen,
-                               final boolean filteringCrafting,
-                               final boolean smeltingBookOpen,
-                               final boolean smeltingFilterActive,
-                               final boolean blastFurnaceBookOpen,
-                               final boolean blastFurnaceFilterActive,
-                               final boolean smokerBookOpen,
-                               final boolean smokerFilterActive,
-                               final @NotNull List<@NotNull Identifier> recipes,
-                               final @Nullable List<@NotNull Identifier> toBeDisplayed) {
+            final boolean craftingBookOpen,
+            final boolean filteringCrafting,
+            final boolean smeltingBookOpen,
+            final boolean smeltingFilterActive,
+            final boolean blastFurnaceBookOpen,
+            final boolean blastFurnaceFilterActive,
+            final boolean smokerBookOpen,
+            final boolean smokerFilterActive,
+            final @NotNull List<@NotNull Identifier> recipes,
+            final @Nullable List<@NotNull Identifier> toBeDisplayed) {
 
         Preconditions.requireNotNull(action, "action");
         Preconditions.requireContainsNoNulls(recipes, "recipes");
@@ -62,7 +62,8 @@ public final class UnlockRecipesPacket implements ClientBoundPacket {
         if (action == Action.INIT) {
             Preconditions.requireNotNull(toBeDisplayed, "toBeDisplayed");
         } else {
-            Preconditions.requireTrue(toBeDisplayed == null, "toBeDisplayed must be null when action is not INIT");
+            Preconditions.requireTrue(toBeDisplayed == null,
+                    "toBeDisplayed must be null when action is not INIT");
         }
 
         this.action = action;

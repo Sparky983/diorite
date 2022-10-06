@@ -181,7 +181,8 @@ public interface DioriteClient extends AutoCloseable {
          */
         @ApiStatus.Experimental
         @Contract(value = "_ -> this")
-        @NotNull Builder unsafe_ProtocolVersion(@Range(from = 0, to = Integer.MAX_VALUE) int protocolVersion);
+        @NotNull Builder unsafe_ProtocolVersion(
+                @Range(from = 0, to = Integer.MAX_VALUE) int protocolVersion);
 
         /**
          * Connects the client to the server.

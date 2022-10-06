@@ -40,9 +40,9 @@ public final class TabCompletePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public TabCompletePacket(final int transactionId,
-                             final int start,
-                             final int length,
-                             final @NotNull List<@NotNull Match> matches) {
+            final int start,
+            final int length,
+            final @NotNull List<@NotNull Match> matches) {
 
         Preconditions.requireContainsNoNulls(matches, "matches");
 

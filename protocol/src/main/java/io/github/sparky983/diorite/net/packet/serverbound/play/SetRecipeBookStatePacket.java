@@ -33,8 +33,8 @@ public final class SetRecipeBookStatePacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public SetRecipeBookStatePacket(final @NotNull Book book,
-                                    final boolean isOpen,
-                                    final boolean isFilterActive) {
+            final boolean isOpen,
+            final boolean isFilterActive) {
 
         Preconditions.requireNotNull(book, "book");
 

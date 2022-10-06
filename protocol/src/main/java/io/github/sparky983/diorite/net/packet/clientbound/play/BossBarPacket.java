@@ -75,7 +75,51 @@ public final class BossBarPacket implements ClientBoundPacket {
         return ClientBoundPacketId.Play.BOSS_BAR;
     }
 
-     public interface Action extends Writable {
+    public enum ActionType {
+
+        ADD(AddAction::new),
+        REMOVE(RemoveAction::new),
+        UPDATE_HEALTH(UpdateHealthAction::new),
+        UPDATE_TITLE(UpdateTitleAction::new),
+        UPDATE_STYLE(UpdateStyleAction::new),
+        UPDATE_FLAGS(UpdateFlagsAction::new);
+
+        private final Function<StreamIn, Action> factory;
+
+        @Contract(pure = true)
+        ActionType(final @NotNull Function<StreamIn, Action> factory) {
+
+            this.factory = factory;
+        }
+
+        @Contract(pure = true)
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
+
+            return factory.apply(inputStream);
+        }
+    }
+
+    public enum Color {
+
+        PINK,
+        BLUE,
+        RED,
+        GREEN,
+        YELLOW,
+        PURPLE,
+        WHITE
+    }
+
+    public enum Division {
+
+        NONE,
+        SIX,
+        TEN,
+        TWELVE,
+        TWENTY
+    }
+
+    public interface Action extends Writable {
 
         @Contract(pure = true)
         @NotNull ActionType getType();
@@ -84,7 +128,7 @@ public final class BossBarPacket implements ClientBoundPacket {
     public static final class AddAction implements Action {
 
         private final static byte DARKEN_SKY_BIT = 0b00000001;
-        private final static byte IS_DRAGON_BAR_BIT= 0x00000002;
+        private final static byte IS_DRAGON_BAR_BIT = 0x00000002;
         private final static byte CREATE_FOG = 0b00000100;
 
         private final Component title;
@@ -95,10 +139,10 @@ public final class BossBarPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public AddAction(final @NotNull Component title,
-                         final float health,
-                         final @NotNull Color color,
-                         final @NotNull Division division,
-                         final byte flags) {
+                final float health,
+                final @NotNull Color color,
+                final @NotNull Division division,
+                final byte flags) {
 
             Preconditions.requireNotNull(title, "title");
             Preconditions.requireNotNull(color, "color");
@@ -410,49 +454,5 @@ public final class BossBarPacket implements ClientBoundPacket {
 
             return (flags & AddAction.CREATE_FOG) != 0;
         }
-    }
-
-    public enum ActionType {
-
-        ADD(AddAction::new),
-        REMOVE(RemoveAction::new),
-        UPDATE_HEALTH(UpdateHealthAction::new),
-        UPDATE_TITLE(UpdateTitleAction::new),
-        UPDATE_STYLE(UpdateStyleAction::new),
-        UPDATE_FLAGS(UpdateFlagsAction::new);
-
-        private final Function<StreamIn, Action> factory;
-
-        @Contract(pure = true)
-        ActionType(final @NotNull Function<StreamIn, Action> factory) {
-
-            this.factory = factory;
-        }
-
-        @Contract(pure = true)
-        public @NotNull Action create(final @NotNull StreamIn inputStream) {
-
-            return factory.apply(inputStream);
-        }
-    }
-
-    public enum Color {
-
-        PINK,
-        BLUE,
-        RED,
-        GREEN,
-        YELLOW,
-        PURPLE,
-        WHITE
-    }
-
-    public enum Division {
-
-        NONE,
-        SIX,
-        TEN,
-        TWELVE,
-        TWENTY
     }
 }

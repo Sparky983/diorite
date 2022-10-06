@@ -48,17 +48,17 @@ public final class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ChunkDataAndUpdateLightPacket(final int chunkX,
-                                         final int chunkZ,
-                                         final @NotNull CompoundBinaryTag heightmaps,
-                                         final byte @NotNull [] data,
-                                         final @NotNull List<@NotNull BlockEntity> blockEntities,
-                                         final boolean trustEdges,
-                                         final long[] skyLightMask,
-                                         final long[] blockLightMask,
-                                         final long[] emptySkyLightMask,
-                                         final long[] emptyBlockLightMask,
-                                         final byte[][] skyLightArrays,
-                                         final byte[][] blockLightArrays) {
+            final int chunkZ,
+            final @NotNull CompoundBinaryTag heightmaps,
+            final byte @NotNull [] data,
+            final @NotNull List<@NotNull BlockEntity> blockEntities,
+            final boolean trustEdges,
+            final long[] skyLightMask,
+            final long[] blockLightMask,
+            final long[] emptySkyLightMask,
+            final long[] emptyBlockLightMask,
+            final byte[][] skyLightArrays,
+            final byte[][] blockLightArrays) {
 
         Preconditions.requireNotNull(heightmaps, "heightmaps");
         Preconditions.requireNotNull(data, "data");
@@ -73,13 +73,15 @@ public final class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
             final byte[] skyLightArray = skyLightArrays[i];
             Preconditions.requireNotNull(skyLightArray, "skyLightArrays[" + i + "]");
             Preconditions.requireTrue(skyLightArray.length == UpdateLightPacket.LIGHT_ARRAY_LENGTH,
-                    "skyLightArrays[" + i + "] length must be " + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
+                    "skyLightArrays[" + i + "] length must be "
+                            + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
         }
 
         for (int i = 0; i < blockLightArrays.length; i++) {
             final byte[] blockLightArray = blockLightArrays[i];
             Preconditions.requireNotNull(blockLightArray, "blockLightArrays[" + i + "]");
-            Preconditions.requireTrue(blockLightArray.length ==  UpdateLightPacket.LIGHT_ARRAY_LENGTH,
+            Preconditions.requireTrue(
+                    blockLightArray.length == UpdateLightPacket.LIGHT_ARRAY_LENGTH,
                     "blockLightArrays[" + i + "] length must be 2048");
         }
 
@@ -121,7 +123,8 @@ public final class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
         for (int i = 0; i < skyLightArraysLength; i++) {
             final byte[] skyLightArray = inputStream.readByteList();
             if (skyLightArray.length != UpdateLightPacket.LIGHT_ARRAY_LENGTH) {
-                throw new DecodeException("skyLightArrays[" + i + "] length must be " + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
+                throw new DecodeException("skyLightArrays[" + i + "] length must be "
+                        + UpdateLightPacket.LIGHT_ARRAY_LENGTH);
             }
             skyLightArrays[i] = skyLightArray;
         }
@@ -254,9 +257,9 @@ public final class ChunkDataAndUpdateLightPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public BlockEntity(final byte packedXZ,
-                           final short y,
-                           final int type,
-                           final @NotNull CompoundBinaryTag data) {
+                final short y,
+                final int type,
+                final @NotNull CompoundBinaryTag data) {
 
             Preconditions.requireNotNull(data, "data");
 

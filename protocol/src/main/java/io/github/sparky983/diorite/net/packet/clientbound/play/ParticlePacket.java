@@ -41,12 +41,12 @@ public final class ParticlePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ParticlePacket(final int particleId,
-                          final boolean longDistance,
-                          final @NotNull Position position,
-                          final @NotNull Vector offset,
-                          final float particleData,
-                          final int particleCount,
-                          final byte @NotNull [] data) {
+            final boolean longDistance,
+            final @NotNull Position position,
+            final @NotNull Vector offset,
+            final float particleData,
+            final int particleCount,
+            final byte @NotNull [] data) {
 
         Preconditions.requireNotNull(position, "position");
         Preconditions.requireNotNull(offset, "offset");

@@ -42,10 +42,10 @@ public final class MapDataPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public MapDataPacket(final int mapId,
-                         final byte scale,
-                         final boolean locked,
-                         final @Nullable List<@NotNull Icon> icons,
-                         final @Nullable MapPatch patch) {
+            final byte scale,
+            final boolean locked,
+            final @Nullable List<@NotNull Icon> icons,
+            final @Nullable MapPatch patch) {
 
         if (icons != null) {
             Preconditions.requireContainsNoNulls(icons, "icons");
@@ -147,10 +147,10 @@ public final class MapDataPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public Icon(final @NotNull Type type,
-                    final byte x,
-                    final byte z,
-                    final byte direction,
-                    final @Nullable Component displayName) {
+                final byte x,
+                final byte z,
+                final byte direction,
+                final @Nullable Component displayName) {
 
             Preconditions.requireNotNull(type, "type");
 
@@ -258,10 +258,10 @@ public final class MapDataPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public MapPatch(final int columns,
-                        final byte rows,
-                        final byte x,
-                        final byte z,
-                        final byte @NotNull [] colors) {
+                final byte rows,
+                final byte x,
+                final byte z,
+                final byte @NotNull [] colors) {
 
             Preconditions.requireNotNull(colors, "colors");
 

@@ -39,9 +39,9 @@ public final class ResourcePackSendPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ResourcePackSendPacket(final @NotNull String url,
-                                    final @NotNull String hash,
-                                    final boolean isForced,
-                                    final @Nullable Component promptMessage) {
+            final @NotNull String hash,
+            final boolean isForced,
+            final @Nullable Component promptMessage) {
 
         Preconditions.requireNotNull(url, "url");
         Preconditions.requireNotNull(hash, "hash");
@@ -76,6 +76,7 @@ public final class ResourcePackSendPacket implements ClientBoundPacket {
 
     @Override
     public int getId() {
+
         return ClientBoundPacketId.Play.RESOURCE_PACK_SEND;
     }
 

@@ -33,8 +33,9 @@ final class IdentifierImpl implements Identifier {
     @Subst("zombie")
     private final String value;
 
-    IdentifierImpl(final @org.intellij.lang.annotations.Pattern(NAMESPACE_PATTERN) @NotNull String namespace,
-                   final @org.intellij.lang.annotations.Pattern(VALUE_PATTERN) @NotNull String value) {
+    IdentifierImpl(
+            final @org.intellij.lang.annotations.Pattern(NAMESPACE_PATTERN) @NotNull String namespace,
+            final @org.intellij.lang.annotations.Pattern(VALUE_PATTERN) @NotNull String value) {
 
         Preconditions.requireNotNull(namespace, "namespace");
         Preconditions.requireNotNull(value, "value");

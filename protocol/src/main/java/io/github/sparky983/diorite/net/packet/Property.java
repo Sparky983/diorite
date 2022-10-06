@@ -33,8 +33,8 @@ public final class Property implements Writable {
 
     @Contract(pure = true)
     public Property(final @NotNull String name,
-                    final @NotNull String value,
-                    final @Nullable String signature) {
+            final @NotNull String value,
+            final @Nullable String signature) {
 
         Preconditions.requireNotNull(name, "name");
         Preconditions.requireNotNull(value, "value");

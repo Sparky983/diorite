@@ -41,9 +41,9 @@ final class PacketListener implements Runnable {
 
     @Contract(pure = true)
     public PacketListener(final Sinks.@NotNull Many<Packet> packets,
-                          final @NotNull Stateful stateful,
-                          final @NotNull StreamIn inputStream,
-                          final @NotNull PacketFormat initialPacketFormat) {
+            final @NotNull Stateful stateful,
+            final @NotNull StreamIn inputStream,
+            final @NotNull PacketFormat initialPacketFormat) {
 
         this.packets = packets;
         this.stateful = stateful;

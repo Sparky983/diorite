@@ -84,7 +84,8 @@ public interface StreamIn extends Closeable {
     }
 
     /**
-     * Creates a new byte array minecraft output stream reading input from the specified byte array.
+     * Creates a new byte array minecraft output stream reading input from the specified byte
+     * array.
      *
      * @param input The input to read from.
      * @return The newly created input stream.
@@ -231,8 +232,8 @@ public interface StreamIn extends Closeable {
      * @param maxLength The maximum length the string is allowed to be.
      * @return The read input.
      * @throws RuntimeIOException if an io exception occurred.
-     * @throws DecodeException if an exception occurred while decoding the value or if the string
-     *                         exceeds the maximum length.
+     * @throws DecodeException if an exception occurred while decoding the value or if the
+     *         string exceeds the maximum length.
      * @since 1.0.0
      */
     @Contract(mutates = "this")
@@ -458,7 +459,8 @@ public interface StreamIn extends Closeable {
      * @param reader The reader to read the data from.
      * @param <T> The data type.
      * @return The read data.
-     * @throws NullPointerException if reader is {@code null} or if the reader returns {@code null}.
+     * @throws NullPointerException if reader is {@code null} or if the reader returns
+     *         {@code null}.
      * @throws RuntimeIOException if an io exception occurred.
      * @throws DecodeException if an exception occurred while decoding the value.
      * @see #readOptional(Supplier)
@@ -472,9 +474,7 @@ public interface StreamIn extends Closeable {
      * present.
      * <p>
      * This is an alternative to {@link #readOptional(Function)}, and should be used if the caller
-     * already has a reference to the input stream.
-     * Example:
-     * With {@link #readOptional(Function)}
+     * already has a reference to the input stream. Example: With {@link #readOptional(Function)}
      * <pre>
      * StreamIn input;
      *
@@ -490,7 +490,8 @@ public interface StreamIn extends Closeable {
      * @param reader The reader to read the data from.
      * @param <T> The data type.
      * @return The read data.
-     * @throws NullPointerException if reader is {@code null} or if the reader returns {@code null}.
+     * @throws NullPointerException if reader is {@code null} or if the reader returns
+     *         {@code null}.
      * @throws RuntimeIOException if an io exception occurred.
      * @throws DecodeException if an exception occurred while decoding the value.
      * @see #readOptional(Function)
@@ -550,10 +551,9 @@ public interface StreamIn extends Closeable {
     /**
      * Reads a list from the input stream, reading each element with the specified reader.
      * <p>
-     * This is an alternative to {@link #readList(Function)} (Function)}, and should be used
-     * if the caller already has a reference to the input stream.
-     * Example:
-     * With {@link #readList(Function)}
+     * This is an alternative to {@link #readList(Function)} (Function)}, and should be used if the
+     * caller already has a reference to the input stream. Example: With
+     * {@link #readList(Function)}
      * <pre>
      * StreamIn input;
      *
@@ -568,8 +568,8 @@ public interface StreamIn extends Closeable {
      *
      * @param reader The reader to read elements from.
      * @return The output stream instance (for chaining).
-     * @throws NullPointerException if data or writer are {@code null} or if the reader returns
-     *                              {@code null}.
+     * @throws NullPointerException if data or writer are {@code null} or if the reader
+     *         returns {@code null}.
      * @throws RuntimeIOException if an io exception occurred.
      * @since 1.0.0
      */

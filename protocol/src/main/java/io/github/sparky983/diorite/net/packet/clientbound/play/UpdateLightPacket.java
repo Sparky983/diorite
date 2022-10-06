@@ -44,14 +44,14 @@ public final class UpdateLightPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public UpdateLightPacket(final int chunkX,
-                             final int chunkZ,
-                             final boolean trustEdges,
-                             final long @NotNull [] skyLightMask,
-                             final long @NotNull [] blockLightMask,
-                             final long @NotNull [] emptySkyLightMask,
-                             final long @NotNull [] emptyBlockLightMask,
-                             final byte @NotNull [] @NotNull [] skyLightArrays,
-                             final byte @NotNull [] @NotNull [] blockLightArrays) {
+            final int chunkZ,
+            final boolean trustEdges,
+            final long @NotNull [] skyLightMask,
+            final long @NotNull [] blockLightMask,
+            final long @NotNull [] emptySkyLightMask,
+            final long @NotNull [] emptyBlockLightMask,
+            final byte @NotNull [] @NotNull [] skyLightArrays,
+            final byte @NotNull [] @NotNull [] blockLightArrays) {
 
         Preconditions.requireNotNull(skyLightMask, "skyLightMask");
         Preconditions.requireNotNull(blockLightMask, "blockLightMask");
@@ -62,13 +62,13 @@ public final class UpdateLightPacket implements ClientBoundPacket {
             final byte[] skyLightArray = skyLightArrays[i];
             Preconditions.requireNotNull(skyLightArray, "skyLightArrays[" + i + "]");
             Preconditions.requireTrue(skyLightArray.length == LIGHT_ARRAY_LENGTH,
-                                  "skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
+                    "skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
         }
 
         for (int i = 0; i < blockLightArrays.length; i++) {
             final byte[] blockLightArray = blockLightArrays[i];
             Preconditions.requireNotNull(blockLightArray, "blockLightArrays[" + i + "]");
-            Preconditions.requireTrue(blockLightArray.length ==  LIGHT_ARRAY_LENGTH,
+            Preconditions.requireTrue(blockLightArray.length == LIGHT_ARRAY_LENGTH,
                     "blockLightArrays[" + i + "] length must be 2048");
         }
 
@@ -103,7 +103,8 @@ public final class UpdateLightPacket implements ClientBoundPacket {
         for (int i = 0; i < skyLightArraysLength; i++) {
             final byte[] skyLightArray = inputStream.readByteList();
             if (skyLightArray.length != LIGHT_ARRAY_LENGTH) {
-                throw new DecodeException("skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
+                throw new DecodeException(
+                        "skyLightArrays[" + i + "] length must be " + LIGHT_ARRAY_LENGTH);
             }
             skyLightArrays[i] = skyLightArray;
         }

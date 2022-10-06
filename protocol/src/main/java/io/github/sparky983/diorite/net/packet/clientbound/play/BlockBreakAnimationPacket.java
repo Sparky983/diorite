@@ -35,8 +35,8 @@ public final class BlockBreakAnimationPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public BlockBreakAnimationPacket(final int entityId,
-                                     final @NotNull Position location,
-                                     final @Range(from = 0, to = 9) byte destroyStage) {
+            final @NotNull Position location,
+            final @Range(from = 0, to = 9) byte destroyStage) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireRange(destroyStage, 0, 9, "destroyStage");

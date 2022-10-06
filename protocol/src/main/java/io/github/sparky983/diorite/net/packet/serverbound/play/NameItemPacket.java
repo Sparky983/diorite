@@ -37,7 +37,8 @@ public final class NameItemPacket implements ServerBoundPacket {
         Preconditions.requireNotNull(itemName, "itemName");
         Preconditions.requireRange(itemName.length(), 0, MAX_ITEM_NAME, "itemName.length()");
         // Postel's law: "be conservative with in what you send"
-        // name item allows for limit higher than 35 characters in the protocol, but they'll be ignored
+        // name item allows for limit higher than 35 characters in the protocol, but they'll be
+        // ignored
 
         this.itemName = itemName;
     }
@@ -49,7 +50,8 @@ public final class NameItemPacket implements ServerBoundPacket {
 
         this.itemName = inputStream.readString();
         // Postel's law: "be liberal with in what you accept"
-        // name item allows for limit higher than 35 characters in the protocol, but they'll be ignored
+        // name item allows for limit higher than 35 characters in the protocol, but they'll be
+        // ignored
     }
 
     @Override

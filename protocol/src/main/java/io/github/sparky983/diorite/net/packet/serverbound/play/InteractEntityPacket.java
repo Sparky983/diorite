@@ -40,12 +40,12 @@ public final class InteractEntityPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public InteractEntityPacket(final int entityId,
-                                final @NotNull Type type,
-                                final @Nullable Float targetX,
-                                final @Nullable Float targetY,
-                                final @Nullable Float targetZ,
-                                final @Nullable Hand hand,
-                                final boolean isSneaking) {
+            final @NotNull Type type,
+            final @Nullable Float targetX,
+            final @Nullable Float targetY,
+            final @Nullable Float targetZ,
+            final @Nullable Hand hand,
+            final boolean isSneaking) {
 
         Preconditions.requireNotNull(type, "type");
 
@@ -54,15 +54,19 @@ public final class InteractEntityPacket implements ServerBoundPacket {
             Preconditions.requireNotNull(targetY, "targetY");
             Preconditions.requireNotNull(targetZ, "targetZ");
         } else {
-            Preconditions.requireTrue(targetX == null, "[targetX] must be null if type is not INTERACT_AT");
-            Preconditions.requireTrue(targetY == null, "[targetY] must be null if type is not INTERACT_AT");
-            Preconditions.requireTrue(targetZ == null, "[targetZ] must be null if type is not INTERACT_AT");
+            Preconditions.requireTrue(targetX == null,
+                    "[targetX] must be null if type is not INTERACT_AT");
+            Preconditions.requireTrue(targetY == null,
+                    "[targetY] must be null if type is not INTERACT_AT");
+            Preconditions.requireTrue(targetZ == null,
+                    "[targetZ] must be null if type is not INTERACT_AT");
         }
 
         if (type == Type.INTERACT || type == Type.INTERACT_AT) {
             Preconditions.requireNotNull(hand);
         } else {
-            Preconditions.requireTrue(hand == null, "[hand] must be null if type is INTERACT or INTERACT_AT");
+            Preconditions.requireTrue(hand == null,
+                    "[hand] must be null if type is INTERACT or INTERACT_AT");
         }
 
         this.entityId = entityId;

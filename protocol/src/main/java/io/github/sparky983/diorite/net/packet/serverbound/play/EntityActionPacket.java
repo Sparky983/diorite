@@ -33,8 +33,8 @@ public final class EntityActionPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public EntityActionPacket(final int entityId,
-                              final @NotNull Action action,
-                              final int jumpBoost) {
+            final @NotNull Action action,
+            final int jumpBoost) {
 
         Preconditions.requireNotNull(action, "action");
 

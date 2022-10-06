@@ -26,6 +26,7 @@ final class VelocityImpl implements Velocity {
 
     @Contract(pure = true)
     VelocityImpl(final short x, final short y, final short z) {
+
         this.x = x;
         this.y = y;
         this.z = z;

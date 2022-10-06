@@ -87,12 +87,14 @@ public final class Preconditions {
      */
     @Contract(pure = true)
     public static void requireRange(final long n,
-                                    final long from,
-                                    final long to,
-                                    final @Nullable String parameterName) {
+            final long from,
+            final long to,
+            final @Nullable String parameterName) {
 
         if (n < from || n > to) {
-            throw new IllegalArgumentException("[" + parameterName + "] must be in range " + from + "-" + to + ", but was: " + n);
+            throw new IllegalArgumentException(
+                    "[" + parameterName + "] must be in range " + from + "-" + to + ", but was: "
+                            + n);
         }
     }
 

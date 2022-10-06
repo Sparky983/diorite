@@ -16,9 +16,7 @@
 
 package io.github.sparky983.diorite.io;
 
-import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.BinaryTagIO;
-import net.kyori.adventure.nbt.BinaryTagType;
 import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
@@ -28,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -182,14 +179,16 @@ final class StreamInImpl implements StreamIn {
     }
 
     @Override
-    public @NotNull String readString(final @Range(from = 1, to = Protocol.MAX_STRING_LENGTH) int maxLength) {
+    public @NotNull String readString(
+            final @Range(from = 1, to = Protocol.MAX_STRING_LENGTH) int maxLength) {
 
         Preconditions.requireRange(maxLength, 1, Protocol.MAX_STRING_LENGTH, "maxLength");
 
         final int length = readVarInt();
 
         if (length > maxLength * MAX_UTF_8_CHAR_LENGTH) {
-            throw new DecodeException("Received string was longer than the maximum length (" + maxLength + ")");
+            throw new DecodeException(
+                    "Received string was longer than the maximum length (" + maxLength + ")");
         }
 
         if (length < 0) {
@@ -199,7 +198,8 @@ final class StreamInImpl implements StreamIn {
         final String input = new String(readBytes(length), StandardCharsets.UTF_8);
 
         if (input.length() > maxLength) {
-            throw new DecodeException("Received string was longer than the maximum length (" + maxLength + ")");
+            throw new DecodeException(
+                    "Received string was longer than the maximum length (" + maxLength + ")");
         }
 
         return input;
@@ -374,7 +374,8 @@ final class StreamInImpl implements StreamIn {
     }
 
     @Override
-    public long @NotNull [] readVarLongs(final @Range(from = 0, to = Integer.MAX_VALUE) int length) {
+    public long @NotNull [] readVarLongs(
+            final @Range(from = 0, to = Integer.MAX_VALUE) int length) {
 
         Preconditions.requireRange(length, 0, Integer.MAX_VALUE, "length");
 
@@ -433,15 +434,15 @@ final class StreamInImpl implements StreamIn {
     @Override
     public <T> @NotNull Optional<T> readOptional(final @NotNull Supplier<@NotNull T> reader) {
 
-       Preconditions.requireNotNull(reader, "reader");
+        Preconditions.requireNotNull(reader, "reader");
 
-       final boolean isPresent = readBoolean();
+        final boolean isPresent = readBoolean();
 
-       if (!isPresent) {
-           return Optional.empty();
-       }
+        if (!isPresent) {
+            return Optional.empty();
+        }
 
-       return Optional.of(reader.get());
+        return Optional.of(reader.get());
     }
 
     @SuppressWarnings("ConstantConditions") // Runtime check
@@ -454,7 +455,9 @@ final class StreamInImpl implements StreamIn {
         assert enumConstants != null : "enumClass should be an enum";
 
         if (ordinal >= enumConstants.length) {
-            throw new DecodeException("Id was too large. Expected range: 0-" + (enumConstants.length - 1) + " was " + ordinal);
+            throw new DecodeException(
+                    "Id was too large. Expected range: 0-" + (enumConstants.length - 1) + " was "
+                            + ordinal);
         }
 
         if (ordinal < 0) {

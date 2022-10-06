@@ -36,9 +36,9 @@ public final class BlockActionPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public BlockActionPacket(final @NotNull BlockPosition location,
-                             final @Range(from = 0x00, to = 0xFF) int actionId,
-                             final @Range(from = 0x00, to = 0xFF) int actionParam,
-                             final int blockType) {
+            final @Range(from = 0x00, to = 0xFF) int actionId,
+            final @Range(from = 0x00, to = 0xFF) int actionParam,
+            final int blockType) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireRange(actionId, 0x00, 0xFF, "actionId");

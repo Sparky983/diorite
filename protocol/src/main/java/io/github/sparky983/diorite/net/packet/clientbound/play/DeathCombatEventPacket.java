@@ -35,8 +35,8 @@ public final class DeathCombatEventPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public DeathCombatEventPacket(final int playerId,
-                                  final int killerEntityId,
-                                  final @NotNull Component message) {
+            final int killerEntityId,
+            final @NotNull Component message) {
 
         Preconditions.requireNotNull(message, "message");
 

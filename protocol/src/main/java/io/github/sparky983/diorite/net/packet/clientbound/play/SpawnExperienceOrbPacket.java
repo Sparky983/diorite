@@ -34,8 +34,8 @@ public final class SpawnExperienceOrbPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public SpawnExperienceOrbPacket(final int entityId,
-                                    final @NotNull Position location,
-                                    final short count) {
+            final @NotNull Position location,
+            final short count) {
 
         Preconditions.requireNotNull(location, "location");
 

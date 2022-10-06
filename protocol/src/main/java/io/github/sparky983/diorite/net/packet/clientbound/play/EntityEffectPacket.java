@@ -38,7 +38,8 @@ public final class EntityEffectPacket implements ClientBoundPacket {
     private final byte flags;
 
     @Contract(pure = true)
-    public EntityEffectPacket(final int entityId, final byte effectId, final byte amplifier, final int duration, final byte flags) {
+    public EntityEffectPacket(final int entityId, final byte effectId, final byte amplifier,
+            final int duration, final byte flags) {
 
         this.entityId = entityId;
         this.effectId = effectId;

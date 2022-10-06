@@ -38,13 +38,16 @@ public final class HandshakePacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public HandshakePacket(final int protocolVersion,
-                           final @NotNull String serverAddress,
-                           final @Port int serverPort,
-                           final @NotNull ChannelState nextState) {
+            final @NotNull String serverAddress,
+            final @Port int serverPort,
+            final @NotNull ChannelState nextState) {
 
         Preconditions.requireNotNull(serverAddress, "serverAddress");
-        Preconditions.requireTrue(Networking.isValidPort(serverPort), "[serverPort] is not a valid port");
-        Preconditions.requireTrue(nextState == ChannelState.STATUS || nextState == ChannelState.LOGIN, "[nextState] is not a valid state");
+        Preconditions.requireTrue(Networking.isValidPort(serverPort),
+                "[serverPort] is not a valid port");
+        Preconditions.requireTrue(
+                nextState == ChannelState.STATUS || nextState == ChannelState.LOGIN,
+                "[nextState] is not a valid state");
 
         this.protocolVersion = protocolVersion;
         this.serverAddress = serverAddress;

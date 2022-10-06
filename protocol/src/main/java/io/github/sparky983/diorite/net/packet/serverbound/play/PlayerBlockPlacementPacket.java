@@ -41,12 +41,12 @@ public final class PlayerBlockPlacementPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public PlayerBlockPlacementPacket(final @NotNull Hand hand,
-                                      final @NotNull BlockPosition location,
-                                      final @NotNull BlockFace face,
-                                      final float cursorX,
-                                      final float cursorY,
-                                      final float cursorZ,
-                                      final boolean isInsideBlock) {
+            final @NotNull BlockPosition location,
+            final @NotNull BlockFace face,
+            final float cursorX,
+            final float cursorY,
+            final float cursorZ,
+            final boolean isInsideBlock) {
 
         Preconditions.requireNotNull(hand, "hand");
         Preconditions.requireNotNull(location, "location");

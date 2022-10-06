@@ -40,13 +40,14 @@ public final class UpdateCommandBlockPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public UpdateCommandBlockPacket(final @NotNull BlockPosition location,
-                                    final @NotNull String command,
-                                    final @NotNull Mode mode,
-                                    final byte flags) {
+            final @NotNull String command,
+            final @NotNull Mode mode,
+            final byte flags) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(command, "command");
-        Preconditions.requireRange(command.length(), 0, Protocol.MAX_STRING_LENGTH, "command.length()");
+        Preconditions.requireRange(command.length(), 0, Protocol.MAX_STRING_LENGTH,
+                "command.length()");
         Preconditions.requireNotNull(mode, "mode");
 
         this.location = location;
@@ -118,6 +119,7 @@ public final class UpdateCommandBlockPacket implements ServerBoundPacket {
 
         return (flags & CONDITIONAL) != 0;
     }
+
     @Contract(pure = true)
     public boolean isAutomatic() {
 

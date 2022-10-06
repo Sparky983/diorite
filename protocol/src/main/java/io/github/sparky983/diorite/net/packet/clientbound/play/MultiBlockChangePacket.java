@@ -36,8 +36,8 @@ public final class MultiBlockChangePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public MultiBlockChangePacket(final long chunkSectionPosition,
-                                  final boolean suppressLightUpdates,
-                                  final long @NotNull [] blocks) {
+            final boolean suppressLightUpdates,
+            final long @NotNull [] blocks) {
 
         Preconditions.requireNotNull(blocks, "blocks");
 

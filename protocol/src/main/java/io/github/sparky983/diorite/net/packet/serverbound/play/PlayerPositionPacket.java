@@ -34,9 +34,9 @@ public final class PlayerPositionPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public PlayerPositionPacket(final double x,
-                                final double y,
-                                final double z,
-                                final boolean isOnGround) {
+            final double y,
+            final double z,
+            final boolean isOnGround) {
 
         this.x = x;
         this.y = y;

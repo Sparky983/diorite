@@ -34,11 +34,12 @@ public final class UpdateCommandBlockMinecartPacket implements ServerBoundPacket
 
     @Contract(pure = true)
     public UpdateCommandBlockMinecartPacket(final int entityId,
-                                            final @NotNull String command,
-                                            final boolean trackOutput) {
+            final @NotNull String command,
+            final boolean trackOutput) {
 
         Preconditions.requireNotNull(command, "command");
-        Preconditions.requireRange(command.length(), 0, Protocol.MAX_STRING_LENGTH, "command.length()");
+        Preconditions.requireRange(command.length(), 0, Protocol.MAX_STRING_LENGTH,
+                "command.length()");
 
         this.entityId = entityId;
         this.command = command;

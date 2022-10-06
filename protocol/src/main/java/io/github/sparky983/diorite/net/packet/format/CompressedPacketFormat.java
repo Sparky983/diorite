@@ -38,8 +38,8 @@ final class CompressedPacketFormat implements PacketFormat {
 
     @Contract(pure = true)
     CompressedPacketFormat(final @NotNull Stateful stateful,
-                           final @Range(from = -1, to = Integer.MAX_VALUE) int threshold,
-                           final @NotNull Compression compression) {
+            final @Range(from = -1, to = Integer.MAX_VALUE) int threshold,
+            final @NotNull Compression compression) {
 
         Preconditions.requireNotNull(stateful, "stateful");
         Preconditions.requireRange(threshold, -1, Integer.MAX_VALUE, "stateful");
@@ -59,7 +59,8 @@ final class CompressedPacketFormat implements PacketFormat {
         // contains an uncompressed version of packet id and data fields
         final byte[] uncompressed;
 
-        try (final ByteArrayStreamOut uncompressedOutputStream = StreamOut.createByteArrayStream()) {
+        try (final ByteArrayStreamOut uncompressedOutputStream =
+                     StreamOut.createByteArrayStream()) {
             uncompressedOutputStream.writeVarInt(packet.getId());
             packet.write(uncompressedOutputStream);
             uncompressed = uncompressedOutputStream.toByteArray();
@@ -68,14 +69,17 @@ final class CompressedPacketFormat implements PacketFormat {
         final byte[] dataLengthAndData;
 
         if (uncompressed.length < threshold) {
-            try (final ByteArrayStreamOut dataLengthAndDataOutputStream = StreamOut.createByteArrayStream()) {
+            try (final ByteArrayStreamOut dataLengthAndDataOutputStream =
+                         StreamOut.createByteArrayStream()) {
                 dataLengthAndDataOutputStream.writeVarInt(0);
                 dataLengthAndDataOutputStream.writeBytes(uncompressed);
                 dataLengthAndData = dataLengthAndDataOutputStream.toByteArray();
             }
         } else {
-            final ByteArrayStreamOut byteArrayCompressedOutputStream = StreamOut.createByteArrayStream();
-            try (final StreamOut compressedOutputStream = compression.compressed(byteArrayCompressedOutputStream)) {
+            final ByteArrayStreamOut byteArrayCompressedOutputStream =
+                    StreamOut.createByteArrayStream();
+            try (final StreamOut compressedOutputStream = compression.compressed(
+                    byteArrayCompressedOutputStream)) {
                 compressedOutputStream.writeByteList(uncompressed);
                 dataLengthAndData = byteArrayCompressedOutputStream.toByteArray();
             }
@@ -89,7 +93,8 @@ final class CompressedPacketFormat implements PacketFormat {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
 
-        try (final ByteArrayStreamIn packetInputStream = StreamIn.createByteArrayStream(inputStream.readByteList())) {
+        try (final ByteArrayStreamIn packetInputStream = StreamIn.createByteArrayStream(
+                inputStream.readByteList())) {
             final int dataLength = packetInputStream.readVarInt();
 
             final StreamIn decompressedDataInputStream;
@@ -105,7 +110,8 @@ final class CompressedPacketFormat implements PacketFormat {
 
                 return stateful.getPacketRegistry()
                         .getPacketDecoder(id)
-                        .orElseThrow(() -> new DecodeException("Unknown packet decoder for id 0x" + Integer.toHexString(id), true))
+                        .orElseThrow(() -> new DecodeException(
+                                "Unknown packet decoder for id 0x" + Integer.toHexString(id), true))
                         .decode(decompressedDataInputStream);
             } finally {
                 decompressedDataInputStream.close();

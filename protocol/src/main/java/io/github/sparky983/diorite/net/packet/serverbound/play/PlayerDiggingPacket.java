@@ -35,8 +35,8 @@ public final class PlayerDiggingPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public PlayerDiggingPacket(final @NotNull Status status,
-                               final @NotNull BlockPosition location,
-                               final @NotNull BlockFace face) {
+            final @NotNull BlockPosition location,
+            final @NotNull BlockFace face) {
 
         Preconditions.requireNotNull(status, "status");
         Preconditions.requireNotNull(location, "location");

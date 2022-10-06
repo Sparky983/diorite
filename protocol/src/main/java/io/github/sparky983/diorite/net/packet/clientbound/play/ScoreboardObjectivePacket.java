@@ -38,10 +38,11 @@ public final class ScoreboardObjectivePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ScoreboardObjectivePacket(final @NotNull String objectiveName,
-                                     final @Nullable Action action) {
+            final @Nullable Action action) {
 
         Preconditions.requireNotNull(objectiveName, "objectiveName");
-        Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH, "objectiveName.length()");
+        Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH,
+                "objectiveName.length()");
 
         this.objectiveName = objectiveName;
         this.action = action;
@@ -85,7 +86,7 @@ public final class ScoreboardObjectivePacket implements ClientBoundPacket {
     @Contract(pure = true)
     public @NotNull ActionType getMode() {
 
-            return action != null ? action.getMode() : ActionType.REMOVE;
+        return action != null ? action.getMode() : ActionType.REMOVE;
     }
 
     @Contract(pure = true)
@@ -107,10 +108,10 @@ public final class ScoreboardObjectivePacket implements ClientBoundPacket {
         private final Component objectiveValue;
         private final Type type;
 
-        @Contract(pure = true )
+        @Contract(pure = true)
         public Action(final @NotNull ActionType mode,
-                      final @NotNull Component objectiveValue,
-                      final @NotNull Type type) {
+                final @NotNull Component objectiveValue,
+                final @NotNull Type type) {
 
             Preconditions.requireNotNull(mode, "mode");
             Preconditions.requireNotNull(objectiveValue, "objectiveValue");

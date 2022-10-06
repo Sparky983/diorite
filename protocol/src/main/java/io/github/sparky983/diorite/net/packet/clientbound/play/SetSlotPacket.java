@@ -36,9 +36,9 @@ public final class SetSlotPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public SetSlotPacket(final byte windowId,
-                         final int stateId,
-                         final short slot,
-                         final @NotNull ItemStack itemStack) {
+            final int stateId,
+            final short slot,
+            final @NotNull ItemStack itemStack) {
 
         this.windowId = windowId;
         this.stateId = stateId;

@@ -51,12 +51,11 @@ public final class ClientBoundPacketId {
      */
     public static final class Status {
 
+        public static final int RESPONSE = 0x00;
+        public static final int PONG = 0x01;
         private Status() {
 
         }
-
-        public static final int RESPONSE = 0x00;
-        public static final int PONG = 0x01;
     }
 
     /**
@@ -66,15 +65,14 @@ public final class ClientBoundPacketId {
      */
     public static final class Login {
 
-        private Login() {
-
-        }
-
         public static final int DISCONNECT = 0x00;
         public static final int ENCRYPTION_REQUEST = 0x01;
         public static final int LOGIN_SUCCESS = 0x02;
         public static final int SET_COMPRESSION = 0x03;
         public static final int LOGIN_PLUGIN_REQUEST = 0x04;
+        private Login() {
+
+        }
     }
 
     /**
@@ -83,10 +81,6 @@ public final class ClientBoundPacketId {
      * @since 1.0.0
      */
     public static final class Play {
-
-        private Play() {
-
-        }
 
         public static final int SPAWN_ENTITY = 0x00;
         public static final int SPAWN_EXPERIENCE_ORB = 0x01;
@@ -192,5 +186,8 @@ public final class ClientBoundPacketId {
         public static final int ENTITY_EFFECT = 0x65;
         public static final int DECLARE_RECIPES = 0x66;
         public static final int TAGS = 0x67;
+        private Play() {
+
+        }
     }
 }

@@ -43,7 +43,8 @@ public interface Stateful extends Closeable {
      * Note: this is not thread-safe as the only time the state should change is during handshake
      * and login which is done synchronously.
      *
-     * @throws IllegalArgumentException if the specified state is {@link ChannelState#DISCONNECTED}.
+     * @throws IllegalArgumentException if the specified state is
+     *         {@link ChannelState#DISCONNECTED}.
      * @throws IllegalStateException if the state cannot be changed to the specified state.
      * @since 1.0.0
      */

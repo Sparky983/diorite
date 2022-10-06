@@ -25,9 +25,9 @@ import java.net.Socket;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
+import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.StreamIn;
 import io.github.sparky983.diorite.io.StreamOut;
-import io.github.sparky983.diorite.io.RuntimeIOException;
 import io.github.sparky983.diorite.io.compression.Compression;
 import io.github.sparky983.diorite.net.Channel;
 import io.github.sparky983.diorite.net.ChannelState;
@@ -63,9 +63,9 @@ final class ClientChannel implements Channel<ClientBoundPacket, ServerBoundPacke
     private PacketRegistry packetRegistry = PacketRegistry.EMPTY;
 
     public ClientChannel(final @NotNull String host,
-                         final @Port int port,
-                         final @NotNull ExecutorService executor,
-                         final Sinks.@NotNull Many<Packet> packets) {
+            final @Port int port,
+            final @NotNull ExecutorService executor,
+            final Sinks.@NotNull Many<Packet> packets) {
 
         try {
             client = new Socket(host, port);

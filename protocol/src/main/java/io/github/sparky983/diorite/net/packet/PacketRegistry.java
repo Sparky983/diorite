@@ -78,7 +78,8 @@ public final class PacketRegistry {
          * @param packetDecoder The decoder.
          * @param <T> The packet type.
          * @return The packet registry instance (for chaining).
-         * @throws IllegalStateException if a packet with the specified id has already been registered.
+         * @throws IllegalStateException if a packet with the specified id has already been
+         *         registered.
          * @since 1.0.0
          */
         @Contract(value = "_, _ -> this", mutates = "this")
@@ -88,10 +89,12 @@ public final class PacketRegistry {
 
             Preconditions.requireNotNull(packetDecoder, "packetDecoder");
 
-            final PacketDecoder<?> previousDecoder = packetDecoders.putIfAbsent(packetId, packetDecoder);
+            final PacketDecoder<?> previousDecoder = packetDecoders.putIfAbsent(packetId,
+                    packetDecoder);
 
             if (previousDecoder != null) {
-                throw new IllegalStateException("Decoder with id 0x" + Integer.toHexString(packetId) + " has already been registered");
+                throw new IllegalStateException("Decoder with id 0x" + Integer.toHexString(packetId)
+                        + " has already been registered");
             }
 
             return this;

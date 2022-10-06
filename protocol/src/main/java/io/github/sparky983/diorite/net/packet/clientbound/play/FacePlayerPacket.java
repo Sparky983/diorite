@@ -36,8 +36,8 @@ public final class FacePlayerPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public FacePlayerPacket(final @NotNull BodyPart bodyPart,
-                            final @NotNull Position targetPosition,
-                            final @Nullable TargetInfo targetInfo) {
+            final @NotNull Position targetPosition,
+            final @Nullable TargetInfo targetInfo) {
 
         Preconditions.requireNotNull(bodyPart, "bodyPart");
         Preconditions.requireNotNull(targetPosition, "targetPosition");
@@ -92,6 +92,12 @@ public final class FacePlayerPacket implements ClientBoundPacket {
         return targetInfo;
     }
 
+    public enum BodyPart {
+
+        FEET,
+        EYES
+    }
+
     public static final class TargetInfo implements Writable {
 
         private final int entityId;
@@ -135,11 +141,5 @@ public final class FacePlayerPacket implements ClientBoundPacket {
 
             return bodyPart;
         }
-    }
-
-    public enum BodyPart {
-
-        FEET,
-        EYES
     }
 }

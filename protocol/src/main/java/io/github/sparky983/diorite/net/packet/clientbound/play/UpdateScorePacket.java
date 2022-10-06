@@ -40,7 +40,8 @@ public final class UpdateScorePacket implements ClientBoundPacket {
     public UpdateScorePacket(final @NotNull String entityName, final @NotNull Action action) {
 
         Preconditions.requireNotNull(entityName, "entityName");
-        Preconditions.requireRange(entityName.length(), 0, MAX_ENTITY_NAME_LENGTH, "entityName.length()");
+        Preconditions.requireRange(entityName.length(), 0, MAX_ENTITY_NAME_LENGTH,
+                "entityName.length()");
         Preconditions.requireNotNull(action, "action");
 
         this.entityName = entityName;
@@ -84,6 +85,34 @@ public final class UpdateScorePacket implements ClientBoundPacket {
         return action;
     }
 
+    public enum ActionType {
+
+        CREATE_OR_UPDATE(CreateOrUpdateAction::new),
+        REMOVE(RemoveAction::new);
+
+        private final Function<StreamIn, Action> factory;
+
+        @Contract(pure = true)
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
+
+            this.factory = factory;
+        }
+
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
+
+            return factory.apply(inputStream);
+        }
+    }
+
+    public interface Action extends Writable {
+
+        @Contract(pure = true)
+        @NotNull String getObjectiveName();
+
+        @Contract(pure = true)
+        @NotNull ActionType getType();
+    }
+
     public static final class CreateOrUpdateAction implements Action {
 
         private final String objectiveName;
@@ -93,7 +122,8 @@ public final class UpdateScorePacket implements ClientBoundPacket {
         public CreateOrUpdateAction(final @NotNull String objectiveName, final int value) {
 
             Preconditions.requireNotNull(objectiveName, "objectiveName");
-            Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH, "objectiveName.length()");
+            Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH,
+                    "objectiveName.length()");
 
             this.objectiveName = objectiveName;
             this.value = value;
@@ -144,7 +174,8 @@ public final class UpdateScorePacket implements ClientBoundPacket {
         public RemoveAction(final @NotNull String objectiveName) {
 
             Preconditions.requireNotNull(objectiveName, "objectiveName");
-            Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH, "objectiveName.length()");
+            Preconditions.requireRange(objectiveName.length(), 0, MAX_OBJECTIVE_NAME_LENGTH,
+                    "objectiveName.length()");
 
             this.objectiveName = objectiveName;
         }
@@ -175,34 +206,6 @@ public final class UpdateScorePacket implements ClientBoundPacket {
         public @NotNull ActionType getType() {
 
             return ActionType.REMOVE;
-        }
-    }
-
-    public interface Action extends Writable {
-
-        @Contract(pure = true)
-        @NotNull String getObjectiveName();
-
-        @Contract(pure = true)
-        @NotNull ActionType getType();
-    }
-
-    public enum ActionType {
-
-        CREATE_OR_UPDATE(CreateOrUpdateAction::new),
-        REMOVE(RemoveAction::new);
-
-        private final Function<StreamIn, Action> factory;
-
-        @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
-
-            this.factory = factory;
-        }
-
-        public @NotNull Action create(final @NotNull StreamIn inputStream) {
-
-            return factory.apply(inputStream);
         }
     }
 }

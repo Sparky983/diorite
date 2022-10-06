@@ -34,7 +34,7 @@ public final class PlayerListHeaderAndFooterPacket implements ClientBoundPacket 
 
     @Contract(pure = true)
     public PlayerListHeaderAndFooterPacket(final @NotNull Component header,
-                                           final @NotNull Component footer) {
+            final @NotNull Component footer) {
 
         Preconditions.requireNotNull(header, "header");
         Preconditions.requireNotNull(footer, "footer");

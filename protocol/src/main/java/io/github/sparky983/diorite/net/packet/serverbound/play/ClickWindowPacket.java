@@ -251,7 +251,8 @@ public final class ClickWindowPacket implements ServerBoundPacket {
          *     <tr>
          *         <td>2</td>
          *         <td>Normal</td>
-         *         <td>Middle click, only defined for creative players in non-player inventories</td>
+         *         <td>Middle click, only defined for creative players in non-player
+         *         inventories</td>
          *     </tr>
          * </table>
          */
@@ -323,7 +324,8 @@ public final class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Starting middle mouse drag, only defined for creative players in non-player
          *             inventories. (Note: the vanilla client will still incorrectly send this for
-         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
+         *             non-creative players - see
+         *             <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          *     <tr>
@@ -332,7 +334,8 @@ public final class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Add slot for middle-mouse drag, only defined for creative players in
          *             non-player inventories. (Note: the vanilla client will still incorrectly send
-         *             this for non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
+         *             this for non-creative players - see
+         *             <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          *     <tr>
@@ -341,7 +344,8 @@ public final class ClickWindowPacket implements ServerBoundPacket {
          *         <td>
          *             Ending middle mouse drag, only defined for creative players in non-player
          *             inventories. (Note: the vanilla client will still incorrectly send this for
-         *             non-creative players - see <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
+         *             non-creative players - see
+         *             <a href="https://web.archive.org/web/20211011071750/https://bugs.mojang.com/browse/MC-46584">MC-46584</a>)
          *         </td>
          *     </tr>
          * </table>

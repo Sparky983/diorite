@@ -1,6 +1,6 @@
 # Contributing to Diorite
 
-Before making any major changes to Diorite, please open an issue to discuss the changes. This will 
+Before making any major changes to Diorite, please open an issue to discuss the changes. This will
 allow us to discuss the changes and make sure that your PR won't be immediately closed.
 
 ## Style

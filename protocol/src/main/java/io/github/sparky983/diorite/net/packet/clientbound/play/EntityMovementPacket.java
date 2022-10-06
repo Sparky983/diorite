@@ -25,8 +25,6 @@ import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacketId;
 import io.github.sparky983.diorite.util.Preconditions;
 import io.github.sparky983.diorite.world.Direction;
-import io.github.sparky983.diorite.world.Vector;
-import io.github.sparky983.diorite.world.Velocity;
 
 public abstract class EntityMovementPacket implements ClientBoundPacket {
 
@@ -41,11 +39,11 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     protected EntityMovementPacket(final int entityId,
-                                   final short dx,
-                                   final short dy,
-                                   final short dz,
-                                   final @NotNull Direction direction,
-                                   final boolean isOnGround) {
+            final short dx,
+            final short dy,
+            final short dz,
+            final @NotNull Direction direction,
+            final boolean isOnGround) {
 
         Preconditions.requireNotNull(direction, "direction");
 
@@ -62,12 +60,12 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
      */
     @Contract(pure = true)
     protected EntityMovementPacket(final @NotNull StreamIn inputStream,
-                                   final int entityId,
-                                   final short dx,
-                                   final short dy,
-                                   final short dz,
-                                   final @NotNull Direction direction,
-                                   final boolean isOnGround) {
+            final int entityId,
+            final short dx,
+            final short dy,
+            final short dz,
+            final @NotNull Direction direction,
+            final boolean isOnGround) {
 
         Preconditions.requireNotNull(inputStream, "inputStream");
         Preconditions.requireNotNull(direction, "direction");
@@ -120,10 +118,10 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public Position(final int entityId,
-                        final short dx,
-                        final short dy,
-                        final short dz,
-                        final boolean isOnGround) {
+                final short dx,
+                final short dy,
+                final short dz,
+                final boolean isOnGround) {
 
             // TODO(Sparky983): Use singleton zero direction
             super(entityId, dx, dy, dz, Direction.of((byte) 0, (byte) 0), isOnGround);
@@ -164,11 +162,11 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public PositionAndRotation(final int entityId,
-                                   final short dx,
-                                   final short dy,
-                                   final short dz,
-                                   final @NotNull Direction direction,
-                                   final boolean isOnGround) {
+                final short dx,
+                final short dy,
+                final short dz,
+                final @NotNull Direction direction,
+                final boolean isOnGround) {
 
             super(entityId, dx, dy, dz, direction, isOnGround);
         }
@@ -209,8 +207,8 @@ public abstract class EntityMovementPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public Rotation(final int entityId,
-                        final @NotNull Direction direction,
-                        final boolean isOnGround) {
+                final @NotNull Direction direction,
+                final boolean isOnGround) {
 
             super(entityId, (short) 0, (short) 0, (short) 0, direction, isOnGround);
         }

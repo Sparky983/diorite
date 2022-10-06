@@ -41,9 +41,9 @@ public final class WindowItemsPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public WindowItemsPacket(final int windowId,
-                             final int stateId,
-                             final @NotNull List<@Nullable ItemStack> itemStackList,
-                             final @Nullable ItemStack carriedItem) {
+            final int stateId,
+            final @NotNull List<@Nullable ItemStack> itemStackList,
+            final @Nullable ItemStack carriedItem) {
 
         Preconditions.requireNotNull(itemStackList, "itemStackList");
 

@@ -42,7 +42,7 @@ public final class PlayerInfoPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public PlayerInfoPacket(final @NotNull ActionType actionType,
-                            final @NotNull List<@NotNull Player> players) {
+            final @NotNull List<@NotNull Player> players) {
 
         Preconditions.requireNotNull(actionType, "actionType");
         Preconditions.requireContainsNoNulls(players, "players");
@@ -73,6 +73,34 @@ public final class PlayerInfoPacket implements ClientBoundPacket {
     public int getId() {
 
         return ClientBoundPacketId.Play.PLAYER_INFO;
+    }
+
+    public enum ActionType {
+
+        ADD_PLAYER(AddPlayerAction::new),
+        UPDATE_GAME_MODE(UpdateGamemodeAction::new),
+        UPDATE_LATENCY(UpdateLatencyAction::new),
+        UPDATE_DISPLAY_NAME(UpdateDisplayNameAction::new),
+        REMOVE_PLAYER(RemovePlayerAction::new);
+
+        private final Function<StreamIn, Action> factory;
+
+        @Contract(pure = true)
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
+
+            this.factory = factory;
+        }
+
+        @Contract(pure = true)
+        public @NotNull Action read(final @NotNull StreamIn inputStream) {
+
+            return factory.apply(inputStream);
+        }
+    }
+
+    public interface Action extends Writable {
+
+        @NotNull ActionType getType();
     }
 
     public static final class Player implements Writable {
@@ -122,34 +150,6 @@ public final class PlayerInfoPacket implements ClientBoundPacket {
         }
     }
 
-    public enum ActionType {
-
-        ADD_PLAYER(AddPlayerAction::new),
-        UPDATE_GAME_MODE(UpdateGamemodeAction::new),
-        UPDATE_LATENCY(UpdateLatencyAction::new),
-        UPDATE_DISPLAY_NAME(UpdateDisplayNameAction::new),
-        REMOVE_PLAYER(RemovePlayerAction::new);
-
-        private final Function<StreamIn, Action> factory;
-
-        @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
-
-            this.factory = factory;
-        }
-
-        @Contract(pure = true)
-        public @NotNull Action read(final @NotNull StreamIn inputStream) {
-
-            return factory.apply(inputStream);
-        }
-    }
-
-    public interface Action extends Writable {
-
-        @NotNull ActionType getType();
-    }
-
     public static final class AddPlayerAction implements Action {
 
         private final String name;
@@ -160,10 +160,10 @@ public final class PlayerInfoPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public AddPlayerAction(final @NotNull String name,
-                         final @NotNull List<@NotNull Property> properties,
-                         final @NotNull Gamemode gamemode,
-                         final int ping,
-                         final @Nullable Component displayName) {
+                final @NotNull List<@NotNull Property> properties,
+                final @NotNull Gamemode gamemode,
+                final int ping,
+                final @Nullable Component displayName) {
 
             Preconditions.requireNotNull(name, "name");
             Preconditions.requireNotNull(properties, "properties");

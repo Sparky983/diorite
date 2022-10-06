@@ -38,8 +38,8 @@ public final class PlayerAbilitiesPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public PlayerAbilitiesPacket(final byte flags,
-                                 final float flyingSpeed,
-                                 final float fieldOfViewModifier) {
+            final float flyingSpeed,
+            final float fieldOfViewModifier) {
 
         this.flags = flags;
         this.flyingSpeed = flyingSpeed;

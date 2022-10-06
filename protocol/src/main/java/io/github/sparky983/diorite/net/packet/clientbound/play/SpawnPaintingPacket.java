@@ -39,10 +39,10 @@ public final class SpawnPaintingPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public SpawnPaintingPacket(final int entityId,
-                               final @NotNull UUID entityUuid,
-                               final int motive,
-                               final @NotNull Position location,
-                               final @NotNull CardinalDirection direction) {
+            final @NotNull UUID entityUuid,
+            final int motive,
+            final @NotNull Position location,
+            final @NotNull CardinalDirection direction) {
 
         Preconditions.requireNotNull(entityUuid, "entityUuid");
         Preconditions.requireNotNull(location, "location");

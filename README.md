@@ -1,7 +1,7 @@
 # Diorite
 
-Diorite is a fast, powerful, reactive library to enable the quick and easy creation of Minecraft 
-bots. 
+Diorite is a fast, powerful, reactive library to enable the quick and easy creation of Minecraft
+bots.
 
 ## Quick Links
 
@@ -75,7 +75,7 @@ public class Main {
 
 ### [EmbeddedPaper](https://github.com/Sparky983/EmbeddedPaper)
 
-Run paper plugins within single contained jar. 
+Run paper plugins within single contained jar.
 
-When paired with the diorite client, this can be used for easy acceptance testing (and soon 
+When paired with the diorite client, this can be used for easy acceptance testing (and soon
 integration testing). 

@@ -36,8 +36,8 @@ public final class BlockEntityDataPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public BlockEntityDataPacket(final @NotNull BlockPosition location,
-                                 final @NotNull Action action,
-                                 final @NotNull CompoundBinaryTag nbt) {
+            final @NotNull Action action,
+            final @NotNull CompoundBinaryTag nbt) {
 
         this.location = location;
         this.action = action;

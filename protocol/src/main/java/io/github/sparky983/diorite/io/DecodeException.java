@@ -80,7 +80,6 @@ public class DecodeException extends RuntimeException {
         this.canIgnore = false;
     }
 
-
     /**
      * Constructs a new decode exception with the specified message and whether it is safe to
      * ignore.
@@ -106,7 +105,8 @@ public class DecodeException extends RuntimeException {
      * @since 1.0.0
      */
     @Contract(pure = true)
-    public DecodeException(final @Nullable String message, final @Nullable Throwable cause, final boolean canIgnore) {
+    public DecodeException(final @Nullable String message, final @Nullable Throwable cause,
+            final boolean canIgnore) {
 
         super(message, cause);
         this.canIgnore = canIgnore;

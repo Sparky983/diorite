@@ -328,7 +328,6 @@ public interface StreamOut extends Closeable {
     @Contract(value = "_ -> this", mutates = "this")
     @NotNull StreamOut writeByteList(byte @NotNull [] data);
 
-
     /**
      * Writes the specified int array to the output stream.
      *
@@ -447,7 +446,8 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_, _ -> this", mutates = "this")
-    <T> @NotNull StreamOut writeNullable(@Nullable T data, @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer);
+    <T> @NotNull StreamOut writeNullable(@Nullable T data,
+            @NotNull BiConsumer<@NotNull StreamOut, @NotNull T> writer);
 
     /**
      * Writes the specified nullable type to the output stream.
@@ -520,7 +520,8 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "_, _ -> this", mutates = "this")
-    <T> @NotNull StreamOut writeList(@NotNull List<T> data, @NotNull BiConsumer<@NotNull StreamOut, T> writer);
+    <T> @NotNull StreamOut writeList(@NotNull List<T> data,
+            @NotNull BiConsumer<@NotNull StreamOut, T> writer);
 
     /**
      * Writes the specified list to the output stream, writing each element with the specified.

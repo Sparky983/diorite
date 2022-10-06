@@ -25,8 +25,8 @@ package io.github.sparky983.diorite.net;
 public enum ChannelState {
 
     /**
-     * Not a real state. Just the state that is returned before the client is connected or after
-     * it is disconnected.
+     * Not a real state. Just the state that is returned before the client is connected or after it
+     * is disconnected.
      *
      * @since 1.0.0
      */

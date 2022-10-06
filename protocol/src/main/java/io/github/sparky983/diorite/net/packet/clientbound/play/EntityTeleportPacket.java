@@ -36,9 +36,9 @@ public final class EntityTeleportPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public EntityTeleportPacket(final int entityId,
-                                final @NotNull Position location,
-                                final @NotNull Direction direction,
-                                final boolean isOnGround) {
+            final @NotNull Position location,
+            final @NotNull Direction direction,
+            final boolean isOnGround) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(direction, "direction");

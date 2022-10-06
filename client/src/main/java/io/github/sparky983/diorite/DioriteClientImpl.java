@@ -16,8 +16,6 @@
 
 package io.github.sparky983.diorite;
 
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
@@ -31,10 +29,10 @@ import io.github.sparky983.diorite.net.annotations.Port;
 import io.github.sparky983.diorite.net.packet.clientbound.ClientBoundPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.LoginSuccessPacket;
 import io.github.sparky983.diorite.net.packet.clientbound.login.SetCompressionPacket;
-import io.github.sparky983.diorite.net.packet.serverbound.play.KeepAlivePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.handshaking.HandshakePacket;
 import io.github.sparky983.diorite.net.packet.serverbound.login.LoginStartPacket;
 import io.github.sparky983.diorite.net.packet.serverbound.play.ChatMessagePacket;
+import io.github.sparky983.diorite.net.packet.serverbound.play.KeepAlivePacket;
 import io.github.sparky983.diorite.util.Preconditions;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
@@ -49,9 +47,9 @@ final class DioriteClientImpl implements DioriteClient {
     private final ClientChannel clientChannel;
 
     private DioriteClientImpl(final @NotNull ClientChannel clientChannel,
-                              final @NotNull ExecutorService executor,
-                              final int protocolVersion,
-                              final @NotNull String name) {
+            final @NotNull ExecutorService executor,
+            final int protocolVersion,
+            final @NotNull String name) {
 
         this.clientChannel = clientChannel;
         this.executor = executor;
@@ -98,7 +96,8 @@ final class DioriteClientImpl implements DioriteClient {
     }
 
     @Override
-    public @NotNull Mono<Void> command(final @NotNull String command, final @NotNull String @NotNull ... args) {
+    public @NotNull Mono<Void> command(final @NotNull String command,
+            final @NotNull String @NotNull ... args) {
 
         assert getState() == ChannelState.PLAY;
 
@@ -182,7 +181,8 @@ final class DioriteClientImpl implements DioriteClient {
             return this;
         }
 
-        private void handshake(final @NotNull ExecutorService executor, final @NotNull ChannelState nextState) {
+        private void handshake(final @NotNull ExecutorService executor,
+                final @NotNull ChannelState nextState) {
 
             if (clientChannel != null) {
                 throw new IllegalStateException("Already connecting");
@@ -195,7 +195,8 @@ final class DioriteClientImpl implements DioriteClient {
                     Sinks.many().replay().all()
             );
 
-            clientChannel.sendPacket(new HandshakePacket(protocolVersion, host, port, ChannelState.LOGIN)).block();
+            clientChannel.sendPacket(
+                    new HandshakePacket(protocolVersion, host, port, ChannelState.LOGIN)).block();
             clientChannel.setState(nextState);
         }
 
@@ -213,7 +214,8 @@ final class DioriteClientImpl implements DioriteClient {
 
             clientChannel.setState(ChannelState.PLAY);
 
-            clientChannel.on(io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket.class)
+            clientChannel.on(
+                            io.github.sparky983.diorite.net.packet.clientbound.play.KeepAlivePacket.class)
                     .subscribe((packet) ->
                             clientChannel.sendPacket(new KeepAlivePacket(packet.getKeepAliveId()))
                                     .subscribe()
@@ -247,7 +249,7 @@ final class DioriteClientImpl implements DioriteClient {
                             this::connect,
                             executorS
                     )
-            ) ;
+            );
         }
     }
 }

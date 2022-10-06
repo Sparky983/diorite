@@ -17,7 +17,6 @@
 package io.github.sparky983.diorite.io;
 
 import net.kyori.adventure.nbt.BinaryTagIO;
-import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -385,7 +384,7 @@ final class StreamOutImpl implements StreamOut {
 
     @Override
     public <T> @NotNull StreamOut writeNullable(final @Nullable T data,
-                                                            final @NotNull Runnable writer) {
+            final @NotNull Runnable writer) {
 
         Preconditions.requireNotNull(writer, "writer");
 
@@ -408,7 +407,8 @@ final class StreamOutImpl implements StreamOut {
     public @NotNull StreamOut writeByteEnum(final @NotNull Enum<?> data) {
 
         Preconditions.requireNotNull(data, "data");
-        Preconditions.requireTrue(data.ordinal() <= Byte.MAX_VALUE, "enum value is too big to be encoded to a single byte");
+        Preconditions.requireTrue(data.ordinal() <= Byte.MAX_VALUE,
+                "enum value is too big to be encoded to a single byte");
 
         return writeByte((byte) data.ordinal());
     }
@@ -417,7 +417,8 @@ final class StreamOutImpl implements StreamOut {
     public @NotNull StreamOut writeUnsignedByteEnum(final @NotNull Enum<?> data) {
 
         Preconditions.requireNotNull(data, "data");
-        Preconditions.requireTrue(data.ordinal() <= 0xFF, "enum value is too big to be encoded to a single unsigned byte");
+        Preconditions.requireTrue(data.ordinal() <= 0xFF,
+                "enum value is too big to be encoded to a single unsigned byte");
 
         return writeUnsignedByte((byte) data.ordinal());
     }

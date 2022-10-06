@@ -31,6 +31,23 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 class PreconditionsTest {
 
+    static List<Arguments> provideValidRanges() {
+
+        return List.of(
+                Arguments.of(0, 0, 0),
+                Arguments.of(-1, -1, 10),
+                Arguments.of(10, 1, 10)
+        );
+    }
+
+    static List<Arguments> provideInvalidRanges() {
+
+        return List.of(
+                Arguments.of(-1, 0, 0),
+                Arguments.of(11, -1, 10)
+        );
+    }
+
     @Test
     void requireTrue_Succeeds_WhenArgumentIsValid() {
 
@@ -63,15 +80,6 @@ class PreconditionsTest {
         assertEquals("[n] must be positive", positiveThrown.getMessage());
     }
 
-    static List<Arguments> provideValidRanges() {
-
-        return List.of(
-                Arguments.of(0, 0, 0),
-                Arguments.of(-1, -1, 10),
-                Arguments.of(10, 1, 10)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("provideValidRanges")
     void requireRange_Succeeds_WhenNumberIsInRange(final int n, final int from, final int to) {
@@ -80,20 +88,13 @@ class PreconditionsTest {
         assertDoesNotThrow(() -> Preconditions.requireRange(n, from, to, "test"));
     }
 
-    static List<Arguments> provideInvalidRanges() {
-
-        return List.of(
-                Arguments.of(-1, 0, 0),
-                Arguments.of(11, -1, 10)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("provideInvalidRanges")
     void requireRange_Fails_WhenNumberIsNotInRange(final int n, final int from, final int to) {
 
         assertThrows(IllegalArgumentException.class, () -> Preconditions.requireRange(n, from, to));
-        assertThrows(IllegalArgumentException.class, () -> Preconditions.requireRange(n, from, to, "test"));
+        assertThrows(IllegalArgumentException.class,
+                () -> Preconditions.requireRange(n, from, to, "test"));
     }
 
     @Test
@@ -116,17 +117,20 @@ class PreconditionsTest {
         assertThrows(
                 NullPointerException.class,
                 () -> Preconditions.requireContainsNoNulls(new Object[]{null}));
-        assertThrows(NullPointerException.class, () -> Preconditions.requireContainsNoNulls((Object[]) null));
+        assertThrows(NullPointerException.class,
+                () -> Preconditions.requireContainsNoNulls((Object[]) null));
 
         assertThrows(
                 NullPointerException.class,
-                () -> Preconditions.requireContainsNoNulls(Collections.singletonList(null), "parameter"));
+                () -> Preconditions.requireContainsNoNulls(Collections.singletonList(null),
+                        "parameter"));
         assertThrows(
                 NullPointerException.class,
                 () -> Preconditions.requireContainsNoNulls((Iterable<Object>) null, "parameter"));
         assertThrows(
                 NullPointerException.class,
                 () -> Preconditions.requireContainsNoNulls(new Object[]{null}));
-        assertThrows(NullPointerException.class, () -> Preconditions.requireContainsNoNulls((Iterable<Object>) null));
+        assertThrows(NullPointerException.class,
+                () -> Preconditions.requireContainsNoNulls((Iterable<Object>) null));
     }
 }

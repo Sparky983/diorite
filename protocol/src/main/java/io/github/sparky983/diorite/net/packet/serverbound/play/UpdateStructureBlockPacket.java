@@ -87,7 +87,8 @@ public final class UpdateStructureBlockPacket implements ServerBoundPacket {
         Preconditions.requireNotNull(mirror, "mirror");
         Preconditions.requireNotNull(rotation, "rotation");
         Preconditions.requireNotNull(metadata, "metadata");
-        Preconditions.requireTrue(integrity >= 0 && integrity <= 1, "[integrity] must be between 0-1");
+        Preconditions.requireTrue(integrity >= 0 && integrity <= 1,
+                "[integrity] must be between 0-1");
 
         this.location = location;
         this.action = action;
@@ -246,13 +247,11 @@ public final class UpdateStructureBlockPacket implements ServerBoundPacket {
         return mirror;
     }
 
-
     @Contract(pure = true)
     public @NotNull Rotation getRotation() {
 
         return rotation;
     }
-
 
     @Contract(pure = true)
     public @NotNull String getMetadata() {
@@ -260,20 +259,17 @@ public final class UpdateStructureBlockPacket implements ServerBoundPacket {
         return metadata;
     }
 
-
     @Contract(pure = true)
     public float getIntegrity() {
 
         return integrity;
     }
 
-
     @Contract(pure = true)
     public long getSeed() {
 
         return seed;
     }
-
 
     @Contract(pure = true)
     public byte getFlags() {

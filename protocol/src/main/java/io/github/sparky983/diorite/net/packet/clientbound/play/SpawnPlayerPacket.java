@@ -38,9 +38,9 @@ public final class SpawnPlayerPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public SpawnPlayerPacket(final int entityId,
-                             final @NotNull UUID entityUuid,
-                             final @NotNull Position position,
-                             final @NotNull Direction direction) {
+            final @NotNull UUID entityUuid,
+            final @NotNull Position position,
+            final @NotNull Direction direction) {
 
         Preconditions.requireNotNull(entityUuid, "entityUuid");
         Preconditions.requireNotNull(position, "position");

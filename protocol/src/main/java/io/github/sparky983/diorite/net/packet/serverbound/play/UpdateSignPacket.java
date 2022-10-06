@@ -39,10 +39,10 @@ public final class UpdateSignPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public UpdateSignPacket(final @NotNull BlockPosition location,
-                            final @NotNull String line1,
-                            final @NotNull String line2,
-                            final @NotNull String line3,
-                            final @NotNull String line4) {
+            final @NotNull String line1,
+            final @NotNull String line2,
+            final @NotNull String line3,
+            final @NotNull String line4) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(line1, "line1");

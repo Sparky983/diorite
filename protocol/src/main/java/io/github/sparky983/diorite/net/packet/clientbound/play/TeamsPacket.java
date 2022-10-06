@@ -95,6 +95,35 @@ public final class TeamsPacket implements ClientBoundPacket {
         return action;
     }
 
+    public enum ActionType {
+
+        CREATE(CreateAction::new),
+        REMOVE(RemoveAction::new),
+        UPDATE(UpdateAction::new),
+        ADD_ENTITIES(AddEntities::new),
+        REMOVE_ENTITIES(RemoveEntities::new);
+
+        private final Function<StreamIn, Action> factory;
+
+        @Contract(pure = true)
+        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
+
+            this.factory = factory;
+        }
+
+        @Contract(mutates = "param")
+        public @NotNull Action create(final @NotNull StreamIn inputStream) {
+
+            return factory.apply(inputStream);
+        }
+    }
+
+    public interface Action extends Writable {
+
+        @Contract(pure = true)
+        @NotNull ActionType getType();
+    }
+
     // TODO(Sparky983): better design for this
     public static final class CreateAction extends UpdateAction {
 
@@ -104,19 +133,20 @@ public final class TeamsPacket implements ClientBoundPacket {
 
         @Contract(pure = true)
         public CreateAction(final @NotNull Component displayName,
-                            final byte flags,
-                            final TeamsPacket.UpdateAction.@NotNull NameTagVisibility nameTagVisibility,
-                            final TeamsPacket.UpdateAction.@NotNull CollisionRule collisionRule,
-                            final TeamsPacket.UpdateAction.@NotNull TeamColor teamColor,
-                            final @NotNull Component prefix,
-                            final @NotNull Component suffix,
-                            final @NotNull List<@NotNull String> entities) {
+                final byte flags,
+                final TeamsPacket.UpdateAction.@NotNull NameTagVisibility nameTagVisibility,
+                final TeamsPacket.UpdateAction.@NotNull CollisionRule collisionRule,
+                final TeamsPacket.UpdateAction.@NotNull TeamColor teamColor,
+                final @NotNull Component prefix,
+                final @NotNull Component suffix,
+                final @NotNull List<@NotNull String> entities) {
 
             super(displayName, flags, nameTagVisibility, collisionRule, teamColor, prefix, suffix);
 
             Preconditions.requireContainsNoNulls(entities, "entities");
             for (final String entity : entities) {
-                Preconditions.requireRange(entity.length(), 0, MAX_ENTITY_LENGTH, "entity.length()");
+                Preconditions.requireRange(entity.length(), 0, MAX_ENTITY_LENGTH,
+                        "entity.length()");
             }
 
             this.entities = entities;
@@ -130,7 +160,8 @@ public final class TeamsPacket implements ClientBoundPacket {
             this.entities = inputStream.readList(() -> {
                 final String entity = inputStream.readString();
                 if (entity.length() > MAX_ENTITY_LENGTH) {
-                    throw new DecodeException("entity.length() cannot be longer than " + MAX_ENTITY_LENGTH);
+                    throw new DecodeException(
+                            "entity.length() cannot be longer than " + MAX_ENTITY_LENGTH);
                 }
                 return entity;
             });
@@ -229,8 +260,10 @@ public final class TeamsPacket implements ClientBoundPacket {
 
             this.displayName = inputStream.readComponent();
             this.flags = inputStream.readByte();
-            this.nameTagVisibility = NameTagVisibility.valueOf(inputStream.readString(MAX_NAME_TAG_VISIBILITY_LENGTH));
-            this.collisionRule = CollisionRule.valueOf(inputStream.readString(MAX_COLLISION_RULE_LENGTH));
+            this.nameTagVisibility = NameTagVisibility.valueOf(
+                    inputStream.readString(MAX_NAME_TAG_VISIBILITY_LENGTH));
+            this.collisionRule = CollisionRule.valueOf(
+                    inputStream.readString(MAX_COLLISION_RULE_LENGTH));
             this.teamColor = inputStream.readVarIntEnum(TeamColor.class);
             this.prefix = inputStream.readComponent();
             this.suffix = inputStream.readComponent();
@@ -362,7 +395,8 @@ public final class TeamsPacket implements ClientBoundPacket {
 
             Preconditions.requireContainsNoNulls(entities, "entities");
             for (final String entity : entities) {
-                Preconditions.requireRange(entity.length(), 0, TeamsPacket.CreateAction.MAX_ENTITY_LENGTH, "entity.length()");
+                Preconditions.requireRange(entity.length(), 0,
+                        TeamsPacket.CreateAction.MAX_ENTITY_LENGTH, "entity.length()");
             }
 
             this.entities = entities;
@@ -376,7 +410,8 @@ public final class TeamsPacket implements ClientBoundPacket {
             this.entities = inputStream.readList(() -> {
                 final String entity = inputStream.readString();
                 if (entity.length() > TeamsPacket.CreateAction.MAX_ENTITY_LENGTH) {
-                    throw new DecodeException("entity.length() cannot be longer than " + TeamsPacket.CreateAction.MAX_ENTITY_LENGTH);
+                    throw new DecodeException("entity.length() cannot be longer than "
+                            + TeamsPacket.CreateAction.MAX_ENTITY_LENGTH);
                 }
                 return entity;
             });
@@ -412,7 +447,8 @@ public final class TeamsPacket implements ClientBoundPacket {
 
             Preconditions.requireContainsNoNulls(entities, "entities");
             for (final String entity : entities) {
-                Preconditions.requireRange(entity.length(), 0, TeamsPacket.CreateAction.MAX_ENTITY_LENGTH, "entity.length()");
+                Preconditions.requireRange(entity.length(), 0,
+                        TeamsPacket.CreateAction.MAX_ENTITY_LENGTH, "entity.length()");
             }
 
             this.entities = entities;
@@ -426,7 +462,8 @@ public final class TeamsPacket implements ClientBoundPacket {
             this.entities = inputStream.readList(() -> {
                 final String entity = inputStream.readString();
                 if (entity.length() > TeamsPacket.CreateAction.MAX_ENTITY_LENGTH) {
-                    throw new DecodeException("entity.length() cannot be longer than " + TeamsPacket.CreateAction.MAX_ENTITY_LENGTH);
+                    throw new DecodeException("entity.length() cannot be longer than "
+                            + TeamsPacket.CreateAction.MAX_ENTITY_LENGTH);
                 }
                 return entity;
             });
@@ -451,34 +488,5 @@ public final class TeamsPacket implements ClientBoundPacket {
 
             return entities;
         }
-    }
-
-    public enum ActionType {
-
-        CREATE(CreateAction::new),
-        REMOVE(RemoveAction::new),
-        UPDATE(UpdateAction::new),
-        ADD_ENTITIES(AddEntities::new),
-        REMOVE_ENTITIES(RemoveEntities::new);
-
-        private final Function<StreamIn, Action> factory;
-
-        @Contract(pure = true)
-        ActionType(final @NotNull Function<@NotNull StreamIn, @NotNull Action> factory) {
-
-            this.factory = factory;
-        }
-
-        @Contract(mutates = "param")
-        public @NotNull Action create(final @NotNull StreamIn inputStream) {
-
-            return factory.apply(inputStream);
-        }
-    }
-
-    public interface Action extends Writable {
-
-        @Contract(pure = true)
-        @NotNull ActionType getType();
     }
 }

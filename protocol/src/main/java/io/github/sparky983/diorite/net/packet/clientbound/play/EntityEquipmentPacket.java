@@ -37,7 +37,8 @@ public final class EntityEquipmentPacket implements ClientBoundPacket {
     private final List<Equipment> equipment;
 
     @Contract(pure = true)
-    public EntityEquipmentPacket(final int entityId, final @NotNull List<@NotNull Equipment> equipment) {
+    public EntityEquipmentPacket(final int entityId,
+            final @NotNull List<@NotNull Equipment> equipment) {
 
         Preconditions.requireNotNull(equipment, "equipment");
         Preconditions.requireRange(equipment.size(), 1, Integer.MAX_VALUE, "equipment.size()");
@@ -110,7 +111,8 @@ public final class EntityEquipmentPacket implements ClientBoundPacket {
         private final @Nullable ItemStack item;
 
         @Contract(pure = true)
-        public Equipment(final @NotNull EquipmentSlot equipmentSlot, final @Nullable ItemStack item) {
+        public Equipment(final @NotNull EquipmentSlot equipmentSlot,
+                final @Nullable ItemStack item) {
 
             Preconditions.requireNotNull(equipmentSlot, "equipmentSlot");
             Preconditions.requireNotNull(item, "item");

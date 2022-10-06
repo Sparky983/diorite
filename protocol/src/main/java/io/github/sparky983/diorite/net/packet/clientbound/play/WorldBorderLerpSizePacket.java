@@ -32,7 +32,8 @@ public final class WorldBorderLerpSizePacket implements ClientBoundPacket {
     private final long speed;
 
     @Contract(pure = true)
-    public WorldBorderLerpSizePacket(final double previousDiameter, final double newDiameter, final long speed) {
+    public WorldBorderLerpSizePacket(final double previousDiameter, final double newDiameter,
+            final long speed) {
 
         this.previousDiameter = previousDiameter;
         this.newDiameter = newDiameter;

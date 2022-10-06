@@ -32,7 +32,8 @@ public final class CollectItemPacket implements ClientBoundPacket {
     private final int pickupItemCount;
 
     @Contract(pure = true)
-    public CollectItemPacket(final int collectedEntityId, final int collectorEntityId, final int pickupItemCount) {
+    public CollectItemPacket(final int collectedEntityId, final int collectorEntityId,
+            final int pickupItemCount) {
 
         this.collectedEntityId = collectedEntityId;
         this.collectorEntityId = collectorEntityId;

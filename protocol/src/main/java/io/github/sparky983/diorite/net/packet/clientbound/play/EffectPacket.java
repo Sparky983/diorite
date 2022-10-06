@@ -37,9 +37,9 @@ public final class EffectPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public EffectPacket(final int effectId,
-                        final @NotNull BlockPosition location,
-                        final int data,
-                        final boolean disableRelativeVolume) {
+            final @NotNull BlockPosition location,
+            final int data,
+            final boolean disableRelativeVolume) {
 
         Preconditions.requireNotNull(location, "location");
 

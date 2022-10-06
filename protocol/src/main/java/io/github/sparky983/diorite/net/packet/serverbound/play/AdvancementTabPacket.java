@@ -35,14 +35,15 @@ public final class AdvancementTabPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public AdvancementTabPacket(final @NotNull Action action,
-                                final @Nullable Identifier tab) {
+            final @Nullable Identifier tab) {
 
         Preconditions.requireNotNull(action, "action");
 
         if (action == Action.OPENED_TAB) {
             Preconditions.requireNotNull(tab, "tab");
         } else {
-            Preconditions.requireTrue(tab == null, "[tab] must be null if [action] is not OPENED_TAB");
+            Preconditions.requireTrue(tab == null,
+                    "[tab] must be null if [action] is not OPENED_TAB");
         }
 
         this.action = action;

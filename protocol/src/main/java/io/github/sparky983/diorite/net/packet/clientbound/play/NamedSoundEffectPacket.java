@@ -42,10 +42,10 @@ public final class NamedSoundEffectPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public NamedSoundEffectPacket(final @NotNull Identifier soundName,
-                                  final @NotNull Category category,
-                                  final @NotNull Position position,
-                                  final float volume,
-                                  final float pitch) {
+            final @NotNull Category category,
+            final @NotNull Position position,
+            final float volume,
+            final float pitch) {
 
         Preconditions.requireNotNull(soundName, "soundName");
         Preconditions.requireNotNull(category, "category");
@@ -95,7 +95,7 @@ public final class NamedSoundEffectPacket implements ClientBoundPacket {
     }
 
     private void writeFixedPointNumberPosition(final @NotNull Position position,
-                                               final @NotNull StreamOut outputStream) {
+            final @NotNull StreamOut outputStream) {
 
         outputStream.writeInt((int) (position.getX() * POSITION_SCALING_FACTOR))
                 .writeInt((int) (position.getY() * POSITION_SCALING_FACTOR))

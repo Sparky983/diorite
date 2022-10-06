@@ -34,8 +34,8 @@ public final class CraftRecipeRequestPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public CraftRecipeRequestPacket(final byte windowId,
-                                    final @NotNull Identifier recipe,
-                                    final boolean shouldMakeAll) {
+            final @NotNull Identifier recipe,
+            final boolean shouldMakeAll) {
 
         Preconditions.requireNotNull(recipe, "recipe");
 

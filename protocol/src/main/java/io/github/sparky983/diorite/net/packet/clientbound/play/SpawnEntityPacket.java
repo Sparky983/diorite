@@ -42,12 +42,12 @@ public final class SpawnEntityPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public SpawnEntityPacket(final int entityId,
-                             final @NotNull UUID objectId,
-                             final int entityType,
-                             final @NotNull Position location,
-                             final @NotNull Direction direction,
-                             final int data,
-                             final @NotNull Velocity velocity) {
+            final @NotNull UUID objectId,
+            final int entityType,
+            final @NotNull Position location,
+            final @NotNull Direction direction,
+            final int data,
+            final @NotNull Velocity velocity) {
 
         Preconditions.requireNotNull(objectId, "objectId");
         Preconditions.requireNotNull(location, "location");

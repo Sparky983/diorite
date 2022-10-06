@@ -36,8 +36,8 @@ public final class DeclareCommandsPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public DeclareCommandsPacket(final int nodeCount,
-                                 final byte @NotNull [] nodes,
-                                 final int rootIndex) {
+            final byte @NotNull [] nodes,
+            final int rootIndex) {
 
         Preconditions.requireNotNull(nodes, "nodes");
 
@@ -66,6 +66,7 @@ public final class DeclareCommandsPacket implements ClientBoundPacket {
 
     @Override
     public int getId() {
+
         return ClientBoundPacketId.Play.DECLARE_COMMANDS;
     }
 

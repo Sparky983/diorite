@@ -33,8 +33,8 @@ public final class OpenHorseWindowPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public OpenHorseWindowPacket(final byte windowId,
-                                 final int slots,
-                                 final int entityId) {
+            final int slots,
+            final int entityId) {
 
         this.windowId = windowId;
         this.slots = slots;

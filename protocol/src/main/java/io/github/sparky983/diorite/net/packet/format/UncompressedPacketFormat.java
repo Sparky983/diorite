@@ -42,7 +42,7 @@ final class UncompressedPacketFormat implements PacketFormat {
 
     @Override
     public void encode(final @NotNull Packet packet,
-                       final @NotNull StreamOut outputStream) {
+            final @NotNull StreamOut outputStream) {
 
         Preconditions.requireNotNull(packet, "packet");
         Preconditions.requireNotNull(outputStream, "outputStream");
@@ -56,9 +56,9 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final byte[] data = byteArrayOutputStream.toByteArray();
 
-         synchronized (this) {
-             outputStream.writeByteList(data);
-         }
+        synchronized (this) {
+            outputStream.writeByteList(data);
+        }
     }
 
     @Override
@@ -76,7 +76,8 @@ final class UncompressedPacketFormat implements PacketFormat {
 
         final PacketDecoder<?> decoder = stateful.getPacketRegistry()
                 .getPacketDecoder(id)
-                .orElseThrow(() -> new DecodeException("No packet encoder for id 0x" + Integer.toHexString(id), true));
+                .orElseThrow(() -> new DecodeException(
+                        "No packet encoder for id 0x" + Integer.toHexString(id), true));
 
         try {
             return decoder.decode(byteArrayInputStream);

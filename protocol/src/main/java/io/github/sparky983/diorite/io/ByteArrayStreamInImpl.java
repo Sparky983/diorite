@@ -126,7 +126,8 @@ final class ByteArrayStreamInImpl implements ByteArrayStreamIn {
     }
 
     @Override
-    public @NotNull String readString(final @Range(from = 1, to = Protocol.MAX_STRING_LENGTH) int maxLength) {
+    public @NotNull String readString(
+            final @Range(from = 1, to = Protocol.MAX_STRING_LENGTH) int maxLength) {
 
         return delegate.readString(maxLength);
     }
@@ -216,7 +217,8 @@ final class ByteArrayStreamInImpl implements ByteArrayStreamIn {
     }
 
     @Override
-    public long @NotNull [] readVarLongs(final @Range(from = 0, to = Integer.MAX_VALUE) int length) {
+    public long @NotNull [] readVarLongs(
+            final @Range(from = 0, to = Integer.MAX_VALUE) int length) {
 
         return delegate.readVarLongs(length);
     }

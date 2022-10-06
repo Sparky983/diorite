@@ -33,8 +33,8 @@ public final class PlayerRotationPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public PlayerRotationPacket(final float yaw,
-                                final float pitch,
-                                final boolean isOnGround) {
+            final float pitch,
+            final boolean isOnGround) {
 
         this.yaw = yaw;
         this.pitch = pitch;

@@ -38,11 +38,11 @@ public final class UpdateJigsawBlockPacket implements ServerBoundPacket {
 
     @Contract(pure = true)
     public UpdateJigsawBlockPacket(final @NotNull BlockPosition location,
-                                   final @NotNull Identifier name,
-                                   final @NotNull Identifier target,
-                                   final @NotNull Identifier pool,
-                                   final @NotNull String finalState,
-                                   final @NotNull String jointType) {
+            final @NotNull Identifier name,
+            final @NotNull Identifier target,
+            final @NotNull Identifier pool,
+            final @NotNull String finalState,
+            final @NotNull String jointType) {
 
         Preconditions.requireNotNull(location, "location");
         Preconditions.requireNotNull(name, "name");

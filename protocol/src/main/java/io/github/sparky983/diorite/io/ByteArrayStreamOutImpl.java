@@ -73,7 +73,8 @@ final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
     }
 
     @Override
-    public @NotNull ByteArrayStreamOut writeUnsignedByte(final @Range(from = 0, to = 0xFF) int data) {
+    public @NotNull ByteArrayStreamOut writeUnsignedByte(
+            final @Range(from = 0, to = 0xFF) int data) {
 
         delegate.writeUnsignedByte(data);
         return this;
@@ -87,7 +88,8 @@ final class ByteArrayStreamOutImpl implements ByteArrayStreamOut {
     }
 
     @Override
-    public @NotNull ByteArrayStreamOut writeUnsignedShort(final @Range(from = 0, to = 0xFFFF) int data) {
+    public @NotNull ByteArrayStreamOut writeUnsignedShort(
+            final @Range(from = 0, to = 0xFFFF) int data) {
 
         delegate.writeUnsignedShort(data);
         return this;

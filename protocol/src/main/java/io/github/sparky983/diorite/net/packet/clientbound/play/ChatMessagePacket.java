@@ -37,8 +37,8 @@ public final class ChatMessagePacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public ChatMessagePacket(final @NotNull Component message,
-                             final @NotNull Position position,
-                             final @NotNull UUID sender) {
+            final @NotNull Position position,
+            final @NotNull UUID sender) {
 
         Preconditions.requireNotNull(message, "message");
         Preconditions.requireNotNull(position, "position");

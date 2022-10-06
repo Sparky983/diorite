@@ -35,8 +35,8 @@ public final class EncryptionRequestPacket implements ClientBoundPacket {
 
     @Contract(pure = true)
     public EncryptionRequestPacket(final @NotNull String serverId,
-                             final byte @NotNull [] publicKey,
-                             final byte @NotNull [] verifyToken) {
+            final byte @NotNull [] publicKey,
+            final byte @NotNull [] verifyToken) {
 
         Preconditions.requireNotNull(serverId, "serverId");
         Preconditions.requireRange(serverId.length(), 0, MAX_SERVER_ID_LENGTH, "serverId.length()");
