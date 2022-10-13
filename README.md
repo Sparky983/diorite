@@ -73,7 +73,7 @@ public class Main {
 
 ## Related Projects
 
-### [EmbeddedPaper](https://github.com/Sparky983/EmbeddedPaper)
+### [EmbeddedPaper (WIP)](https://github.com/Sparky983/EmbeddedPaper)
 
 Run paper plugins within single contained jar.
 
