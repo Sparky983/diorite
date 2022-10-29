@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 
 import io.github.sparky983.diorite.util.Preconditions;
 
@@ -69,7 +68,7 @@ public final class PacketRegistry {
 
     public static final class Builder {
 
-        private final Map<Integer, PacketDecoder<?>> packetDecoders = new TreeMap<>();
+        private final Map<Integer, PacketDecoder<?>> packetDecoders = new HashMap<>(115);
 
         /**
          * Registers a packet decoder of the specified id.
