@@ -388,7 +388,7 @@ final class StreamOutImpl implements StreamOut {
 
         Preconditions.requireNotNull(writer, "writer");
 
-        if (data == null) {
+        if (data != null) {
             writer.run();
         }
 
