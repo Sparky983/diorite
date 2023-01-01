@@ -90,7 +90,7 @@ public interface StreamOut extends Closeable {
      * @since 1.0.0
      */
     @Contract(value = "-> new", pure = true)
-    static @NotNull ByteArrayStreamOut createByteArrayStream() {
+    static @NotNull ByteArrayStreamOut ofByteArray() {
 
         return new ByteArrayStreamOutImpl(new ByteArrayOutputStream());
     }

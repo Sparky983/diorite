@@ -60,7 +60,7 @@ final class CompressedPacketFormat implements PacketFormat {
         final byte[] uncompressed;
 
         try (final ByteArrayStreamOut uncompressedOutputStream =
-                     StreamOut.createByteArrayStream()) {
+                     StreamOut.ofByteArray()) {
             uncompressedOutputStream.writeVarInt(packet.getId());
             packet.write(uncompressedOutputStream);
             uncompressed = uncompressedOutputStream.toByteArray();
@@ -70,14 +70,14 @@ final class CompressedPacketFormat implements PacketFormat {
 
         if (uncompressed.length < threshold) {
             try (final ByteArrayStreamOut dataLengthAndDataOutputStream =
-                         StreamOut.createByteArrayStream()) {
+                         StreamOut.ofByteArray()) {
                 dataLengthAndDataOutputStream.writeVarInt(0);
                 dataLengthAndDataOutputStream.writeBytes(uncompressed);
                 dataLengthAndData = dataLengthAndDataOutputStream.toByteArray();
             }
         } else {
             final ByteArrayStreamOut byteArrayCompressedOutputStream =
-                    StreamOut.createByteArrayStream();
+                    StreamOut.ofByteArray();
             try (final StreamOut compressedOutputStream = compression.compressed(
                     byteArrayCompressedOutputStream)) {
                 compressedOutputStream.writeByteList(uncompressed);

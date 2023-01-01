@@ -48,7 +48,7 @@ final class UncompressedPacketFormat implements PacketFormat {
         Preconditions.requireNotNull(outputStream, "outputStream");
 
         final ByteArrayStreamOut byteArrayOutputStream =
-                StreamOut.createByteArrayStream();
+                StreamOut.ofByteArray();
 
         byteArrayOutputStream.writeVarInt(packet.getId());
 
